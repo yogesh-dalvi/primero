@@ -62,6 +62,8 @@
 //= require_tree ./views/management
 //= require_tree ./views
 //= require router
+//= require intakes
+
 
 //= require turbolinks
 //= require primero_libs/turbolinks-compatibility
