@@ -13,6 +13,14 @@ $lg_input_font_size: 2rem;
   z-index:9999 !important;
 }
 
+fieldset#tab_cp_mental_wellbeing_assessment_scale input[type=radio]+ label {
+    margin-left: 1px;
+    vertical-align: top;
+}
+fieldset#tab_cp_mental_wellbeing_assessment_scale input[type=radio]+ label +br {
+    display: none;
+}
+
 input:focus{
   -webkit-box-shadow: none !important;
   -moz-box-shadow: none !important;
@@ -410,7 +418,6 @@ fieldset {
       span {
         font-weight: normal;
         font-size: $thirteen_px;
-        unicode-bidi: plaintext;
       }
     }
 
