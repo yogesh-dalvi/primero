@@ -1,0 +1,316 @@
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+<style>
+	.cssShow {
+	display : block;
+	}
+
+	.cssHide {
+		display : none;
+	}
+</style>
+
+<style>
+
+label {
+	margin-bottom: 0px;
+}
+
+body {font-family: Arial, Helvetica, sans-serif;}
+* {box-sizing: border-box;}
+
+.form-inline {  
+  display: flex;
+  flex-flow: row wrap;
+  align-items: center;
+}
+
+.form-inline label {
+  margin: 5px 10px 5px 0;
+}
+
+.form-inline input {
+  vertical-align: middle;
+  margin: 5px 10px 5px 0;
+  padding: 10px;
+  background-color: #fff;
+  border: 1px solid #ddd;
+}
+
+.form-inline button {
+  padding: 10px 20px;
+  background-color: dodgerblue;
+  border: 1px solid #ddd;
+  color: white;
+  cursor: pointer;
+}
+
+.form-inline button:hover {
+  background-color: royalblue;
+}
+
+@media (max-width: 800px) {
+  .form-inline input {
+    margin: 10px 0;
+  }
+  
+  .form-inline {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}
+</style>
+
+<script>
+$(document).ready(function() {
+	document.getElementById("validation_div").innerHTML= ""
+    document.getElementById("submit_tag").addEventListener("click", function(event){
+      document.getElementById("validation_div").innerHTML= ""
+	    var validation_content='';	
+      var start_date = document.getElementById("start_date_field").value;
+      var end_date = document.getElementById("end_date_field").value;
+      var state = document.getElementById("report-state").value;
+      if (start_date == "" || end_date == "" || state == "")
+        {
+          if (start_date == "")
+            {
+			  //document.getElementById("start_date_validate").innerHTML = "please select start date"; 
+			  validation_content += '<label id = "start_date_validate1" style="color: red">please select start date</label><br>';
+            }
+          if (end_date == "")
+            {
+			  //document.getElementById("end_date_validate").innerHTML = "please select end date";
+			  validation_content += '<label id = "end_date_validate1" style="color: red">please select end date</label><br>'; 
+            }
+          if (state == "")
+            {
+			  //document.getElementById("state_validate").innerHTML = "please select state"; 
+			  validation_content += '<label id = "state_validate1" style="color: red">please select state</label><br>';
+            }
+          if (start_date!= "" && end_date!= "")
+            {
+              if(new Date(start_date)> new Date(end_date))
+                {
+                  //document.getElementById("date_validation").innerHTML = "start date cannot be greater than end date";
+				  validation_content += '<label id = "date_validation1" style="color: red">start date cannot be greater than end date</label><br>';
+				}
+              
+            }
+
+          event.preventDefault();
+        }
+      else if (start_date!= "" && end_date!= "")
+        {
+          if(new Date(start_date)> new Date(end_date))
+            {
+              //document.getElementById("date_validation").innerHTML = "start date cannot be greater than end date";
+			  validation_content += '<label id = "date_validation1" style="color: red">start date cannot be greater than end date</label><br>';
+			  event.preventDefault();
+            }
+          
+		}
+		console.log(validation_content);
+		document.getElementById("validation_div").innerHTML= validation_content;
+
+	});
+});
+
+</script>	
+
+<script>
+$(document).ready(function() {
+    $('#report-state').on('change', function() {
+      var state = document.getElementById("report-state").value;
+      if (state!="")
+        {
+      //document.getElementById("state_validate").innerHTML = ""; 
+      var element_exist =  document.getElementById('state_validate1');
+      if (typeof(element_exist) != 'undefined' && element_exist != null)
+        {
+          document.getElementById("state_validate1").innerHTML = ""; 
+        }
+		  
+      }
+    });
+
+    $('#end_date_field').on('change', function() {
+      var end_date = document.getElementById("end_date_field").value;
+      var start_date = document.getElementById("start_date_field").value;
+      if (end_date!="")
+        {
+      //document.getElementById("end_date_validate").innerHTML = ""; 
+      var element_exist =  document.getElementById('end_date_validate1');
+      if (typeof(element_exist) != 'undefined' && element_exist != null)
+        {
+          document.getElementById("end_date_validate1").innerHTML = ""; 
+        }
+      }
+      if (start_date!= "" && end_date!= "")
+        {
+          if(new Date(start_date)<= new Date(end_date))
+            {
+              //document.getElementById("date_validation").innerHTML = "";
+              var element_exist =  document.getElementById('date_validation1');
+              if (typeof(element_exist) != 'undefined' && element_exist != null)
+                {
+                  document.getElementById("date_validation1").innerHTML = "";
+                }
+            }
+          
+        }
+      
+    });
+    
+    $('#start_date_field').on('change', function() {
+      var start_date = document.getElementById("start_date_field").value;
+      var end_date = document.getElementById("end_date_field").value;
+      if (start_date!="")
+        {
+      //document.getElementById("start_date_validate").innerHTML = "";
+      var element_exist =  document.getElementById('start_date_validate1');
+      if (typeof(element_exist) != 'undefined' && element_exist != null)
+        {
+          document.getElementById("start_date_validate1").innerHTML = "";  
+        }
+        }
+      if (start_date!= "" && end_date!= "")
+        {
+          if(new Date(start_date)<= new Date(end_date))
+            {
+              //document.getElementById("date_validation").innerHTML = "";
+              var element_exist =  document.getElementById('date_validation1');
+              if (typeof(element_exist) != 'undefined' && element_exist != null)
+                {
+                  document.getElementById("date_validation1").innerHTML = "";
+                }
+            }
+          
+        }
+    });
+
+});
+
+</script>
+
+<div class="container">
+<br>
+<h2 style="color: #819f56">Monthly Report</h2>
+<br>
+<div class="panel panel-default">
+	<div class="panel-body" style="padding: 20px">
+				<div>
+				<div>
+				<div id = "validation_div"></div>
+                <% if @date_validation == "true" %>
+                      <label style="color: red">start date cannot be greater than end date</label>
+				        <% end %>
+				<%= form_tag("/monthly_reports/submit_form", method: "post", class: 'form-inline', name:"myForm", id:"submit_form_for_monthly_report") do %>
+               
+                <div class="col-sm-3">
+                    <label>Start Date</label>
+                    <%= date_field_tag(:start_date, Date.today.prev_month, :id => 'start_date_field', :max => Date.today)%>
+                    <% if @start_date_not_selected == "true" %>
+                      <label style="color: red">please select start date</label>
+                    <% end %>
+                </div>
+                <div class="col-sm-3">
+                    <label>End Date</label>
+                    <%= date_field_tag(:end_date, Date.today, :id => 'end_date_field', :max => Date.today)%>
+                    <% if @end_date_not_selected == "true" %>
+                      <label style="color: red">please select end date</label>
+                    <% end %>
+                </div>
+                <div class="col-sm-2" id="states">
+                    <label>Location</label>
+                    <%= select_tag 'state', options_for_select(@state_array),{:id => "report-state"} %>
+                    <% if @state_not_selected == "true" %>
+                      <label style="color: red">please select state</label>
+                    <% end %>   
+                </div>
+                <div id="Cell" class="col-sm-2">    
+                    <div id="Maharashtra" class="cell">
+                        <label>Cell</label>
+                        <%= select_tag 'district1', options_for_select(@maha_location_array),{:id => "distr-maha"} %>
+                        
+                    </div>
+                    <div id="Delhi" class="cell">
+                        <label>Cell</label>
+                        <%=  select_tag 'district2', options_for_select(@delh_location_array),{:id => "distr-delhi"} %>
+                        
+                    </div>
+                    <div id="NCW" class="cell">
+                        <label>Cell</label>
+                        <%= select_tag 'district3', options_for_select(@ncw_location_array),{:id => "distr-ncw"} %>
+                        
+                    </div>
+                </div>
+                <div class="col-sm-2" style="margin-top: 4%;">
+                   <%= submit_tag "Generate Report", :name => 'save', :id => 'submit_tag' ,:class => "button btn_submit large" %>
+                </div>
+
+            <% end %>
+        </div> 
+    </div>
+    <br>
+<br>
+</div>
+<script>
+	$(document).ready(function() {
+	$('#states option[value=""]').attr("selected",true);
+	$('#Cell').addClass('cssHide');
+	$('#Maharashtra,#Delhi,#NCW').addClass('cssHide');
+
+	$('#report-state').on('change', function() {
+		if($(this).find('option:selected').val() != ""){
+			var selectedState = $(this).find('option:selected').text();
+			$('#Cell').removeClass('cssHide').addClass('cssShow');
+			$('.cell').each(function() {
+				if ($(this).hasClass('cssShow')){
+					$(this).removeClass('cssShow').addClass('cssHide');
+				}
+			});
+			$('#' + selectedState).removeClass('cssHide').addClass('cssShow');
+		}else{
+			$('#Cell').removeClass('cssShow').addClass('cssHide');
+		}
+	});
+ });
+
+</script>
+
+<script>
+	if ("<%=@start_date_for_display %>" != "" || "<%=@end_date_for_display %>" != "")
+	{
+		if ("<%=@start_date_for_display %>" != "")
+		{
+			document.getElementById("start_date_field").defaultValue = "<%=@start_date_for_display %>";
+		}
+		if ("<%=@start_date_for_display %>" == "")
+		{
+			document.getElementById("start_date_field").defaultValue = "";
+		}
+		if ("<%=@end_date_for_display %>" != "")
+		{
+			document.getElementById("end_date_field").defaultValue = "<%=@end_date_for_display %>";
+		}
+		if ("<%=@end_date_for_display %>" == "")
+		{
+			document.getElementById("end_date_field").defaultValue = "";
+		}
+		
+	}
+	if ("<%=@start_date_not_selected %>" == "true" && "<%=@end_date_not_selected %>" == "true")
+		{
+			document.getElementById("start_date_field").defaultValue = "";
+			document.getElementById("end_date_field").defaultValue = "";
+		}
+		
+	
+	
+
+
+</script>

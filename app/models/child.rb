@@ -165,7 +165,472 @@ class Child < CouchRest::Model::Base
                     }
                  }
               }"
-  end
+    view :by_age_new,
+          :map => "function(doc) {
+        if (doc['location'] != null && doc['age'] != null)
+        {
+          emit([doc.location,doc.age],1)
+        }
+        }"
+
+    view :by_clients_reffered_by,
+          :map => "function(doc) {
+              if(doc.location!=null && doc.district!=null && doc.clients_referred_by!=null && doc.registration_date!=null){
+                emit([doc.location,doc.district,new Date(doc.registration_date),doc.clients_referred_by],1)
+              }
+            }",
+          :reduce =>
+            "_sum"
+    
+    view :by_state_date_clients_reffered_by,
+      :map => "function(doc) {
+          if(doc.location!=null && doc.district!=null && doc.clients_referred_by!=null && doc.registration_date!=null){
+            emit([doc.location,1,new Date(doc.registration_date),doc.clients_referred_by],1)
+          }
+        }",
+      :reduce =>
+          "_sum"
+
+    view :by_nature_of_interaction,
+      :map => "function(doc) {
+                    if(doc.location!=null  && doc.district!=null && doc.nature_of_interaction!=null && doc.registration_date!=null){
+                        emit([doc.location,doc.district,new Date(doc.registration_date),doc.nature_of_interaction],1)
+                    }
+              }",
+      :reduce =>
+        "_sum"
+      
+    view :by_state_date_nature_of_interaction,
+      :map => "function(doc) {
+                  if(doc.location!=null  && doc.district!=null && doc.nature_of_interaction!=null && doc.registration_date!=null){
+                      emit([doc.location,1,new Date(doc.registration_date),doc.nature_of_interaction],1)
+                  }
+            }",
+      :reduce =>
+        "_sum"
+
+    view :by_programme_participation,
+          :map => "function(doc) {
+                       if(doc.location!=null  && doc.district!=null && doc.programme_participationorganisationfacilitation!=null && doc.registration_date!=null){
+                           emit([doc.location,doc.district,new Date(doc.registration_date),doc.programme_participationorganisationfacilitation],1)
+                       }
+                 }",
+          :reduce =>
+            "_sum"
+
+    view :by_state_date_programme_participation,
+      :map => "function(doc) {
+                    if(doc.location!=null  && doc.district!=null && doc.programme_participationorganisationfacilitation!=null && doc.registration_date!=null){
+                        emit([doc.location,1,new Date(doc.registration_date),doc.programme_participationorganisationfacilitation],1)
+                    }
+              }",
+      :reduce =>
+        "_sum"
+
+    view :by_new_refferals,
+          :map => "function(doc) {
+                      if(doc.location!=null  && doc.district!=null && doc.referrals_new_clients_ongoing_clients!=null && doc.registration_date!=null){
+                          emit([doc.location,doc.district,new Date(doc.registration_date),doc.referrals_new_clients_ongoing_clients],1)
+                      }
+                }",
+          :reduce =>
+            "_sum"
+
+    view :by_state_date_new_refferals,
+      :map => "function(doc) {
+                  if(doc.location!=null  && doc.district!=null && doc.referrals_new_clients_ongoing_clients!=null && doc.registration_date!=null){
+                      emit([doc.location,1,new Date(doc.registration_date),doc.referrals_new_clients_ongoing_clients],1)
+                  }
+            }",
+      :reduce =>
+        "_sum"
+
+    view :by_onetime_intervention,
+        :map => "function(doc) {
+                      if(doc.location!=null  && doc.district!=null && doc.onetime_intervention!=null && doc.registration_date!=null){
+                          emit([doc.location,doc.district,new Date(doc.registration_date),doc.onetime_intervention],1)
+                      }
+                }",
+        :reduce =>
+          "_sum"
+        
+    view :by_state_date_onetime_intervention,
+      :map => "function(doc) {
+                    if(doc.location!=null  && doc.district!=null && doc.onetime_intervention!=null && doc.registration_date!=null){
+                        emit([doc.location,1,new Date(doc.registration_date),doc.onetime_intervention],1)
+                    }
+              }",
+      :reduce =>
+      "_sum"
+
+    view :by_other_interevention_home_visits,
+          :map => "function(doc) {
+                    if(doc.location!=null  && doc.district!=null && doc.other_interventions_taking_place_outside_the_cell!=null && doc.registration_date!=null){
+                          if(doc.other_interventions_taking_place_outside_the_cell.match(/home_visits/)){
+                            emit([doc.location,doc.district,new Date(doc.registration_date),doc.other_interventions_taking_place_outside_the_cell],1)
+                          }
+                      }
+                  }",
+          :reduce =>
+            "_sum"
+
+    view :by_state_date_other_interevention_home_visits,
+    :map => "function(doc) {
+              if(doc.location!=null  && doc.district!=null && doc.other_interventions_taking_place_outside_the_cell!=null && doc.registration_date!=null){
+                    if(doc.other_interventions_taking_place_outside_the_cell.match(/home_visits/)){
+                      emit([doc.location,1,new Date(doc.registration_date),doc.other_interventions_taking_place_outside_the_cell],1)
+                    }
+                }
+            }",
+    :reduce =>
+      "_sum"
+
+    view :by_collateral_visits,
+    :map => "function(doc) {
+              if(doc.collateral_visits!=null && doc.registration_date!=null){
+                    
+                      emit([new Date(doc.registration_date),doc.collateral_visits],1)
+                    
+                }
+            }",
+    :reduce =>
+    "_sum"
+
+    view :by_gender_of_complaint,
+    :map => "function(doc) {
+            if(doc.location!=null  && doc.district!=null && doc.sex!=null && doc.registration_date!=null && doc.age!=null)
+              {     
+                if (doc.age < 18 && doc.sex == 'female')
+                  {
+                    emit([doc.location,doc.district,new Date(doc.registration_date),'child_female', doc.age],1)
+                  }
+                else if (doc.age < 18 && doc.sex == 'male')
+                  {
+                    emit([doc.location,doc.district,new Date(doc.registration_date),'child_male', doc.age],1)
+                  }
+                else if (doc.age >= 18 && doc.sex == 'male')
+                  {
+                    emit([doc.location,doc.district,new Date(doc.registration_date),'adult_male', doc.age],1)
+                  }
+                else if (doc.age >= 18 && doc.sex == 'female')
+                  {
+                    emit([doc.location,doc.district,new Date(doc.registration_date),'adult_female', doc.age],1)
+                  }
+                else
+                  {
+                    emit([doc.location,doc.district,new Date(doc.registration_date),'third_gender', doc.age],1)
+                  }
+
+              }
+            }",
+    :reduce =>
+    "_sum"
+
+    view :by_state_date_gender_of_complaint,
+    :map => "function(doc) {
+      if(doc.location!=null  && doc.district!=null && doc.sex!=null && doc.registration_date!=null && doc.age!=null)
+        {     
+          if (doc.age < 18 && doc.sex == 'female')
+            {
+              emit([doc.location,1,new Date(doc.registration_date),'child_female', doc.age],1)
+            }
+          else if (doc.age < 18 && doc.sex == 'male')
+            {
+              emit([doc.location,1,new Date(doc.registration_date),'child_male', doc.age],1)
+            }
+          else if (doc.age >= 18 && doc.sex == 'male')
+            {
+              emit([doc.location,1,new Date(doc.registration_date),'adult_male', doc.age],1)
+            }
+          else if (doc.age >= 18 && doc.sex == 'female')
+            {
+              emit([doc.location,1,new Date(doc.registration_date),'adult_female', doc.age],1)
+            }
+          else
+            {
+              emit([doc.location,1,new Date(doc.registration_date),'third_gender', doc.age],1)
+            }
+
+        }
+      }",
+    :reduce =>
+    "_sum"
+
+    view :by_age_of_client,
+    :map => "function(doc) {
+            if(doc.location!=null  && doc.district!=null && doc.registration_date!=null && doc.age!=null )
+              {     
+                if (doc.age < 14)
+                  {
+                    emit([doc.location,doc.district,new Date(doc.registration_date),'less_than_14'],1)
+                  }
+                else if (doc.age >= 15 && doc.age < 17)
+                  {
+                    emit([doc.location,doc.district,new Date(doc.registration_date),'in_15_17'],1)
+                  }
+                else if (doc.age >= 18 && doc.age < 24)
+                  {
+                    emit([doc.location,doc.district,new Date(doc.registration_date),'in_18_24'],1)
+                  }
+                else if (doc.age >= 25 && doc.age < 34 )
+                  {
+                    emit([doc.location,doc.district,new Date(doc.registration_date),'in_25_34'],1)
+                  }
+                else if (doc.age >= 35 && doc.age < 44 )
+                  {
+                    emit([doc.location,doc.district,new Date(doc.registration_date),'in_35_44'],1)
+                  }
+                else if (doc.age >= 45 && doc.age < 54 )
+                  {
+                    emit([doc.location,doc.district,new Date(doc.registration_date),'in_45_54'],1)
+                  }
+                else if (doc.age >= 55)
+                  {
+                    emit([doc.location,doc.district,new Date(doc.registration_date),'above_55'],1)
+                  }
+                else
+                  {
+                    emit([doc.location,doc.district,new Date(doc.registration_date),'not_mentioned'],1)
+                  }
+
+              }
+            }",
+    :reduce =>
+    "_sum"
+
+    view :by_state_date_age_of_client,
+    :map => "function(doc) {
+            if(doc.location!=null  && doc.district!=null && doc.registration_date!=null && doc.age!=null)
+              {     
+                if (doc.age < 14)
+                  {
+                    emit([doc.location,1,new Date(doc.registration_date),'less_than_14'],1)
+                  }
+                else if (doc.age >= 15 && doc.age < 17)
+                  {
+                    emit([doc.location,1,new Date(doc.registration_date),'in_15_17'],1)
+                  }
+                else if (doc.age >= 18 && doc.age < 24)
+                  {
+                    emit([doc.location,1,new Date(doc.registration_date),'in_18_24'],1)
+                  }
+                else if (doc.age >= 25 && doc.age < 34 )
+                  {
+                    emit([doc.location,1,new Date(doc.registration_date),'in_25_34'],1)
+                  }
+                else if (doc.age >= 35 && doc.age < 44 )
+                  {
+                    emit([doc.location,1,new Date(doc.registration_date),'in_35_44'],1)
+                  }
+                else if (doc.age >= 45 && doc.age < 54 )
+                  {
+                    emit([doc.location,1,new Date(doc.registration_date),'in_45_54'],1)
+                  }
+                else if (doc.age >= 55)
+                  {
+                    emit([doc.location,1,new Date(doc.registration_date),'above_55'],1)
+                  }
+                else
+                  {
+                    emit([doc.location,1,new Date(doc.registration_date),'not_mentioned'],1)
+                  }
+              }
+            }",
+    :reduce =>
+    "_sum"
+
+    view :by_client_education,
+    :map => "function(doc) {
+              if(doc.location!=null  && doc.district!=null && doc.registration_date!=null){
+                  emit([doc.location,doc.district,new Date(doc.registration_date),doc.education_of_the_client],1)
+              }
+        }",
+    :reduce =>
+    "_sum"
+
+    view :by_state_date_client_education,
+    :map => "function(doc) {
+                if(doc.location!=null  && doc.district!=null && doc.registration_date!=null){
+                    emit([doc.location,1,new Date(doc.registration_date),doc.education_of_the_client],1)
+                }
+          }",
+    :reduce =>
+    "_sum"
+
+    view :by_reasons_for_registering_at_the_special_cell,
+    :map => "function(doc) {
+                if(doc.location!=null  && doc.district!=null && doc.registration_date!=null){
+                    emit([doc.location,doc.district,new Date(doc.registration_date),doc.reasons_for_registering_at_special_cell],1)
+                }
+          }",
+    :reduce =>
+    "_sum"
+
+    view :by_state_date_reasons_for_registering_at_the_special_cell,
+    :map => "function(doc) {
+                if(doc.location!=null  && doc.district!=null && doc.registration_date!=null){
+                    emit([doc.location,1,new Date(doc.registration_date),doc.reasons_for_registering_at_special_cell],1)
+                }
+          }",
+    :reduce =>
+    "_sum"
+
+    view :by_vio_by_husband,
+    :map => "function(doc) {
+                if(doc.location!=null  && doc.district!=null && doc.registration_date!=null){
+                    emit([doc.location,doc.district,new Date(doc.registration_date),doc.violence_by_husband],1)
+                }
+          }",
+    :reduce =>
+    "_sum"
+
+    view :by_state_date_vio_by_husband,
+    :map => "function(doc) {
+                if(doc.location!=null  && doc.district!=null && doc.registration_date!=null){
+                    emit([doc.location,1,new Date(doc.registration_date),doc.violence_by_husband],1)
+                }
+          }",
+    :reduce =>
+    "_sum"
+
+    view :by_vio_by_marital_family,
+    :map => "function(doc) {
+                if(doc.location!=null  && doc.district!=null && doc.registration_date!=null){
+                    emit([doc.location,doc.district,new Date(doc.registration_date),doc.violence_by_marital_family_members_other_than_husband],1)
+                }
+          }",
+    :reduce =>
+    "_sum"
+
+
+    view :by_state_date_vio_by_martial_family,
+    :map => "function(doc) {
+                if(doc.location!=null  && doc.district!=null && doc.registration_date!=null){
+                    emit([doc.location,1,new Date(doc.registration_date),doc.violence_by_marital_family_members_other_than_husband],1)
+                }
+          }",
+    :reduce =>
+    "_sum"
+
+    view :by_previous_intervention_before_coming_to_the_cell,
+    :map => "function(doc) {
+                if(doc.location!=null  && doc.district!=null && doc.registration_date!=null){
+                    emit([doc.location,doc.district,new Date(doc.registration_date),doc.previous_intervention_before_coming_to_the_cell],1)
+                }
+          }",
+    :reduce =>
+    "_sum"
+
+    view :by_state_date_previous_intervention_before_coming_to_the_cell,
+    :map => "function(doc) {
+                if(doc.location!=null  && doc.district!=null && doc.registration_date!=null){
+                    emit([doc.location,1,new Date(doc.registration_date),doc.previous_intervention_before_coming_to_the_cell],1)
+                }
+          }",
+    :reduce =>
+    "_sum"
+
+    view :by_intervention_by_special_cell,
+    :map => "function(doc) {
+                if(doc.location!=null  && doc.district!=null && doc.registration_date!=null){
+                    emit([doc.location,doc.district,new Date(doc.registration_date),doc.intervention_by_special_cell],1)
+                }
+          }",
+    :reduce =>
+    "_sum"
+
+    view :by_state_date_intervention_by_special_cell,
+    :map => "function(doc) {
+                if(doc.location!=null  && doc.district!=null && doc.registration_date!=null){
+                    emit([doc.location,1,new Date(doc.registration_date),doc.intervention_by_special_cell],1)
+                }
+          }",
+    :reduce =>
+    "_sum"
+
+    view :by_negotiating_nonviolence,
+    :map => "function(doc) {
+                if(doc.location!=null  && doc.district!=null && doc.registration_date!=null){
+                    emit([doc.location,doc.district,new Date(doc.registration_date),doc.negotiating_nonviolence],1)
+                }
+          }",
+    :reduce =>
+    "_sum"
+
+    view :by_state_date_negotiating_nonviolence,
+    :map => "function(doc) {
+                if(doc.location!=null  && doc.district!=null && doc.registration_date!=null){
+                    emit([doc.location,1,new Date(doc.registration_date),doc.negotiating_nonviolence],1)
+                }
+          }",
+    :reduce =>
+    "_sum"
+
+    view :by_referrals_new_clients_ongoing_clients,
+    :map => "function(doc) {
+                if(doc.location!=null  && doc.district!=null && doc.registration_date!=null){
+                    emit([doc.location,doc.district,new Date(doc.registration_date),doc.referrals_new_clients_ongoing_clients],1)
+                }
+          }",
+    :reduce =>
+    "_sum"
+
+    view :by_state_date_referrals_new_clients_ongoing_clients,
+    :map => "function(doc) {
+                if(doc.location!=null  && doc.district!=null && doc.registration_date!=null){
+                    emit([doc.location,1,new Date(doc.registration_date),doc.referrals_new_clients_ongoing_clients],1)
+                }
+          }",
+    :reduce =>
+    "_sum"
+
+    view :by_other_interventions_taking_place_outside_the_cell,
+    :map => "function(doc) {
+                if(doc.location!=null  && doc.district!=null && doc.registration_date!=null){
+                    emit([doc.location,doc.district,new Date(doc.registration_date),doc.other_interventions_taking_place_outside_the_cell],1)
+                }
+          }",
+    :reduce =>
+    "_sum"
+
+    view :by_state_date_other_interventions_taking_place_outside_the_cell,
+    :map => "function(doc) {
+                if(doc.location!=null  && doc.district!=null && doc.registration_date!=null){
+                    emit([doc.location,1,new Date(doc.registration_date),doc.other_interventions_taking_place_outside_the_cell],1)
+                }
+          }",
+    :reduce =>
+    "_sum"
+
+    view :by_outcomes_new_clients_ongoing_clients,
+    :map => "function(doc) {
+                if(doc.location!=null  && doc.district!=null && doc.registration_date!=null){
+                    emit([doc.location,doc.district,new Date(doc.registration_date),doc.outcomes_new_clients_ongoing_clients],1)
+                }
+          }",
+    :reduce =>
+    "_sum"
+
+    view :by_state_date_outcomes_new_clients_ongoing_clients,
+    :map => "function(doc) {
+                if(doc.location!=null  && doc.district!=null && doc.registration_date!=null){
+                    emit([doc.location,1,new Date(doc.registration_date),doc.outcomes_new_clients_ongoing_clients],1)
+                }
+          }",
+    :reduce =>
+    "_sum"
+
+    view :by_clients_registered_in_this_quarter,
+    :map => "function(doc) {
+                if(doc.location!=null  && doc.district!=null && doc.registration_date!=null){
+                    emit([new Date(doc.registration_date)],1)
+                }
+          }",
+    :reduce =>
+    "_sum"
+  
+end
+
 
   def self.quicksearch_fields
     # The fields family_count_no and dss_id are hacked in only because of Bangladesh

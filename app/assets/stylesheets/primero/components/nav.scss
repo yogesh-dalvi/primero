@@ -2,7 +2,7 @@ nav#main {
   position: relative;
   background: $grey_color;
   width: 100%;
-  z-index: 1091;
+  z-index: 9999;
   height: rem_calc(49);
 
   #search_form {
@@ -15,6 +15,49 @@ nav#main {
       height: rem_calc(49);
     }
   }
+  
+ul > li:hover a > .report_menu {
+					display: block;
+				}
+.report_menu {
+				border-radius: 0 0 2px 2px;
+				box-shadow: 0 3px 1px rgba(0,0,0,.05);
+				display: none;
+				font-size: 1rem;
+				position: absolute;
+				width: 195px;
+				background-color:#575757;
+			}
+			
+.report_menu > ul {
+					list-style-type: none;
+					margin-left:0px;	
+				}
+				
+.report_menu > ul > li {
+						margin: 0;
+						padding: 0;
+						border-left: none !important;
+						border-bottom: 1px solid #f9faf6;
+					}
+					
+.report_menu > ul > li > a {
+							display: block;	
+							font-size: .75rem;
+							letter-spacing: 1.5px;
+							padding: .25rem 1.5rem;
+							text-decoration: none;
+							text-transform: uppercase;
+						}
+						
+.report_menu > ul > li:hover > a {
+								background-color: #86A05D;
+								border-bottom: 1px solid #f9faf6;	
+							}
+ul > li:hover a + .report_menu {
+  display: block;
+}
+
 
   ul {
     a {

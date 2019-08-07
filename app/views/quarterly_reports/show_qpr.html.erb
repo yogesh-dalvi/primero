@@ -1,0 +1,985 @@
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<style>
+	.cssShow {
+	display : block;
+	}
+
+	.cssHide {
+		display : none;
+	}
+</style>
+
+<style>
+
+label {
+	margin-bottom: 0px;
+}
+
+body {font-family: Arial, Helvetica, sans-serif;}
+* {box-sizing: border-box;}
+
+.form-inline {  
+  display: flex;
+  flex-flow: row wrap;
+  align-items: center;
+}
+
+.form-inline label {
+  margin: 5px 10px 5px 0;
+}
+
+.form-inline input {
+  vertical-align: middle;
+  margin: 5px 10px 5px 0;
+  padding: 10px;
+  background-color: #fff;
+  border: 1px solid #ddd;
+}
+
+.form-inline button {
+  padding: 10px 20px;
+  background-color: dodgerblue;
+  border: 1px solid #ddd;
+  color: white;
+  cursor: pointer;
+}
+
+.form-inline button:hover {
+  background-color: royalblue;
+}
+
+@media (max-width: 800px) {
+  .form-inline input {
+    margin: 10px 0;
+  }
+  
+  .form-inline {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}
+</style>
+
+<script>
+$(document).ready(function(){
+  $('[data-toggle="tooltip"]').tooltip();   
+});
+
+$(document).ready(function() {
+	document.getElementById("validation_div").innerHTML= ""
+    document.getElementById("submit_tag").addEventListener("click", function(event){
+      document.getElementById("validation_div").innerHTML= ""
+	    var validation_content='';	
+      var start_date = document.getElementById("start_date_field").value;
+      var end_date = document.getElementById("end_date_field").value;
+      var state = document.getElementById("report-state").value;
+      if (start_date == "" || end_date == "" || state == "")
+        {
+          if (start_date == "")
+            {
+			  //document.getElementById("start_date_validate").innerHTML = "please select start date"; 
+			  validation_content += '<label id = "start_date_validate1" style="color: red">please select start date</label><br>';
+            }
+          if (end_date == "")
+            {
+			  //document.getElementById("end_date_validate").innerHTML = "please select end date";
+			  validation_content += '<label id = "end_date_validate1" style="color: red">please select end date</label><br>'; 
+            }
+          if (state == "")
+            {
+			  //document.getElementById("state_validate").innerHTML = "please select state"; 
+			  validation_content += '<label id = "state_validate1" style="color: red">please select state</label><br>';
+            }
+          if (start_date!= "" && end_date!= "")
+            {
+              if(new Date(start_date)> new Date(end_date))
+                {
+                  //document.getElementById("date_validation").innerHTML = "start date cannot be greater than end date";
+				  validation_content += '<label id = "date_validation1" style="color: red">start date cannot be greater than end date</label><br>';
+				}
+              
+            }
+
+          event.preventDefault();
+        }
+      else if (start_date!= "" && end_date!= "")
+        {
+          if(new Date(start_date)> new Date(end_date))
+            {
+              //document.getElementById("date_validation").innerHTML = "start date cannot be greater than end date";
+			  validation_content += '<label id = "date_validation1" style="color: red">start date cannot be greater than end date</label><br>';
+			  event.preventDefault();
+            }
+          
+		}
+		console.log(validation_content);
+		document.getElementById("validation_div").innerHTML= validation_content;
+
+	});
+});
+
+</script>	
+
+<script>
+$(document).ready(function() {
+    $('#report-state').on('change', function() {
+      var state = document.getElementById("report-state").value;
+      if (state!="")
+        {
+      //document.getElementById("state_validate").innerHTML = ""; 
+      var element_exist =  document.getElementById('state_validate1');
+      if (typeof(element_exist) != 'undefined' && element_exist != null)
+        {
+          document.getElementById("state_validate1").innerHTML = ""; 
+        }
+		  
+      }
+    });
+
+    $('#end_date_field').on('change', function() {
+      var end_date = document.getElementById("end_date_field").value;
+      var start_date = document.getElementById("start_date_field").value;
+      if (end_date!="")
+        {
+      //document.getElementById("end_date_validate").innerHTML = ""; 
+      var element_exist =  document.getElementById('end_date_validate1');
+      if (typeof(element_exist) != 'undefined' && element_exist != null)
+        {
+          document.getElementById("end_date_validate1").innerHTML = ""; 
+        }
+      }
+      if (start_date!= "" && end_date!= "")
+        {
+          if(new Date(start_date)<= new Date(end_date))
+            {
+              //document.getElementById("date_validation").innerHTML = "";
+              var element_exist =  document.getElementById('date_validation1');
+              if (typeof(element_exist) != 'undefined' && element_exist != null)
+                {
+                  document.getElementById("date_validation1").innerHTML = "";
+                }
+            }
+          
+        }
+      
+    });
+    
+    $('#start_date_field').on('change', function() {
+      var start_date = document.getElementById("start_date_field").value;
+      var end_date = document.getElementById("end_date_field").value;
+      if (start_date!="")
+        {
+      //document.getElementById("start_date_validate").innerHTML = "";
+      var element_exist =  document.getElementById('start_date_validate1');
+      if (typeof(element_exist) != 'undefined' && element_exist != null)
+        {
+          document.getElementById("start_date_validate1").innerHTML = "";  
+        }
+        }
+      if (start_date!= "" && end_date!= "")
+        {
+          if(new Date(start_date)<= new Date(end_date))
+            {
+              //document.getElementById("date_validation").innerHTML = "";
+              var element_exist =  document.getElementById('date_validation1');
+              if (typeof(element_exist) != 'undefined' && element_exist != null)
+                {
+                  document.getElementById("date_validation1").innerHTML = "";
+                }
+            }
+          
+        }
+    });
+
+});
+
+</script>
+
+<script></script>
+
+
+<div class="container">
+<br>
+<h2 style="color: #819f56">Quarterly Report</h2>
+<div align='right'>
+<%= link_to "",{:controller => "quarterly_reports", :action => "quarterly_pdf", :format=> 'pdf',:data =>  @data}, {:class => "fa fa-file-pdf-o", :style => "font-size:30px;color:red", :"data-toggle" => "tooltip", :title => "Download pdf", :"data-placement" => "bottom", :target => "_blank"} %>
+<a id="generate" class="fa fa-file-excel-o" style ="font-size:30px;color:green" data-toggle="tooltip" title="Download csv" data-placement="bottom" target ="_blank"></a>
+</div>
+<br>
+<div class="panel panel-default">
+	<div class="panel-body" style="padding: 20px">
+				<div>
+				<div>
+				<div id = "validation_div"></div>
+                <% if @date_validation == "true" %>
+                      <label style="color: red">start date cannot be greater than end date</label>
+				        <% end %>
+				<%= form_tag("/quarterly_reports/submit_form", method: "post", class: 'form-inline', name:"myForm", id:"submit_form_for_monthly_report") do %>
+               
+                <div class="col-sm-3">
+                    <label>Start Date</label>
+                    <%= date_field_tag(:start_date,  Date.today-3.month, :id => 'start_date_field', :max => Date.today)%>
+                    <% if @start_date_not_selected == "true" %>
+                      <label style="color: red">please select start date</label>
+                    <% end %>
+                </div>
+                <div class="col-sm-3">
+                    <label>End Date</label>
+                    <%= date_field_tag(:end_date, Date.today, :id => 'end_date_field', :max => Date.today)%>
+                    <% if @end_date_not_selected == "true" %>
+                      <label style="color: red">please select end date</label>
+                    <% end %>
+                </div>
+                <div class="col-sm-2" id="states">
+                    <label>Location</label>
+                    <%= select_tag 'state', options_for_select(@state_array),{:id => "report-state"} %>
+                    <% if @state_not_selected == "true" %>
+                      <label style="color: red">please select state</label>
+                    <% end %>   
+                </div>
+                <div id="Cell" class="col-sm-2">    
+                    <div id="Maharashtra" class="cell">
+                        <label>Cell</label>
+                        <%= select_tag 'district1', options_for_select(@maha_location_array),{:id => "distr-maha"} %>
+                        
+                    </div>
+                    <div id="Delhi" class="cell">
+                        <label>Cell</label>
+                        <%=  select_tag 'district2', options_for_select(@delh_location_array),{:id => "distr-delhi"} %>
+                        
+                    </div>
+                    <div id="NCW" class="cell">
+                        <label>Cell</label>
+                        <%= select_tag 'district3', options_for_select(@ncw_location_array),{:id => "distr-ncw"} %>
+                        
+                    </div>
+                </div>
+                <div class="col-sm-2" style="margin-top: 4%;">
+                   <%= submit_tag "Generate Report", :name => 'save', :id => 'submit_tag' ,:class => "button btn_submit large" %>
+                </div>
+
+            <% end %>
+        </div> 
+    </div>
+    <br>
+<br>
+  
+<table class="dataTable in_content_area"  id="qpr_report">
+  <thead>
+		<tr>
+			<th colspan="4" style="text-align:center" align="center">Special Cells for Women</th>
+		</tr>
+		<tr>
+			<th colspan="4" style="text-align:center" align="center">Quarterly Progress Report</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr style="border: 1px solid #aec687; border-collapse: none;">
+			<td><b>Sr.No.</b></td>
+			<td><b>Client Profile & Details</b></td>
+			<td colspan="2"><b>Count</b></td>
+		</tr>
+		<tr>
+			<td><b>1</b></td>
+			<td><b>Total clients with whom there was interaction</b></td>
+			<td colspan="2"></td>
+		</tr>
+		<tr>
+			<td>1.1</td>
+			<td>Number of applications registered in this quater only.</td>
+			<td colspan="2"><%=@total_clients %></td>
+		</tr>
+		<tr>	
+			<td>1.2</td>
+			<td>Ongoing clients (applications registered before this quarter but interventions are continuing in this quarter</td>
+			<td colspan="2"><%=@ongoing_clients %></td>
+		</tr>
+		<tr>
+			<td><b>1.3</b></td>
+			<td><b>One­ time intervention in this quarter</b></td>
+			<td colspan="2"></td>
+		</tr>
+		<tr>
+			<td></td>
+			<td>Number of people provided support by the cell without having registered application.</td>
+			<td colspan="2"><%=@no_of_ppl_prvded_supp %></td>
+		</tr>
+		<tr>
+			<td><b>2</b></td>
+			<td><b>Clients (applications registered in this quarter only) referred by</b></td>
+			<td colspan="2"></td>
+		</tr>
+		<tr>
+			<td></td>
+			<td>Ex-Clients</td>
+			<td colspan="2"><%=@exclients_count %></td>
+		</tr>
+		<tr>
+			<td></td>
+			<td>Self (info. through media / poster / internet etc )</td>
+			<td colspan="2"><%=@self_count %></td>
+		</tr>
+		<tr>
+			<td></td>
+			<td>Police</td>
+			<td colspan="2"><%=@police_count %></td>
+		</tr>
+		<tr>
+			<td></td>
+			<td>NGO</td>
+			<td colspan="2"><%=@ngo_count %></td>
+		</tr>
+		<tr>
+			<td></td>
+			<td>Community based organizations ( TMGS / SHG / Mahila Mandal etc.)</td>
+			<td colspan="2"><%=@community_based_org_count %></td>
+		</tr>
+		<tr>
+			<td></td>
+			<td>Independent community worker/ Political worker</td>
+			<td colspan="2"><%=@icw_pw_count %></td>
+		</tr>
+		<tr>
+			<td></td>
+			<td>Word of mouth</td>
+			<td colspan="2"><%=@word_of_mouth_count %></td>
+		</tr>
+		<tr>
+			<td></td>		
+			<td>GO (WCD/ MAVIM/ ICDS/ Asha worker etc)</td>
+			<td colspan="2"><%=@go_count %></td>
+		</tr>
+		<tr>
+			<td></td>
+			<td>Lawyers/ legal organisations</td>
+			<td colspan="2"><%=@lawyers_legal_org_count %></td>
+		</tr>
+		<tr>
+			<td></td>
+			<td>Any other (please specify)</td>
+			<td colspan="2"><%=@any_other_clients_refferd_count %></td>
+		</tr>
+		<tr>
+			<td><b>3</b></td>
+			<td><b>Gender of the complainants/ clients (applications registered in this quarter only)</b></td>
+			<td colspan="2"></td>
+		</tr>
+		<tr>
+			<td></td>
+			<td>Adults (female)</td>
+			<td colspan="2"><%=@adult_female_count %></td>
+		</tr>
+		<tr>
+			<td></td>
+			<td>Adults (male)</td>
+			<td colspan="2"><%=@adult_male_count %></td>
+		</tr>
+		<tr>
+			<td></td>
+			<td>Children (female )</td>
+			<td colspan="2"><%=@child_female_count %></td>
+		</tr>
+		<tr>
+			<td></td>
+			<td>Children (male)</td>
+			<td colspan="2"><%=@child_male_count %></td>
+		</tr>
+		<tr>
+			<td></td>
+			<td>Third gender/ others</td>
+			<td colspan="2"><%=@third_gender_count %></td>
+		</tr>
+		<tr>
+			<td><b>4</b></td>
+			<td><b>Age of the clients (applications registered in this quarter only)</b></td>
+			<td colspan="2"></td>
+		</tr>
+		<tr>
+			<td></td>
+			<td>Less than 14 years</td>
+			<td colspan="2"><%=@less_than_14_count %></td>
+		</tr>
+		<tr>
+			<td></td>
+			<td>15 – 17 years</td>
+			<td colspan="2"><%=@in_15_17_count %></td>
+		</tr>
+		<tr>
+			<td></td>
+			<td>18 – 24 years</td>
+			<td colspan="2"><%=@in_18_24_count %></td>
+		</tr>
+		<tr>
+			<td></td>
+			<td>25 – 34 years</td>
+			<td colspan="2"><%=@in_25_34_count %></td>
+		</tr>
+		<tr>
+			<td></td>
+			<td>35 – 44 years</td>
+			<td colspan="2"><%=@in_35_44_count %></td>
+		</tr>
+		<tr>
+			<td></td>
+			<td>45 – 54 years</td>
+			<td colspan="2"><%=@in_45_54_count %></td>
+		</tr>
+		<tr>
+			<td></td>
+			<td>Above 55 Years</td>
+			<td colspan="2"><%=@above_55_count %></td>
+		</tr>
+		<tr>
+			<td></td>
+			<td>Information not available</td>
+			<td colspan="2"><%=@no_age_info_count %></td>
+		</tr>
+		<tr>
+			<td><b>5</b></td>
+			<td><b>Education of the clients (applications registered in this quarter only)</b></td>
+			<td colspan="2"></td>
+		</tr>
+		<tr>
+			<td></td>
+			<td>Non­ Literate</td>
+			<td colspan="2"><%=@non_literate_count %></td>
+		</tr>
+		<tr>
+			<td></td>
+			<td>Functional literacy</td>
+			<td colspan="2"><%=@functional_literacy_count %></td>
+		</tr>
+		<tr>
+			<td></td>
+			<td>Primary level (class 4)</td>
+			<td colspan="2"><%=@primary_level_class_4_count %></td>
+		</tr>
+		<tr>
+			<td></td>
+			<td>Upto SSC</td>
+			<td colspan="2"><%=@upto_ssc_count %></td>
+		</tr>
+		<tr>
+			<td></td>
+			<td>Upto HSC</td>
+			<td colspan="2"><%=@upto_hsc_count %></td>
+		</tr>
+		<tr>
+			<td></td>
+			<td>Graduation</td>
+			<td colspan="2"><%=@upto_grad_count %></td>
+		</tr>
+		<tr>
+			<td></td>
+			<td>Post Graduation/ Higher studies</td>
+			<td colspan="2"><%=@post_grad_count %></td>
+		</tr>
+		<tr>
+			<td></td>
+			<td>Any other (please specify)</td>
+			<td colspan="2"><%=@any_other_edu_count %></td>
+		</tr>
+		<tr>
+			<td></td>
+			<td>Information not available</td>
+			<td colspan="2"><%=@no_edu_info_count %></td>
+		</tr>
+		<tr>
+			<td><b>6</b></td>
+			<td><b>Reasons for registering at the Special Cell (multiple response)</b></td>
+			<td colspan="2"></td>
+		</tr>
+		<tr>
+			<td></td>
+			<td>Physical violence by husband</td>
+			<td colspan="2"><%=@phy_vio_by_hus_count %></td>
+		</tr>
+		<tr>
+			<td></td>
+			<td>Emotional / mental violence by husband</td>
+			<td colspan="2"><%=@emo_men_vio_by_hus_count %></td>
+		</tr>
+		<tr>
+			<td></td>
+			<td>Sexual violence by husband</td>
+			<td colspan="2"><%=@sex_vio_by_hus_count %></td>
+		</tr>
+		<tr>
+			<td></td>
+			<td>Financial violence by husband</td>
+			<td colspan="2"><%=@fin_vio_by_hus_count %></td>
+		</tr>
+		<tr>
+			<td></td>
+			<td>Out of marriage relationship/second marriage by husband</td>
+			<td colspan="2"><%=@sec_marr_by_hus_count %></td>
+		</tr>
+		<tr>
+			<td></td>
+			<td>Refusal to give streedhan</td>
+			<td colspan="2"><%=@ref_to_strredhan_by_hus_count %></td>
+		</tr>
+		<tr>
+			<td></td>
+			<td>Alcohol abuse/ substance abuse by husband</td>
+			<td colspan="2"><%=@alch_vio_by_hus_count %></td>
+		</tr>
+		<tr>
+			<td></td>
+			<td>Desertion by husband</td>
+			<td colspan="2"><%=@desertion_by_hus_count %></td>
+		</tr>
+		<tr>
+			<td></td>
+			<td>Child custody disputes/ disputes over visitation rights</td>
+			<td colspan="2"><%=@child_custody_vio_count %></td>
+		</tr>
+		<tr>
+			<td></td>
+			<td>Physical violence by marital family</td>
+			<td colspan="2"><%=@phy_vio_by_mart_family_count %></td>
+		</tr>
+		<tr>
+			<td></td>
+			<td>Emotional/ mental violence by marital family</td>
+			<td colspan="2"><%=@emo_vio_by_mart_family_count %></td>
+		</tr>
+		<tr>
+			<td></td>
+			<td>Sexual violence by marital family</td>
+			<td colspan="2"><%=@sex_vio_by_mart_family_count %></td>
+		</tr>
+		<tr>
+			<td></td>
+			<td>Financial violence by marital family</td>
+			<td colspan="2"><%=@fin_vio_by_mart_family_count %></td>
+		</tr>	
+		<tr>
+			<td></td>
+			<td>Harassment of natal family members of the woman by the husband/family</td>
+			<td colspan="2"><%=@harr_natal_family_by_hus_count %></td>
+		</tr>	
+		<tr>
+			<td></td>
+			<td>Deprivation of matrimonial residence</td>
+			<td colspan="2"><%=@dep_matr_res_count %></td>
+		</tr>	
+		<tr>
+			<td></td>
+			<td>Child­battering (by husband/family)</td>
+			<td colspan="2"><%=@childbattering_count %></td>
+		</tr>	
+		<tr>
+			<td></td>
+			<td>Dowry demands (by husband/family)</td>
+			<td colspan="2"><%=@dowry_count %></td>
+		</tr>	
+		<tr>
+			<td></td>
+			<td>Harassment by natal family</td>
+			<td colspan="2"><%=@harr_by_natal_family_count %></td>
+		</tr>	
+		<tr>
+			<td></td>
+			<td>Harassment by children and their spouses</td>
+			<td colspan="2"><%=@harr_by_chil_spouse_count %></td>
+		</tr>	
+		<tr>
+			<td></td>
+			<td>Wife has left the matrimonial home (male clients)</td>
+			<td colspan="2"><%=@wife_left_matr_home_count %></td>
+		</tr>	
+		<tr>
+			<td></td>
+			<td>Harassment at work</td>
+			<td colspan="2"><%=@harr_at_work_count %></td>
+		</tr>
+		<tr>
+			<td></td>
+			<td>Harassment by live­in partner</td>
+			<td colspan="2"><%=@harr_by_live_in_partner_count %></td>
+		</tr>		
+		<tr>
+			<td></td>
+			<td>Sexual assault</td>
+			<td colspan="2"><%=@sex_assault_count %></td>
+		</tr>		
+		<tr>
+			<td></td>
+			<td>Sexual harassment in other situation</td>
+			<td colspan="2"><%=@sex_har_in_other_sit_count %></td>
+		</tr>		
+		<tr>
+			<td></td>
+			<td>Breach of trust in intimate relationship</td>
+			<td colspan="2"><%=@breach_of_trust_count %></td>
+		</tr>		
+		<tr>
+			<td></td>
+			<td>Harassment by neighbours</td>
+			<td colspan="2"><%=@harr_by_neigh_count %></td>
+		</tr>		
+		<tr>
+			<td></td>
+			<td>Any other (please specify) :</td>
+			<td colspan="2"><%=@any_other_harr_count %></td>
+		</tr>
+		<tr>
+			<td><b>7</b></td>
+			<td><b>Previous intervention before coming to the Cell (multiple response)</b></td>
+			<td colspan="2"></td>
+		</tr>
+		<tr>
+			<td></td>
+			<td>Natal family/ marital family</td>
+			<td colspan="2"><%=@prev_inter_natal_family_marital_family_count %></td>
+		</tr>
+		<tr>
+			<td></td>
+			<td>Police</td>
+			<td colspan="2"><%=@prev_inter_police_count %></td>
+		</tr>		
+		<tr>
+			<td></td>
+			<td>Court / lawyers</td>
+			<td colspan="2"><%=@prev_inter_court_count %></td>
+		</tr>	
+		<tr>
+			<td></td>
+			<td>NGOs</td>
+			<td colspan="2"><%=@prev_interv_ngo_count %></td>
+		</tr>	
+		<tr>
+			<td></td>
+			<td>Panchyat members/Jati Panchyat</td>
+			<td colspan="2"><%=@prev_interv_panch_mem_count %></td>
+		</tr>	
+		<tr>
+			<td></td>
+			<td>Any other(please specify):</td>
+			<td colspan="2"><%=@prev_interv_any_other_count %></td>
+		</tr>
+		<tr>
+			<td><b>8</b></td>
+			<td><b>Intervention by the Special Cell (multiple response)</b></td>
+			<td><b>New Clients (applications registered in this quarter)</b></td>
+			<td><b>Ongoing Clients (applications registered before this quarter)</b></td>
+		</tr>
+		<tr>
+			<td></td>
+			<td>Providing emotional support and strengthening psychological self</td>
+			<td><%=@spec_cell_prov_emo_support_count %></td>
+			<td><%=@spec_cell_prov_emo_support_count_ongoing_client %></td>
+		</tr>
+		<tr>
+			<td></td>
+			<td>Negotiating non­violence with stakeholder</td>
+			<td><%=@spec_cell_neg_nonvio_with_stakeholder_count %></td>
+			<td><%=@spec_cell_neg_nonvio_with_stakeholder_count_ongoing_client %></td>
+		</tr>
+		<tr>
+			<td></td>
+			<td>Building support system</td>
+			<td><%=@spec_cell_build_support_system_count %></td>
+			<td><%=@spec_cell_build_support_system_count_ongoing_client %></td>
+		</tr>
+		<tr>
+			<td></td>
+			<td>Enlisting police help or intervention</td>
+			<td><%=@spec_cell_enlist_police_help_count %></td>
+			<td><%=@spec_cell_enlist_police_help_count_ongoing_client %></td>
+		</tr>
+		<tr>
+			<td></td>
+			<td>Legal aid/ legal referral/ pre­litigation counselling</td>
+			<td><%=@spec_cell_pre­litigation_counsel_count %></td>
+			<td><%=@spec_cell_pre­litigation_counsel_count_ongoing_client %></td>
+		</tr>
+		<tr>
+			<td></td>
+			<td>Working with men in the interest of violated woman</td>
+			<td><%=@spec_cell_work_with_men_count %></td>
+			<td><%=@spec_cell_work_with_men_count_ongoing_client %></td>
+		</tr>
+		<tr>
+			<td></td>
+			<td>Advocacy for financial entitlements</td>
+			<td><%=@spec_cell_adv_fin_ent_count %></td>
+			<td><%=@spec_cell_adv_fin_ent_count_ongoing_client %></td>
+		</tr>	
+		<tr>
+			<td></td>
+			<td>Referral for shelter/ other services</td>
+			<td><%=@spec_cell_refferal_for_shelter_count %></td>
+			<td><%=@spec_cell_refferal_for_shelter_count_ongoing_client %></td>
+		</tr>	
+		<tr>
+			<td></td>
+			<td>Developmental counselling</td>
+			<td><%=@spec_cell_dev_counsel_count %></td>
+			<td><%=@spec_cell_dev_counsel_count_ongoing_client %></td>
+		</tr>
+		<tr>
+			<td><b>9</b></td>
+			<td><b>Referrals (multiple response)</b></td>
+			<td><b>New Clients (applications registered in this quarter)</b></td>
+			<td><b>Ongoing Clients (applications registered before this quarter)</b></td>
+		</tr>
+		<tr>
+			<td></td>
+			<td>Police</td>
+			<td><%=@police_refferal_count %></td>
+			<td><%=@police_refferal_count_ongoing_client %></td>
+		</tr>
+		<tr>
+			<td></td>
+			<td>Court/DLSA</td>
+			<td><%=@court_dlsa_refferal_count %></td>
+			<td><%=@court_dlsa_refferal_count_ongoing_client %></td>
+		</tr>
+		<tr>
+			<td></td>
+			<td>Shelter home</td>
+			<td><%=@shelter_refferal_count %></td>
+			<td><%=@shelter_refferal_count_ongoing_client %></td>
+		</tr>
+		<tr>
+			<td></td>
+			<td>Medical</td>
+			<td><%=@medical_refferal_count %></td>
+			<td><%=@medical_refferal_count_ongoing_client %></td>
+		</tr>
+		<tr>
+			<td></td>
+			<td>Lawyer</td>
+			<td><%=@lawer_services_refferal_count %></td>
+			<td><%=@lawer_services_refferal_count_ongoing_client %></td>
+		</tr>
+		<tr>
+			<td></td>
+			<td>Protection Officer</td>
+			<td><%=@protection_officer_refferal_count %></td>
+			<td><%=@protection_officer_refferal_count_ongoing_client %></td>
+		</tr>
+		<tr>
+			<td></td>
+			<td>Any other (specify):­ for work & school</td>
+			<td><%=@any_other_refferal_count %></td>
+			<td><%=@any_other_refferal_count_ongoing_client %></td>
+		</tr>
+		<tr>
+			<td><b>10</b></td>
+			<td><b>Other interventions in the community</b></td>
+			<td colspan="2"><b>Count</b></td>
+		</tr>
+		<tr>
+			<td></td>
+			<td>Home visits</td>
+			<td colspan="2"><%=@othr_inter_home_visit_count %></td>
+		</tr>
+		<tr>
+			<td></td>
+			<td>Visits to institutions (hospitals/ shelter homes etc.)</td>
+			<td colspan="2"><%=@othr_inter_visit_inst_count %></td>
+		</tr>
+		<tr>
+			<td></td>
+			<td>Community education programmes</td>
+			<td colspan="2"><%=@othr_inter_comm_edu_count %></td>
+		</tr>
+		<tr>
+			<td></td>
+			<td>Meetings with local groups/social organisations etc</td>
+			<td colspan="2"><%=@othr_inter_meet_local_count %></td>
+		</tr>
+		<tr>
+			<td></td>
+			<td>Interaction with police</td>
+			<td colspan="2"><%=@othr_inter_inter_with_police_count %></td>
+		</tr>
+		<tr>
+			<td></td>
+			<td>Any other (specify) :­ organizations</td>
+			<td colspan="2"><%=@othr_inter_any_other_count %></td>
+		</tr>
+		<tr>
+			<td><b>11</b></td>
+			<td><b>Outcomes(multiple response)</b></td>
+			<td><b>New Clients (applications registered in this quarter)</b></td>
+			<td><b>Ongoing Clients (applications registered before this quarter)</b></td>
+		</tr>
+		<tr>
+		    <td></td>
+			<td>Helped in case filed for divorce/ separation/mutual divorce</td>
+			<td><%=@outcomes_helped_in_case_filed_for_divorce_count %></td>
+			<td><%=@outcomes_helped_in_case_filed_for_divorce_count_ongoing_client %></td>
+		</tr>
+		<tr>
+		    <td></td>
+			<td>Streedhan retrieval</td>
+			<td><%=@outcome_streedhan_retrival_count %></td>
+			<td><%=@outcome_streedhan_retrival_count_ongoing_client %></td>
+		</tr>		
+		<tr>
+		    <td></td>
+			<td>Case filed under PWDVA 2005</td>
+			<td><%=@outcome_pwdva_2005_count %></td>
+			<td><%=@outcome_pwdva_2005_count_ongoing_client %></td>
+		</tr>
+		<tr>
+		    <td></td>
+			<td>Case filed under 498A</td>
+			<td><%=@outcome_498A_count %></td>
+			<td><%=@outcome_498A_count_ongoing_client %></td>
+		</tr>				
+		<tr>
+		    <td></td>
+			<td>One – time maintenance/ other financial entitlements</td>
+			<td><%=@outcome_maintenence_count %></td>
+			<td><%=@outcome_maintenence_count_ongoing_client %></td>
+		</tr>		
+		<tr>
+		    <td></td>
+			<td>Non­violent reconciliation</td>
+			<td><%=@outcome_non_violent_recon_count %></td>
+			<td><%=@outcome_non_violent_recon_count_ongoing_client %></td>
+		</tr>		
+		<tr>
+		    <td></td>
+			<td>Court orders in the best interest of the woman</td>
+			<td><%=@outcome_court_order_count %></td>
+			<td><%=@outcome_court_order_count_ongoing_client %></td>
+		</tr>		
+		<tr>
+		    <td></td>
+			<td>Any other (specify) : Assurance paper in stalking case from respondent</td>
+			<td><%=@outcome_any_other_count %></td>
+			<td><%=@outcome_any_other_count_ongoing_client %></td>
+		</tr>		
+					
+	</tbody>
+</table>
+</div>
+<script>
+	$(document).ready(function() {
+	$('#states option[value=""]').attr("selected",true);
+	$('#Cell').addClass('cssHide');
+	$('#Maharashtra,#Delhi,#NCW').addClass('cssHide');
+
+	$('#report-state').on('change', function() {
+		if($(this).find('option:selected').val() != ""){
+			var selectedState = $(this).find('option:selected').text();
+			$('#Cell').removeClass('cssHide').addClass('cssShow');
+			$('.cell').each(function() {
+				if ($(this).hasClass('cssShow')){
+					$(this).removeClass('cssShow').addClass('cssHide');
+				}
+			});
+			$('#' + selectedState).removeClass('cssHide').addClass('cssShow');
+		}else{
+			$('#Cell').removeClass('cssShow').addClass('cssHide');
+		}
+	});
+ });
+
+</script>
+
+<script>
+$(document).ready(function() {
+    var state= "<%=@selected_state %>";
+    var district= "<%=@selected_district %>";
+    $("#report-state").val(state);
+    $('#Cell').removeClass('cssHide').addClass('cssShow');
+    
+  if (state.match(/maharashtra/))
+    {
+      $('#Maharashtra').removeClass('cssHide').addClass('cssShow');
+      if (district!="")
+        {
+          $("#distr-maha").val(district);
+        }
+    }
+  else if (state.match(/delhi/)) {
+    $('#Delhi').removeClass('cssHide').addClass('cssShow');
+    if (district!="")
+      {
+        $("#distr-delhi").val(district);
+      }
+  }
+  else if (state.match(/ncw/)) {
+    $('#NCW').removeClass('cssHide').addClass('cssShow');
+    if (district!="")
+      {
+        $("#distr-ncw").val(district);
+      }
+  }
+});
+
+  document.getElementById("start_date_field").defaultValue = "<%= @start_date_for_display %>";
+  document.getElementById("end_date_field").defaultValue = "<%=@end_date_for_display %>";
+     
+</script>
+
+<script>
+  function download_csv(csv, filename) {
+      var csvFile;
+      var downloadLink;
+
+      // CSV FILE
+      csvFile = new Blob([csv], {type: "text/csv"});
+
+      // Download link
+      downloadLink = document.createElement("a");
+
+      // File name
+      downloadLink.download = filename;
+
+      // We have to create a link to the file
+      downloadLink.href = window.URL.createObjectURL(csvFile);
+
+      // Make sure that the link is not displayed
+      downloadLink.style.display = "none";
+
+      // Add the link to your DOM
+      document.body.appendChild(downloadLink);
+
+      // Lanzamos
+      downloadLink.click();
+
+      document.body.removeChild(downloadLink);
+      
+  }
+
+  function export_table_to_csv(html, filename) {
+    var csv = [];
+    var rows = html.querySelectorAll("tr");
+    
+      for (var i = 0; i < rows.length; i++) {
+      var row = [], cols = rows[i].querySelectorAll("td, th");
+      	if(i>1){
+			for (var j = 0; j < cols.length; j++)
+			{
+				row.push(cols[j].innerText);
+			}
+			csv.push(row.join(","));		
+		  }
+          
+    }
+
+      // Download CSV
+      download_csv(csv.join("\n"), filename);
+  }
+
+  document.getElementById("generate").addEventListener("click", function () {
+      var html = document.getElementById("qpr_report");
+    export_table_to_csv(html, "table.csv");
+  });
+
+</script>
+
