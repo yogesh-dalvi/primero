@@ -1,0 +1,550 @@
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<style>
+	.cssShow {
+	display : block;
+	}
+
+	.cssHide {
+		display : none;
+	}
+</style>
+
+<style>
+
+label {
+	margin-bottom: 0px;
+}
+
+body {font-family: Arial, Helvetica, sans-serif;}
+* {box-sizing: border-box;}
+
+.form-inline {  
+  display: flex;
+  flex-flow: row wrap;
+  align-items: center;
+}
+
+.form-inline label {
+  margin: 5px 10px 5px 0;
+}
+
+.form-inline input {
+  vertical-align: middle;
+  margin: 5px 10px 5px 0;
+  padding: 10px;
+  background-color: #fff;
+  border: 1px solid #ddd;
+}
+
+.form-inline button {
+  padding: 10px 20px;
+  background-color: dodgerblue;
+  border: 1px solid #ddd;
+  color: white;
+  cursor: pointer;
+}
+
+.form-inline button:hover {
+  background-color: royalblue;
+}
+
+@media (max-width: 800px) {
+  .form-inline input {
+    margin: 10px 0;
+  }
+  
+  .form-inline {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}
+</style>
+
+<script>
+$(document).ready(function(){
+  $('[data-toggle="tooltip"]').tooltip();   
+});
+
+
+$(document).ready(function() {
+	document.getElementById("validation_div").innerHTML= ""
+    document.getElementById("submit_tag").addEventListener("click", function(event){
+	    document.getElementById("validation_div").innerHTML= ""
+	    var validation_content='';
+      var start_date = document.getElementById("start_date_field").value;
+      var end_date = document.getElementById("end_date_field").value;
+      var state = document.getElementById("report-state").value;
+      if (start_date == "" || end_date == "" || state == "")
+        {
+          if (start_date == "")
+            {
+			  //document.getElementById("start_date_validate").innerHTML = "please select start date"; 
+			  validation_content += '<label id = "start_date_validate1" style="color: red">please select start date</label><br>';
+            }
+          if (end_date == "")
+            {
+			  //document.getElementById("end_date_validate").innerHTML = "please select end date";
+			  validation_content += '<label id = "end_date_validate1" style="color: red">please select end date</label><br>'; 
+            }
+          if (state == "")
+            {
+			  //document.getElementById("state_validate").innerHTML = "please select state"; 
+			  validation_content += '<label id = "state_validate1" style="color: red">please select state</label><br>';
+            }
+          if (start_date!= "" && end_date!= "")
+            {
+              if(new Date(start_date)> new Date(end_date))
+                {
+                  //document.getElementById("date_validation").innerHTML = "start date cannot be greater than end date";
+				  validation_content += '<label id = "date_validation1" style="color: red">start date cannot be greater than end date</label><br>';
+				}
+              
+            }
+
+          event.preventDefault();
+        }
+      else if (start_date!= "" && end_date!= "")
+        {
+          if(new Date(start_date)> new Date(end_date))
+            {
+              //document.getElementById("date_validation").innerHTML = "start date cannot be greater than end date";
+			  validation_content += '<label id = "date_validation1" style="color: red">start date cannot be greater than end date</label><br>';
+			  event.preventDefault();
+            }
+          
+		}
+		console.log(validation_content);
+		document.getElementById("validation_div").innerHTML= validation_content;
+
+	});
+});
+</script>
+
+<script>
+$(document).ready(function() {
+    $('#report-state').on('change', function() {
+      var state = document.getElementById("report-state").value;
+      if (state!="")
+        {
+      //document.getElementById("state_validate").innerHTML = ""; 
+      var element_exist =  document.getElementById('state_validate1');
+      if (typeof(element_exist) != 'undefined' && element_exist != null)
+        {
+          document.getElementById("state_validate1").innerHTML = ""; 
+        }
+		  
+      }
+    });
+
+    $('#end_date_field').on('change', function() {
+      var end_date = document.getElementById("end_date_field").value;
+      var start_date = document.getElementById("start_date_field").value;
+      if (end_date!="")
+        {
+      //document.getElementById("end_date_validate").innerHTML = ""; 
+      var element_exist =  document.getElementById('end_date_validate1');
+      if (typeof(element_exist) != 'undefined' && element_exist != null)
+        {
+          document.getElementById("end_date_validate1").innerHTML = ""; 
+        }
+      }
+      if (start_date!= "" && end_date!= "")
+        {
+          if(new Date(start_date)<= new Date(end_date))
+            {
+              //document.getElementById("date_validation").innerHTML = "";
+              var element_exist =  document.getElementById('date_validation1');
+              if (typeof(element_exist) != 'undefined' && element_exist != null)
+                {
+                  document.getElementById("date_validation1").innerHTML = "";
+                }
+            }
+          
+        }
+      
+    });
+    
+    $('#start_date_field').on('change', function() {
+      var start_date = document.getElementById("start_date_field").value;
+      var end_date = document.getElementById("end_date_field").value;
+      if (start_date!="")
+        {
+      //document.getElementById("start_date_validate").innerHTML = "";
+      var element_exist =  document.getElementById('start_date_validate1');
+      if (typeof(element_exist) != 'undefined' && element_exist != null)
+        {
+          document.getElementById("start_date_validate1").innerHTML = "";  
+        }
+        }
+      if (start_date!= "" && end_date!= "")
+        {
+          if(new Date(start_date)<= new Date(end_date))
+            {
+              //document.getElementById("date_validation").innerHTML = "";
+              var element_exist =  document.getElementById('date_validation1');
+              if (typeof(element_exist) != 'undefined' && element_exist != null)
+                {
+                  document.getElementById("date_validation1").innerHTML = "";
+                }
+            }
+          
+        }
+    });
+
+});
+
+</script>
+
+
+
+<div class="container">
+<br>
+<h2 style="color: #819f56">Monthly Report</h2>
+<div align="right">
+<%= link_to "",{:controller => "monthly_reports", :action => "generate_pdf", :format=> 'pdf',:data =>  @data}, {:class => "fa fa-file-pdf-o", :style => "font-size:30px;color:red", :"data-toggle" => "tooltip", :title => "Download pdf", :"data-placement" => "bottom", :target => "_blank"} %>
+<a id="generate" class="fa fa-file-excel-o" style ="font-size:30px;color:green" data-toggle="tooltip" title="Download csv" data-placement="bottom" target = "_blank"></a>
+</div>
+<br>
+<div class="panel panel-default">
+	<div class="panel-body" style="padding: 20px">
+				<div>
+				<div>
+				<div id = "validation_div"></div>
+                <% if @date_validation == "true" %>
+                      <label style="color: red">start date cannot be greater than end date</label>
+				        <% end %>
+				<%= form_tag("/monthly_reports/submit_form", method: "post", class: 'form-inline', name:"myForm", id:"submit_form_for_monthly_report") do %>
+               
+                <div class="col-sm-3">
+                    <label>Start Date</label>
+                    <%= date_field_tag(:start_date, Date.today.prev_month, :id => 'start_date_field', :max => Date.today)%>
+                    <% if @start_date_not_selected == "true" %>
+                      <label style="color: red">please select start date</label>
+                    <% end %>
+                </div>
+                <div class="col-sm-3">
+                    <label>End Date</label>
+                    <%= date_field_tag(:end_date, Date.today, :id => 'end_date_field', :max => Date.today)%>
+                    <% if @end_date_not_selected == "true" %>
+                      <label style="color: red">please select end date</label>
+                    <% end %>
+                </div>
+                <div class="col-sm-2" id="states">
+                    <label>Location</label>
+                    <%= select_tag 'state', options_for_select(@state_array),{:id => "report-state"} %>
+                    <% if @state_not_selected == "true" %>
+                      <label style="color: red">please select state</label>
+                    <% end %>   
+                </div>
+                <div id="Cell" class="col-sm-2">    
+                    <div id="Maharashtra" class="cell">
+                        <label>Cell</label>
+                        <%= select_tag 'district1', options_for_select(@maha_location_array),{:id => "distr-maha"} %>
+                        
+                    </div>
+                    <div id="Delhi" class="cell">
+                        <label>Cell</label>
+                        <%=  select_tag 'district2', options_for_select(@delh_location_array),{:id => "distr-delhi"} %>
+                        
+                    </div>
+                    <div id="NCW" class="cell">
+                        <label>Cell</label>
+                        <%= select_tag 'district3', options_for_select(@ncw_location_array),{:id => "distr-ncw"} %>
+                        
+                    </div>
+                </div>
+                <div class="col-sm-2" style="margin-top: 4%;">
+                   <%= submit_tag "Generate Report", :name => 'save', :id => 'submit_tag' ,:class => "button btn_submit large" %>
+                </div>
+
+            <% end %>
+        </div> 
+    </div>
+    <br>
+<br>
+  <table class="dataTable in_content_area" id="mpr_report">
+    <thead>
+      <tr>
+        <th colspan="4" style="text-align:center" align="center">Special Cells for Women</th>
+      </tr>
+      <tr>
+        <th colspan="4" style="text-align:center" align="center">Consolidated Monthly Progress Report</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr style="border: 1px solid #aec687; border-collapse: none;">
+        <td><b>Sr.No.</b></td>
+        <td><b>Client Profile & Details</b></td>
+        <td><b>Count</b></td>
+      </tr>
+      <tr>
+          <td><b>1</b></td>
+          <td><b>New Registered applications</b></td>
+          <td></td>
+      </tr> 
+      <tr>
+        <td>1.1</td>
+        <td>Police</td>
+        <td id="police_count"><%= @police_count %></td>
+      </tr>
+      <tr>
+        <td>1.2</td>
+        <td>Ex-clients</td>
+        <td id="exclients_count"><%= @exclients_count %></td>
+      </tr>
+      <tr>
+        <td>1.3</td>
+        <td>Word of mouth</td>
+        <td id="word_of_mouth_count"><%= @word_of_mouth_count %></td>
+      </tr>
+      <tr>
+        <td>1.4</td>
+        <td>Self (info. through media / poster / internet etc.)</td>
+        <td id="self_count"><%= @self_count %></td>
+      </tr>
+      <tr>
+        <td>1.5</td>
+        <td>Lawyers/ legal organisations</td>
+        <td id="lawyers_legal_org_count"><%= @lawyers_legal_org_count %></td>
+      </tr>
+      <tr>
+        <td>1.6</td>
+        <td>Non-Govermental Organisation</td>
+        <td id="ngo_count"><%= @ngo_count %></td>
+      </tr>
+      <tr>
+        <td>1.7</td>
+        <td>Govermental Organisation</td>
+        <td id="go_count"><%= @go_count %></td>
+      </tr>
+      <tr>
+        <td>1.8</td>
+        <td>Independent Community Worker/ Political worker</td>
+        <td id="icw_pw_count"><%= @icw_pw_count %></td>
+      </tr>
+      <tr>
+        <td>1.9</td>
+        <td>Any other (for ex. Pvt. Hospitals etc.)</td>
+        <td id="any_other_count"><%= @any_other_count %></td>
+      </tr>
+      <tr>
+        <td><b>2</b></td>
+        <th><b>Ongoing intervention (from previous months/not registered in this month)</b></th>
+        <td id="on_going_intevention_count"><%= @on_going_intevention_count %></td>
+      </tr>
+			<tr>
+        <td><b>3</b></td>
+        <th><b>One Time Intervention</b></th>
+        <td id="one_time_intervention_count"><%= @one_time_intervention_count %></td>
+      </tr>
+      <tr>
+        <td><b>4</b></td>
+        <th><b>Home visits/Outreach details</b></th>
+        <td></td>
+      </tr>
+      <tr>
+        <td>4.1</td>
+        <td>Home visits</td>
+        <td id="home_visit_count"><%= @home_visit_count %></td>
+      </tr>
+        <td>4.2</td>
+        <td>Collateral visits</td>
+        <td id="collateral_visit_count"><%=@collateral_visits_count %></td>
+      </tr>
+
+      <tr>
+        <td><b>5</b></td>
+        <th><b>Individual meeting/sessions</b></th>
+        <td id="individual_meeting_count"><%= @individual_meeting_count %></td>
+      </tr>
+
+      <tr>
+        <td><b>6</b></td>
+        <b><th>	Group meetings and sessions (Joint meeting) </th></b>
+        <td id="group_meeting_count"><%= @group_meeting_count %></td>
+      </tr>
+
+      <tr>
+        <td><b>7</b></td>
+        <b><th>	Engaging police help </th></b>
+        <td id="engaing_police_help_count"><%= @engaing_police_help_count %></td>
+      </tr>
+
+      <tr>
+        <td><b>8</b></td>
+        <b><th>Participation in workshops/conferences/ programmes/seminars/ meetings</th></b>
+        <td id="participation_in_workshop"><%=@participation_count %></td>
+      </tr>
+      <tr>
+        <td><b>9</b></td>
+        <b><th>Programmes organised</th></b>
+        <td id="programmes_organised"><%=@programs_organised_count %></td>
+      </tr>
+      <tr>
+        <td><b>10</b></td>
+        <b><th>Conducted or facilitated a session or programme as a resource person</th></b>
+        <td id="conducted_session_or_prog_count"><%= @conducted_session_or_prog_count %></td>
+      </tr>
+      <tr>
+        <td><b>11</b></td>
+        <th><b>Referred to:</b></th>
+		  	<td></td>	
+      </tr>
+      <tr>
+        <td>11.1</td>
+        <td>Police</td>
+        <td id="police_reffered_to_count"><%= @police_reffered_to_count %></td>
+      </tr>
+      <tr>
+        <td>11.2</td>
+        <td>Medical</td>
+        <td id="medical_count"><%= @medical_count %></td>
+      </tr>
+      <tr>
+        <td>11.3</td>
+        <td>Shelter</td>
+        <td id="shelter_count"><%= @shelter_count %></td>
+       </tr>
+      <tr>
+        <td>11.4</td>
+        <td>Legal services</td>
+        <td id="legal_services_count"><%= @legal_services_count %></td>
+      </tr>
+      <tr>
+        <td>11.5</td>
+        <td>Protection officer</td>
+        <td id="protection_officer_count"><%= @protection_officer_count %></td>
+      </tr>
+      <tr>
+        <td>11.6</td>
+        <td>NGO/CBO/Any other/Zila lok shiyakat niwaran karyalya/Govt. Offices</td>
+        <td id="lok_shiyakat_niwaran_count"><%= @lok_shiyakat_niwaran_count %></td>
+      </tr>
+    </tbody>
+  </table>
+
+</div>
+
+<script>
+	$(document).ready(function() {
+	$('#states option[value=""]').attr("selected",true);
+	$('#Cell').addClass('cssHide');
+	$('#Maharashtra,#Delhi,#NCW').addClass('cssHide');
+
+	$('#report-state').on('change', function() {
+		if($(this).find('option:selected').val() != ""){
+			var selectedState = $(this).find('option:selected').text();
+			$('#Cell').removeClass('cssHide').addClass('cssShow');
+			$('.cell').each(function() {
+				if ($(this).hasClass('cssShow')){
+					$(this).removeClass('cssShow').addClass('cssHide');
+				}
+			});
+			$('#' + selectedState).removeClass('cssHide').addClass('cssShow');
+		}else{
+			$('#Cell').removeClass('cssShow').addClass('cssHide');
+		}
+	});
+ });
+
+</script>
+
+<script>
+$(document).ready(function() {
+    var state= "<%=@selected_state %>";
+    var district= "<%=@selected_district %>";
+    $("#report-state").val(state);
+    $('#Cell').removeClass('cssHide').addClass('cssShow');
+    
+  if (state.match(/maharashtra/))
+    {
+      $('#Maharashtra').removeClass('cssHide').addClass('cssShow');
+      if (district!="")
+        {
+          $("#distr-maha").val(district);
+        }
+    }
+  else if (state.match(/delhi/)) {
+    $('#Delhi').removeClass('cssHide').addClass('cssShow');
+    if (district!="")
+      {
+        $("#distr-delhi").val(district);
+      }
+  }
+  else if (state.match(/ncw/)) {
+    $('#NCW').removeClass('cssHide').addClass('cssShow');
+    if (district!="")
+      {
+        $("#distr-ncw").val(district);
+      }
+  }
+});
+
+  document.getElementById("start_date_field").defaultValue = "<%= @start_date_for_display %>";
+  document.getElementById("end_date_field").defaultValue = "<%=@end_date_for_display %>";
+     
+</script>
+
+<script>
+  function download_csv(csv, filename) {
+      var csvFile;
+      var downloadLink;
+
+      // CSV FILE
+      csvFile = new Blob([csv], {type: "text/csv"});
+
+      // Download link
+      downloadLink = document.createElement("a");
+
+      // File name
+      downloadLink.download = filename;
+
+      // We have to create a link to the file
+      downloadLink.href = window.URL.createObjectURL(csvFile);
+
+      // Make sure that the link is not displayed
+      downloadLink.style.display = "none";
+
+      // Add the link to your DOM
+      document.body.appendChild(downloadLink);
+
+      // Lanzamos
+      downloadLink.click();
+
+      document.body.removeChild(downloadLink);
+      
+  }
+
+  function export_table_to_csv(html, filename) {
+    var csv = [];
+    var rows = html.querySelectorAll("tr");
+    
+     
+    for (var i = 0; i < rows.length; i++) {
+      var row = [], cols = rows[i].querySelectorAll("td, th");
+      	if(i>1){
+			for (var j = 0; j < cols.length; j++)
+			{
+				row.push(cols[j].innerText);
+			}
+			csv.push(row.join(","));		
+		  }
+          
+    }
+
+      // Download CSV
+      download_csv(csv.join("\n"), filename);
+  }
+
+  document.getElementById("generate").addEventListener("click", function () {
+      var html = document.getElementById("mpr_report");
+    export_table_to_csv(html, "table.csv");
+  });
+
+</script>

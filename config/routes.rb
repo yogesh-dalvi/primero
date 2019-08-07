@@ -5,6 +5,22 @@ Primero::Application.routes.draw do
   match "/404", :to => "errors#not_found", :via => :all
   match "/500", :to => "errors#internal_server_error", :via => :all
 
+  resources :monthly_reports do
+    collection do
+      post :submit_form
+      get :show_mpr
+      get :generate_pdf
+    end
+  end
+  
+  resources :quarterly_reports do
+    collection do
+      post :submit_form
+      get :show_qpr
+      get :quarterly_pdf
+    end
+  end
+  
 #######################
 # USER URLS
 #######################

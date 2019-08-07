@@ -1,0 +1,190 @@
+@media only screen and (min-width: 320px) and (max-width: 358px) {
+  .input-group {
+    display: none !important;
+  }
+}
+
+@media only screen and (min-width: 320px) and (max-width: 480px) {
+  .dataTables_wrapper .dataTables_length, .dataTables_wrapper .dataTables_filter {
+    float: left;
+    text-align: left;
+  }
+
+  .dataTables_wrapper .dataTables_info, .dataTables_wrapper .dataTables_paginate {
+    float: right;
+    text-align: right;
+  }
+
+  #dashboard #content table thead th {
+    width: 63px !important;
+    font-size: 11px !important;
+  }
+
+  .small-6 {
+    flex: 0 0 50%;
+    max-width: 25%;
+  }
+
+  body {
+    text-align: center !important;
+    padding: 10px 15px !important;
+  }
+  
+  .login_panel {
+      width: 100%;
+      padding: 15px;
+  }
+
+  header .sublogo {
+    text-indent: 0px;
+  }
+
+  .menu.align-right {
+    justify-content: flex-start;
+  }
+
+  .small-9 {
+    flex: 1 1 auto;
+    max-width:100%;
+  }
+
+  .small-3 {
+    flex: 1 1 auto;
+    max-width:100%;
+  }
+
+  .index_controls_container .row {
+    flex-wrap: unset;
+  }
+
+  .flex-container {
+    display: flex;
+    flex-basis: 100%;
+  }
+
+  header .menu.simple li {
+    flex-shrink: inherit;
+    align-items: center;
+    justify-content: stretch;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    text-align: center;
+    height:30px;
+  }
+
+  .dataTables_wrapper .dataTables_paginate {
+    margin-top: 0px;
+  }
+
+  .h2, h2 {
+    font-size: 2rem;
+    padding-top: 15px;
+    padding-bottom: 15px;
+  }
+
+  table.dataTable tbody th, table.dataTable tbody td {
+    font-size: 0.7rem;
+  }
+
+}
+
+@media only screen and (min-width: 481px) and (max-width: 768px) { 
+  .container {
+    max-width: 100% !important;
+  }
+
+  .col-sm-2 {
+   max-width: 100% !important;
+  }
+
+  .form-inline label {
+    justify-content: left !important;
+  }
+
+   .flex-child-auto {
+    margin: 0 auto !important;
+  }
+
+  header ul.links li:not(:last-child) {
+    padding-right: 12px;
+  }
+
+
+  .dataTables_wrapper .dataTables_length, .dataTables_wrapper .dataTables_filter {
+    float: left;
+    text-align: left;
+  }
+
+  .dataTables_wrapper .dataTables_info, .dataTables_wrapper .dataTables_paginate {
+    float: right;
+    text-align: right;
+  }
+
+  #dashboard #content table thead th {
+    width: 63px !important;
+    font-size: 11px !important;
+  }
+
+  .small-6 {
+    flex: 0 0 50%;
+    max-width: 25%;
+  }
+
+  body {
+    text-align: center !important;
+    padding: 10px 15px !important;
+  }
+  
+  .login_panel {
+      width: 100%;
+      padding: 15px;
+  }
+
+  header .sublogo {
+    text-indent: 0px;
+  }
+
+  .menu.align-right {
+    justify-content: flex-start;
+  }
+
+  .small-9 {
+    flex: 1 1 auto;
+    max-width:100%;
+  }
+
+  .small-3 {
+    flex: 1 1 auto;
+    max-width:100%;
+  }
+
+  .index_controls_container .row {
+    flex-wrap: unset;
+  }
+
+  .flex-container {
+    display: flex;
+    flex-basis: 100%;
+  }
+
+  header .menu.simple li {
+    flex-shrink: inherit;
+    align-items: center;
+    justify-content: stretch;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    text-align: center;
+    height: 30px;
+  }
+
+  .dataTables_wrapper .dataTables_paginate {
+    margin-top: 0px;
+  }
+
+  .h2, h2 {
+    font-size: 2rem;
+    padding-top: 15px;
+    padding-bottom: 15px;
+  }
+
+}

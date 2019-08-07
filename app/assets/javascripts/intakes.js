@@ -1,4 +1,3 @@
-
 $(document).ready(function(){
 	$("#record_case_data_child_location_chosen").closest('.row').nextAll().hide() ;
 	var defaultIndex = displayDefault();
@@ -158,4 +157,3 @@ function displayHideDropDownFields(element){
 		}, 500);
 
 	}
-}
