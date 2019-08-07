@@ -36,7 +36,7 @@ class QuarterlyReportsController < ApplicationController
   end
 
   def submit_form
-    authorize! :submit_form, Child
+    
     state = params[:state]
     select_mh = params[:district1]
     select_dl = params[:district2]
@@ -90,7 +90,7 @@ class QuarterlyReportsController < ApplicationController
     
 
   def show_qpr
-    authorize! :show_qpr, Child
+    
     @data=[]
     state = params[:state]
     district =params[:district]

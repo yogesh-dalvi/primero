@@ -231,16 +231,10 @@ module IndexHelper
     header_list = []
     header_list << {title: '', sort_title: 'select'}
     header_list << {title: 'id', sort_title: 'short_id'}
-    header_list << {title: 'name', sort_title: 'sortable_name'} if (@is_cp && !@is_manager && !@id_search.present?)
-    header_list << {title: 'survivor_code', sort_title: 'survivor_code_no'} if (@is_gbv && !@is_manager)
-    header_list << {title: 'age', sort_title: 'age'} if @is_cp || @id_search.present?
-    header_list << {title: 'sex', sort_title: 'sex'} if @is_cp || @id_search.present?
-    header_list << {title: 'registration_date', sort_title: 'registration_date'} if @is_cp && !@id_search.present?
-    header_list << {title: 'case_opening_date', sort_title: 'created_at'} if @is_gbv && !@id_search.present?
-    header_list << {title: 'photo', sort_title: 'photo'} if @is_cp && !@id_search.present? && FormSection.has_photo_form
+    header_list << {title: 'age', sort_title: 'age'}
+    header_list << {title: 'sex', sort_title: 'sex'}
     header_list << {title: 'social_worker', sort_title: 'owned_by'} if @is_manager && !@id_search.present?
     header_list << {title: 'owned_by', sort_title: 'owned_by'} if @is_cp && @id_search.present?
-    header_list << {title: 'owned_by_agency', sort_title: 'owned_by_agency'} if @is_cp && @id_search.present?
     header_list << {title: '', sort_title: 'view'} if @id_search.present? && @can_display_view_page
 
     return header_list
@@ -356,20 +350,6 @@ module IndexHelper
     field_names = ["gbv_displacement_status", "protection_status", "urgent_protection_concern", "protection_concerns", "type_of_risk"]
     forms = FormSection.fields(:keys => field_names)
                   .all.select{|fs| fs.parent_form == "case" && !fs.is_nested && allowed_form_ids.include?(fs.unique_id)}
-
-    filters << "Flagged"
-    filters << "Mobile" if @can_sync_mobile
-    filters << "Social Worker" if @is_manager
-    filters << "My Cases"
-    filters << "Workflow"
-    filters << "Approvals" if @can_approvals && (allowed_form_ids.any?{|fs_id| ["cp_case_plan", "closure_form", "cp_bia_form"].include?(fs_id) })
-    #Check independently the checkboxes on the view.
-    filters << "cp_bia_form" if allowed_form_ids.include?("cp_bia_form") && @can_approval_bia
-    filters << "cp_case_plan" if allowed_form_ids.include?("cp_case_plan") && @can_approval_case_plan
-    filters << "closure_form" if allowed_form_ids.include?("closure_form") && @can_approval_closure
-
-    filters << "Agency" if @is_admin || @is_manager
-    filters << "Status"
     filters << "Age Range"
     filters << "Sex"
 
@@ -390,8 +370,8 @@ module IndexHelper
     filters << "Reporting Location" if @can_view_reporting_filter
     filters << "Dates" if @is_cp
     filters << "Case Open Date" if @is_gbv
-    filters << "No Activity"
-    filters << "Record State"
+    #filters << "No Activity"
+    #filters << "Record State"
     filters << "Photo" if @is_cp && FormSection.has_photo_form
 
     return filters

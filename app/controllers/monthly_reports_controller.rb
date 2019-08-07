@@ -26,7 +26,6 @@ class MonthlyReportsController < ApplicationController
   end
 
   def generate_pdf
-    authorize! :generate_pdf, Child
     respond_to do |format|
       format.html
       format.pdf do
@@ -37,7 +36,6 @@ class MonthlyReportsController < ApplicationController
   end
 
   def submit_form
-    authorize! :submit_form, Child
     state = params[:state]
     select_mh = params[:district1]
     select_dl = params[:district2]
