@@ -157,4 +157,3 @@ function displayHideDropDownFields(element){
 		}, 500);
 
 	}
-}
