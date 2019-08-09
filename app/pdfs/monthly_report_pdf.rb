@@ -6,7 +6,14 @@ class MonthlyReportPdf < Prawn::Document
     end
 
     def user_id
-        move_down 8
+        move_down 4
+        pad(4) { text "Location : "+@data[25], align: :left }
+        if @data[26]!=""
+            pad(4) { text "Cell : "+@data[26], align: :left }
+        end
+        pad(4) { text "From Date : "+@data[27], align: :left }
+        pad(4) { text "To Date : "+@data[28], align: :left }
+        move_down 16
         stroke_horizontal_rule
         pad(4) { text "SPECIAL CELLS FOR WOMEN", size: 15, style: :bold, align: :center }
         stroke_horizontal_rule

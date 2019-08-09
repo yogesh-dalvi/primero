@@ -26,6 +26,7 @@ class MonthlyReportsController < ApplicationController
   end
 
   def generate_pdf
+    
     respond_to do |format|
       format.html
       format.pdf do
@@ -245,7 +246,48 @@ class MonthlyReportsController < ApplicationController
   end_date = (Date.parse(end_date)-1).to_s
   @end_date_for_display = end_date
   @start_date_for_display = start_date
-  @data.push(@police_count,@exclients_count,@word_of_mouth_count,@self_count,@lawyers_legal_org_count,@ngo_count,@go_count,@icw_pw_count,@any_other_count,@one_time_intervention_count,@home_visit_count,@collateral_visits_count,@individual_meeting_count,@group_meeting_count,@participation_count,@programs_organised_count,@conducted_session_or_prog_count,@police_reffered_to_count,@medical_count,@shelter_count,@legal_services_count,@protection_officer_count,@lok_shiyakat_niwaran_count,@on_going_intevention_count,@engaing_police_help_count)
+
+  for i in @state_array
+    if i[1]!= nil
+      if i.include? state
+        @state_in_pdf=i[0]
+        break
+      end
+    end
+  end
+
+  if state.include? "maharashtra_94827"
+    for i in @maha_location_array
+      if i[1]!= nil
+        if i.include? district
+          @district_in_pdf=i[0]
+          break
+        end
+      end
+    end
+  
+  elsif state.include? "delhi_64730" 
+    for i in @delh_location_array
+      if i[1]!= nil
+        if i.include? district
+          @district_in_pdf=i[0]
+          break
+        end
+      end
+    end
+  elsif state.include? "ncw_37432"
+    for i in @ncw_location_array
+      if i[1]!= nil
+        if i.include? district
+          @district_in_pdf=i[0]
+          break
+        end
+      end
+    end
+  end
+  @start_date_in_pdf=Date.parse(start_date).strftime("%d-%m-%Y")
+  @end_date_in_pdf=Date.parse(end_date).strftime("%d-%m-%Y")
+  @data.push(@police_count,@exclients_count,@word_of_mouth_count,@self_count,@lawyers_legal_org_count,@ngo_count,@go_count,@icw_pw_count,@any_other_count,@one_time_intervention_count,@home_visit_count,@collateral_visits_count,@individual_meeting_count,@group_meeting_count,@participation_count,@programs_organised_count,@conducted_session_or_prog_count,@police_reffered_to_count,@medical_count,@shelter_count,@legal_services_count,@protection_officer_count,@lok_shiyakat_niwaran_count,@on_going_intevention_count,@engaing_police_help_count,@state_in_pdf,@district_in_pdf,@start_date_in_pdf,@end_date_in_pdf)
 end
 
 end

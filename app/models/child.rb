@@ -622,7 +622,7 @@ class Child < CouchRest::Model::Base
 
     view :by_clients_registered_in_this_quarter,
     :map => "function(doc) {
-                if(doc.location!=null  && doc.district!=null && doc.registration_date!=null){
+                if(doc.registration_date!=null){
                     emit([new Date(doc.registration_date)],1)
                 }
           }",

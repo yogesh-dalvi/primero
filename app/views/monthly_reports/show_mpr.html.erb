@@ -13,9 +13,6 @@
 	.cssHide {
 		display : none;
 	}
-</style>
-
-<style>
 
 label {
 	margin-bottom: 0px;
@@ -49,7 +46,9 @@ body {font-family: Arial, Helvetica, sans-serif;}
   color: white;
   cursor: pointer;
 }
-
+header .menu.simple li a {
+	color: #212529 !important;
+}
 .form-inline button:hover {
   background-color: royalblue;
 }
@@ -59,10 +58,14 @@ body {font-family: Arial, Helvetica, sans-serif;}
     margin: 10px 0;
   }
   
+  
   .form-inline {
     flex-direction: column;
     align-items: stretch;
   }
+}
+.row.align-middle {
+    margin: 0 auto !important; 
 }
 </style>
 
@@ -523,20 +526,24 @@ $(document).ready(function() {
 
   function export_table_to_csv(html, filename) {
     var csv = [];
+    csv.push("Location : <%=@state_in_pdf %>");
+    if ("<%=@district_in_pdf %>" != "")
+      {
+        csv.push("Cell : <%=@district_in_pdf %>");
+      }
+    csv.push("From Date : <%=@start_date_in_pdf %>");
+    csv.push("To Date : <%=@end_date_in_pdf %>");
     var rows = html.querySelectorAll("tr");
     
      
     for (var i = 0; i < rows.length; i++) {
       var row = [], cols = rows[i].querySelectorAll("td, th");
-      	if(i>1){
-			for (var j = 0; j < cols.length; j++)
-			{
-				row.push(cols[j].innerText);
-			}
-			csv.push(row.join(","));		
-		  }
-          
-    }
+        for (var j = 0; j < cols.length; j++)
+        {
+          row.push(cols[j].innerText);
+        }
+        csv.push(row.join(","));		
+      }
 
       // Download CSV
       download_csv(csv.join("\n"), filename);
@@ -544,7 +551,7 @@ $(document).ready(function() {
 
   document.getElementById("generate").addEventListener("click", function () {
       var html = document.getElementById("mpr_report");
-    export_table_to_csv(html, "table.csv");
+    export_table_to_csv(html, "monthly_report.csv");
   });
 
 </script>

@@ -714,9 +714,48 @@ class QuarterlyReportsController < ApplicationController
   end_date = (Date.parse(end_date)-1).to_s
   @end_date_for_display = end_date
   @start_date_for_display = start_date
-  @data.push(@total_clients,@ongoing_clients,@no_of_ppl_prvded_supp,@exclients_count,@self_count,@police_count,@ngo_count,@community_based_org_count,@icw_pw_count,@word_of_mouth_count,@go_count,@lawyers_legal_org_count,@any_other_clients_refferd_count,@adult_female_count,@adult_male_count,@child_female_count,@child_male_count,@third_gender_count,@less_than_14_count,@in_15_17_count,@in_18_24_count,@in_25_34_count,@in_35_44_count,@in_45_54_count,@above_55_count,@no_age_info_count,@non_literate_count,@functional_literacy_count,@primary_level_class_4_count,@upto_ssc_count,@upto_hsc_count,@upto_grad_count,@post_grad_count,@any_other_edu_count,@no_edu_info_count,@phy_vio_by_hus_count,@emo_men_vio_by_hus_count,@sex_vio_by_hus_count,@fin_vio_by_hus_count,@sec_marr_by_hus_count,@ref_to_strredhan_by_hus_count,@alch_vio_by_hus_count,@desertion_by_hus_count,@child_custody_vio_count,@phy_vio_by_mart_family_count,@emo_vio_by_mart_family_count,@sex_vio_by_mart_family_count,@fin_vio_by_mart_family_count,@harr_natal_family_by_hus_count,@dep_matr_res_count,@childbattering_count,@dowry_count,@harr_by_natal_family_count,@harr_by_chil_spouse_count,@wife_left_matr_home_count,@harr_at_work_count,@harr_by_live_in_partner_count,@sex_assault_count,@sex_har_in_other_sit_count,@breach_of_trust_count,@harr_by_neigh_count,@any_other_harr_count,@prev_inter_natal_family_marital_family_count,@prev_inter_police_count,@prev_inter_court_count,@prev_interv_ngo_count,@prev_interv_panch_mem_count,@prev_interv_any_other_count,@spec_cell_prov_emo_support_count,@spec_cell_prov_emo_support_count_ongoing_client,@spec_cell_neg_nonvio_with_stakeholder_count,@spec_cell_neg_nonvio_with_stakeholder_count_ongoing_client,@spec_cell_build_support_system_count,@spec_cell_build_support_system_count_ongoing_client,@spec_cell_enlist_police_help_count,@spec_cell_enlist_police_help_count_ongoing_client,@spec_cell_pre­litigation_counsel_count,@spec_cell_pre­litigation_counsel_count_ongoing_client,@spec_cell_work_with_men_count,@spec_cell_work_with_men_count_ongoing_client,@spec_cell_adv_fin_ent_count,@spec_cell_adv_fin_ent_count_ongoing_client,@spec_cell_refferal_for_shelter_count,@spec_cell_refferal_for_shelter_count_ongoing_client,@spec_cell_dev_counsel_count,@spec_cell_dev_counsel_count_ongoing_client,@police_refferal_count,@police_refferal_count_ongoing_client,@court_dlsa_refferal_count,@court_dlsa_refferal_count_ongoing_client,@shelter_refferal_count,@shelter_refferal_count_ongoing_client,@medical_refferal_count,@medical_refferal_count_ongoing_client,@lawer_services_refferal_count,@lawer_services_refferal_count_ongoing_client,@protection_officer_refferal_count,@protection_officer_refferal_count_ongoing_client,@any_other_refferal_count,@any_other_refferal_count_ongoing_client,@othr_inter_home_visit_count,@othr_inter_visit_inst_count,@othr_inter_comm_edu_count,@othr_inter_meet_local_count,@othr_inter_inter_with_police_count,@othr_inter_any_other_count,@outcomes_helped_in_case_filed_for_divorce_count,@outcomes_helped_in_case_filed_for_divorce_count_ongoing_client,@outcome_streedhan_retrival_count,@outcome_streedhan_retrival_count_ongoing_client,@outcome_pwdva_2005_count,@outcome_pwdva_2005_count_ongoing_client,@outcome_498A_count,@outcome_498A_count_ongoing_client,@outcome_maintenence_count,@outcome_maintenence_count_ongoing_client,@outcome_non_violent_recon_count,@outcome_non_violent_recon_count_ongoing_client,@outcome_court_order_count,@outcome_court_order_count_ongoing_client,@outcome_any_other_count,@outcome_any_other_count_ongoing_client)  
+  for i in @state_array
+    if i[1]!= nil
+      if i.include? state
+        @state_in_pdf=i[0]
+        break
+      end
+    end
+  end
+  
+  if state.include? "maharashtra_94827"
+    for i in @maha_location_array
+      if i[1]!= nil
+        if i.include? district
+          @district_in_pdf=i[0]
+          break
+        end
+      end
+    end
+  
+  elsif state.include? "delhi_64730" 
+    for i in @delh_location_array
+      if i[1]!= nil
+        if i.include? district
+          @district_in_pdf=i[0]
+          break
+        end
+      end
+    end
+  elsif state.include? "ncw_37432"
+    for i in @ncw_location_array
+      if i[1]!= nil
+        if i.include? district
+          @district_in_pdf=i[0]
+          break
+        end
+      end
+    end
+  end
+  @start_date_in_pdf=Date.parse(start_date).strftime("%d-%m-%Y")
+  @end_date_in_pdf=Date.parse(end_date).strftime("%d-%m-%Y")
+  @data.push(@total_clients,@ongoing_clients,@no_of_ppl_prvded_supp,@exclients_count,@self_count,@police_count,@ngo_count,@community_based_org_count,@icw_pw_count,@word_of_mouth_count,@go_count,@lawyers_legal_org_count,@any_other_clients_refferd_count,@adult_female_count,@adult_male_count,@child_female_count,@child_male_count,@third_gender_count,@less_than_14_count,@in_15_17_count,@in_18_24_count,@in_25_34_count,@in_35_44_count,@in_45_54_count,@above_55_count,@no_age_info_count,@non_literate_count,@functional_literacy_count,@primary_level_class_4_count,@upto_ssc_count,@upto_hsc_count,@upto_grad_count,@post_grad_count,@any_other_edu_count,@no_edu_info_count,@phy_vio_by_hus_count,@emo_men_vio_by_hus_count,@sex_vio_by_hus_count,@fin_vio_by_hus_count,@sec_marr_by_hus_count,@ref_to_strredhan_by_hus_count,@alch_vio_by_hus_count,@desertion_by_hus_count,@child_custody_vio_count,@phy_vio_by_mart_family_count,@emo_vio_by_mart_family_count,@sex_vio_by_mart_family_count,@fin_vio_by_mart_family_count,@harr_natal_family_by_hus_count,@dep_matr_res_count,@childbattering_count,@dowry_count,@harr_by_natal_family_count,@harr_by_chil_spouse_count,@wife_left_matr_home_count,@harr_at_work_count,@harr_by_live_in_partner_count,@sex_assault_count,@sex_har_in_other_sit_count,@breach_of_trust_count,@harr_by_neigh_count,@any_other_harr_count,@prev_inter_natal_family_marital_family_count,@prev_inter_police_count,@prev_inter_court_count,@prev_interv_ngo_count,@prev_interv_panch_mem_count,@prev_interv_any_other_count,@spec_cell_prov_emo_support_count,@spec_cell_prov_emo_support_count_ongoing_client,@spec_cell_neg_nonvio_with_stakeholder_count,@spec_cell_neg_nonvio_with_stakeholder_count_ongoing_client,@spec_cell_build_support_system_count,@spec_cell_build_support_system_count_ongoing_client,@spec_cell_enlist_police_help_count,@spec_cell_enlist_police_help_count_ongoing_client,@spec_cell_pre­litigation_counsel_count,@spec_cell_pre­litigation_counsel_count_ongoing_client,@spec_cell_work_with_men_count,@spec_cell_work_with_men_count_ongoing_client,@spec_cell_adv_fin_ent_count,@spec_cell_adv_fin_ent_count_ongoing_client,@spec_cell_refferal_for_shelter_count,@spec_cell_refferal_for_shelter_count_ongoing_client,@spec_cell_dev_counsel_count,@spec_cell_dev_counsel_count_ongoing_client,@police_refferal_count,@police_refferal_count_ongoing_client,@court_dlsa_refferal_count,@court_dlsa_refferal_count_ongoing_client,@shelter_refferal_count,@shelter_refferal_count_ongoing_client,@medical_refferal_count,@medical_refferal_count_ongoing_client,@lawer_services_refferal_count,@lawer_services_refferal_count_ongoing_client,@protection_officer_refferal_count,@protection_officer_refferal_count_ongoing_client,@any_other_refferal_count,@any_other_refferal_count_ongoing_client,@othr_inter_home_visit_count,@othr_inter_visit_inst_count,@othr_inter_comm_edu_count,@othr_inter_meet_local_count,@othr_inter_inter_with_police_count,@othr_inter_any_other_count,@outcomes_helped_in_case_filed_for_divorce_count,@outcomes_helped_in_case_filed_for_divorce_count_ongoing_client,@outcome_streedhan_retrival_count,@outcome_streedhan_retrival_count_ongoing_client,@outcome_pwdva_2005_count,@outcome_pwdva_2005_count_ongoing_client,@outcome_498A_count,@outcome_498A_count_ongoing_client,@outcome_maintenence_count,@outcome_maintenence_count_ongoing_client,@outcome_non_violent_recon_count,@outcome_non_violent_recon_count_ongoing_client,@outcome_court_order_count,@outcome_court_order_count_ongoing_client,@outcome_any_other_count,@outcome_any_other_count_ongoing_client,@state_in_pdf,@district_in_pdf,@start_date_in_pdf,@end_date_in_pdf)  
 end
-
 
 end
 
