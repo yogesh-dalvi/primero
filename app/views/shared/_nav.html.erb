@@ -24,11 +24,11 @@
           <% end  %>
           
           <li>
-						<a href="#">TISS Reports</a>
+						<a href="#">REPORTS</a>
 							<div class="report_menu">
 							<ul class="dropdown-report">
-								<li><a href="/monthly_reports">MONTHLY REPORTS</a></li>
-								<li><a href="/quarterly_reports">QUARTERLY REPORTS</a></li>
+								<li><a href="/monthly_reports">Monthly Reports</a></li>
+								<li><a href="/quarterly_reports">Quarterly Reports</a></li>
 							</ul>
 							</div>
 					</li>
@@ -73,13 +73,7 @@
               </a>
             </li>
           <% end %>
-          <% if can?(:index, BulkExport) %>
-            <li>
-              <a class="<%= current_menu('bulk_exports') %>" href="<%= bulk_exports_path %>" title="<%= t('navigation.bulk_exports') %>">
-                <i class="fa fa-download"></i>
-              </a>
-            </li>
-          <% end %>
+          
         </ul>
       <% end %>
     </div>

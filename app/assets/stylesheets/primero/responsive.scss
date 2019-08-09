@@ -1,7 +1,5 @@
-@media only screen and (min-width: 320px) and (max-width: 358px) {
-  .input-group {
-    display: none !important;
-  }
+@media only screen and (min-width: 320px) and (max-width: 406px) {
+  #search_form{display: none !important;}
 }
 
 @media only screen and (min-width: 320px) and (max-width: 480px) {
@@ -26,7 +24,7 @@
   }
 
   body {
-    text-align: center !important;
+    text-align: left !important;
     padding: 10px 15px !important;
   }
   
@@ -70,6 +68,9 @@
     margin-bottom: 10px;
     text-align: center;
     height:30px;
+    padding-right: 5px !important;
+    padding-top: 5px !important;
+    margin-left: 8px !important;
   }
 
   .dataTables_wrapper .dataTables_paginate {
@@ -86,9 +87,38 @@
     font-size: 0.7rem;
   }
 
+  .index_controls_container .pagination_info, .record_controls_container .pagination_info {
+    font-size: .8rem;
+  }
+
+  #menu li a span {
+    font-size: 0.6125rem !important;
+  }
+  
+  .button-group .button {
+    font-size: 0.6125rem !important;
+    margin-right: 1px !important;
+  }
+
+  #index_filter_form label span {
+   text-align: left !important;
+  }
+
+  #submit_form_for_monthly_report label {
+    text-align: left !important;
+  }
+  #search_form {
+    width: 54%;
+    padding: 0px !important;
+    margin-bottom: 25px !important;
+    height: 30px !important;
+  }
 }
 
 @media only screen and (min-width: 481px) and (max-width: 768px) { 
+  #submit_form_for_monthly_report label {
+    text-align: left !important;
+  }
   .container {
     max-width: 100% !important;
   }
@@ -131,7 +161,7 @@
   }
 
   body {
-    text-align: center !important;
+    text-align: left !important;
     padding: 10px 15px !important;
   }
   
@@ -174,7 +204,6 @@
     margin-top: 10px;
     margin-bottom: 10px;
     text-align: center;
-    height: 30px;
   }
 
   .dataTables_wrapper .dataTables_paginate {
@@ -187,4 +216,15 @@
     padding-bottom: 15px;
   }
 
+}
+
+/*normal media css*/
+.row.align-middle.large-up-5 {
+	align-items: baseline !important;
+}
+.flex-child-auto .menu.simple a {
+  color: #212529 !important;
+}
+.row.align-middle {
+  margin: 0 auto !important; 
 }
