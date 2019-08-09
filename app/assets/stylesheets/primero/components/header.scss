@@ -1,6 +1,13 @@
 header {
   background: $desat_green_color;
   padding-bottom: 1%;
+	
+	.row {
+	margin-right: 0 !important;
+	margin-left: 0 !important;
+	margin: 0 auto !important;
+	
+	}
 
   .menu {
     font-size: .8rem;
@@ -47,5 +54,6 @@ header {
     li {
       margin-left: rem_calc(10);
     }
+    
   }
 }
