@@ -21,14 +21,12 @@ class QuarterlyReportPdf < Prawn::Document
         stroke_horizontal_rule
 
         table user_id_all do
-
             rows(0).width = 72
             self.row_colors = ["DDDDDD", "FFFFFF"]
             row(0).font_style = :bold
             row(4).font_style = :bold
             column(0).align = :center
             column(2).align = :center
-            #style(rows(1..-1), :padding => [6, 25, 5, 25], :borders => [])
             style(row(1), padding: [7, 10], :font_style => :bold)
             style(row(5), padding: [7, 35])
             style(row(6), padding: [7, 10], :font_style => :bold)
