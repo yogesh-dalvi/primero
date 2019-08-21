@@ -239,3 +239,4 @@ function displayHideDropDownFields(element,mainElement){
 		}, 500);
 	}
 }
+
