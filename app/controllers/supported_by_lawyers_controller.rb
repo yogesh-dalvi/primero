@@ -1,0 +1,3 @@
+class SupportedByLawyersController < ApplicationController
+	
+end

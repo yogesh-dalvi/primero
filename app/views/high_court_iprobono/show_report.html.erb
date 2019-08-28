@@ -1,0 +1,115 @@
+<div class="container">
+	<div class="row">
+		<div class="large-12 small-12 columns">
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+		<a id="generate" class="fa fa-file-excel-o" data-toggle="tooltip" title="Download csv" data-placement="bottom" target = "_blank"></a>
+		<h3>High Court iprobono</h3><br>
+			<div id = "validation_div"></div>
+			<%= form_tag("/all_reports/high_court_iprobono/submit_form", class: "form-inline" ,method: "post", class: 'form-inline', name:"myForm", id:"submit_form_for_supported_by_lawyers") do %>
+				<label>Start Date</label>
+				<%= date_field_tag(:start_date, Date.today, :id => 'start_date_field', :max => Date.today)%>
+
+				<label>End Date</label>
+				<%= date_field_tag(:end_date, Date.today, :id => 'end_date_field', :max => Date.today)%>
+
+				<button type="submit">Submit</button>
+			<% end %>
+		<div style="margin-top: 5%;" id="report">
+			<table class="dataTable in_content_area reports">
+				<thead>
+					<tr>
+						<td>Case ID </td>
+						<td>Child name</td>
+						<td>Purpose</td>
+						<td>Ground/resons for approaching H.C.</td>
+						<td>Petition filed before</td>
+						<td>Case Number</td>
+						<td>Case Title</td>
+						<td>Case is handled by</td>
+						<td>Date of Filing</td>
+						<td>Date of Disposal</td>
+						<td>Outcome</td>
+						<td>Status</td>
+					</tr>
+				</thead>
+				<tbody>
+
+					<% @high_court.each do |x| %>
+					<tr>
+						<td id="case_id"><%= x[:case_id] %></td>
+						<td id="name"><%= x[:name] %></td>
+						<td id="purpose"><%= x[:purpose] %></td>
+						<td id="groundreasons"><%= x[:groundreasons] %></td>
+						<td id="court"><%= x[:court] %></td>
+						<td id="case_number"><%= x[:case_number] %></td>
+						<td id="case_title"><%= x[:case_title] %></td>
+						<td id="case_is_handled_by"><%= x[:case_is_handled_by] %></td>
+						<td id="date_of_filing"><%= x[:date_of_filing] %></td>
+						<td id="date_of_disposal"><%= x[:date_of_disposal] %></td>
+						<td id="outcome"><%= x[:outcome] %></td>
+						<td id="child_status"><%= x[:child_status] %></td>
+					</tr>
+					<% end %>
+					
+				</tbody>	
+			</table>
+			<script>
+			function download_csv(csv, filename) {
+				var csvFile;
+				var downloadLink;
+
+				// CSV FILE
+				csvFile = new Blob([csv], {type: "text/csv"});
+
+				// Download link
+				downloadLink = document.createElement("a");
+
+				// File name
+				downloadLink.download = filename;
+
+				// We have to create a link to the file
+				downloadLink.href = window.URL.createObjectURL(csvFile);
+
+				// Make sure that the link is not displayed
+				downloadLink.style.display = "none";
+
+				// Add the link to your DOM
+				document.body.appendChild(downloadLink);
+
+				// Lanzamos
+				downloadLink.click();
+
+				document.body.removeChild(downloadLink);
+				
+			}
+
+			function export_table_to_csv(html, filename) {
+				var csv = [];
+			
+				csv.push("From Date : <%= @start_date %>");
+				csv.push("To Date : <%= @end_date %>");
+				var rows = html.querySelectorAll("tr");
+				
+				 
+				for (var i = 0; i < rows.length; i++) {
+					var row = [], cols = rows[i].querySelectorAll("td, th");
+						for (var j = 0; j < cols.length; j++)
+						{
+							row.push(cols[j].innerText);
+						}
+						csv.push(row.join(","));		
+					}
+
+					// Download CSV
+					download_csv(csv.join("\n"), filename);
+			}
+
+			document.getElementById("generate").addEventListener("click", function () {
+					var html = document.getElementById("report");
+				export_table_to_csv(html, "High court iprobono.csv");
+			});
+		</script>
+		</div>
+	</div>	
+	</div>
+</div>

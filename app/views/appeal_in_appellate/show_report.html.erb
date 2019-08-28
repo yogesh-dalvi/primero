@@ -1,0 +1,58 @@
+<div class="container">
+	<div class="row">
+		
+		<div id = "validation_div">
+            <h3>Appeal in Appellate Court</h3>
+            <% if @date_validation == "true" %>
+                <label style="color: red">start date cannot be greater than end date</label>
+            <% end %>
+            <%= form_tag("/all_reports/appeal_in_appellate/submit_form", class: "form-inline" ,method: "post", class: 'form-inline', name:"myForm", id:"submit_form_for_monthly_report") do %>
+                <label>Start Date</label>
+                <%= date_field_tag(:start_date, Date.today, :id => 'start_date_field', :max => Date.today)%>
+
+                <label>End Date</label>
+                <%= date_field_tag(:end_date, Date.today, :id => 'end_date_field', :max => Date.today)%>
+
+                <button type="submit">Submit</button>
+            <% end %>
+        </div>
+		<div class="large-12 small-12 columns">
+			<table class="dataTable in_content_area reports">
+				<thead>
+					<tr>
+						<td rowspan="2">YEARS</td>
+						<td colspan="2">Total cases referred</td>
+						<td colspan="6"> </td>
+					</tr>
+					<tr>
+						<td>New</td>
+						<td>From Previous Years</td>
+						<td>Referred cases closed before formal intake</td>
+						<td>Total Formal Intake in reporting year/period</td>
+						<td>Formal cases closed</td>
+						<td>Balance from formal intake in the reporting period</td>
+						<td>Cases pending formal intake</td>
+						<td>Live Cases at the end of the year/repoting period (includes formal intake and cases pending for formal intake)</td>
+					</tr>
+					
+				</thead>
+				<tbody>
+					<% @data.each do |i|%>
+						<tr>
+							<td><%= i['year'] %></td>
+							<td><%= i['total'] %></td>						
+							<td><%= i['previous'] %></td>					
+							<td><%= i['before_close'] %></td>					
+							<td><%= i['Dtotal'] %></td>
+							<td><%= i['close'] %></td>	
+							<td><%= i['balance'] %></td>
+							<td><%= i['pending'] %></td>	
+							<td>-</td>
+
+						</tr>
+					<% end %>
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>

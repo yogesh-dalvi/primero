@@ -1,0 +1,22 @@
+<div class="container">
+	<div class="row">
+		<div>
+			<h3>Status of Court Hearings on Bail, Interim Compensation and Witness protection</h3>
+			<div id = "validation_div"></div>
+			<% if @date_validation == "true" %>
+				<label style="color: red">start date cannot be greater than end date</label>
+			<% end %>
+			<%= form_tag("/bail_interim_compensation/submit_form", class: "form-inline" ,method: "post", class: 'form-inline', name:"myForm", id:"submit_form_for_monthly_report") do %>
+				<label>Start Date</label>
+				<%= date_field_tag(:start_date, Date.today, :id => 'start_date_field', :max => Date.today)%>
+
+				<label>End Date</label>
+				<%= date_field_tag(:end_date, Date.today, :id => 'end_date_field', :max => Date.today)%>
+
+				<button type="submit">Submit</button>
+			<% end %>
+		</div>
+	</div>
+</div>
+
+

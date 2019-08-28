@@ -8,6 +8,7 @@ Mime::Type.register "audio/mp3", :mp3, ["audio/mpeg", "audio/x-mpeg", "audio/x-m
 Mime::Type.register "audio/amr", :amr
 Mime::Type.register "audio/ogg", :ogg
 Mime::Type.register "image/jpeg", :jpg
+Mime::Type.register "application/pdf", :pdf
 Mime::Type.register "application/vnd.ms-excel", :xls
 Mime::Type.register "application/vnd.ms-excel", :selected_xls
 Mime::Type.register "application/vnd.ms-excel", :incident_recorder_xls

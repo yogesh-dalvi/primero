@@ -50,8 +50,8 @@
               <label for="consent_override"><%=I18n.t("#{transition_type}.consent_override_label")%></label>
             <% end %>
             <br>
-            <%= check_box_tag("is_remote", "true") %>
-            <label for="is_remote"><%=I18n.t("#{transition_type}.is_remote_label")%></label>
+            <!--%= check_box_tag("is_remote", "true") %>
+            <label for="is_remote"><%=I18n.t("#{transition_type}.is_remote_label")%></label-->
             <% if transition_type == Transition::TYPE_TRANSFER %>
               <br>
               <div class="consent_individual_transfer">
@@ -81,9 +81,9 @@
           </div>
           <% if transition_type == "referral" %>
             <%= hidden_field_tag "service" , "", {:id => "service_hidden"}%>
-            <label><%=I18n.t("referral.service_label")%>
+            <!--label><%=I18n.t("referral.service_label")%>
               <%= select_tag("service", options_for_select(Lookup.values_for_select('lookup-service-type', @lookups), ''), :include_blank => true) %>
-            </label>
+            </label-->
           <% end %>
           <label><%=I18n.t("#{transition_type}.notes_label")%>
             <%= text_area_tag("notes") %>

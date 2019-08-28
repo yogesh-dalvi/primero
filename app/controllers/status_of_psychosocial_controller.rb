@@ -1,0 +1,3 @@
+class StatusOfPsychosocialController < ApplicationController
+	
+end

@@ -82,6 +82,10 @@ select:not([class^="ui-datepicker-"]), select:hover:not([class^="ui-datepicker-"
   font-size: $thirteen_px;
 }
 
+#tab_cp_psychosocial_needs_status .subform_container .chosen-container-single {
+	max-width: 574px !important;
+}
+
 .chosen-container .chosen-drop {
   border: 1px solid $stroke_green_color;
   border-top: none;

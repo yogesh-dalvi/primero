@@ -1,0 +1,43 @@
+<div class="container">
+	<div class="row">
+		<div>
+		<h3>Family members directely impacted</h3>
+		<%= form_tag("/family_members_impact/submit_form", class: "form-inline" ,method: "post", class: 'form-inline', name:"myForm", id:"submit_form_for_monthly_report") do %>
+			<label for="email">Start year:</label>
+			<%= select_year(Date.today, start_year: 2000, end_year: Date.today.year, prompt: 'Choose start year...', field_name: 'start_year')%>
+			<label for="pwd">End year</label>
+			<%= select_year(Date.today, start_year: 2000, end_year: Date.today.year, prompt: 'Choose end year...', field_name: 'end_year')%>
+			<button type="submit">Submit</button>
+		<% end %>
+		</div>
+		<br>
+		<br>
+		<br>
+		<div style="margin-top: 5%;">
+			<table class="dataTable in_content_area reports">
+				<thead>
+					<tr>
+						<td>Period</td>
+						<td>Family stopped blaming the child</td>
+						<td>Increase in family’s knowledge and understanding of CSA</td>
+						<td>Family supports the child to continue with her/his education</td>
+						<td>Family understands the importance of being regular with the child’s Counselling/Court Hearing</td>
+						<td>Any other (Specify)</td>
+					</tr>
+				</thead>
+				<tbody>
+					<% @data.each do |i|%>
+						<tr>
+							<td><%= i['year'] %></td>
+							<td id="family_stop_blame"><%= i['family_stop_blame'] %></td>
+							<td id="in_family_knw_nd_under_csa"><%= i['in_family_knw_nd_under_csa'] %></td>
+							<td id="family_support_edu"><%= i['family_support_edu'] %></td>
+							<td id="family_und_imp"><%= i['family_und_imp'] %></td>
+							<td>-</td>
+						</tr>
+					<% end %>
+				</tbody>	
+			</table>
+		</div>
+	</div>
+</div>

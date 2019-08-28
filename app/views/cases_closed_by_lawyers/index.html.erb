@@ -1,0 +1,18 @@
+<div class="container">
+	<div class="row">
+		<div>
+		<h3>Cases closed by HAQ lawyers</h3><br>
+			<div id = "validation_div"></div>
+			<%= form_tag("/all_reports/cases_closed_by_lawyers/submit_form", class: "form-inline" ,method: "post", class: 'form-inline', name:"myForm", id:"submit_form_for_supported_by_lawyers") do %>
+				<label>Start Date</label>
+				<%= date_field_tag(:start_date, Date.today, :id => 'start_date_field', :max => Date.today)%>
+
+				<label>End Date</label>
+				<%= date_field_tag(:end_date, Date.today, :id => 'end_date_field', :max => Date.today)%>
+
+				<button type="submit">Submit</button>
+			<% end %>
+		</div>
+	</div>
+</div>
+

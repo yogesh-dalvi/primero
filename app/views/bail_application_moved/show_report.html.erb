@@ -1,0 +1,98 @@
+<div class="container">
+	<div class="row">
+		<div class="large-12 small-12 columns">
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+		<a id="generate" class="fa fa-file-excel-o" data-toggle="tooltip" title="Download csv" data-placement="bottom" target = "_blank"></a>
+		<h3>Bail Application moved where HAQ Lawyer was present</h3><br>
+			<%= form_tag("/all_reports/bail_application_moved/submit_form", class: "form-inline" ,method: "post", class: 'form-inline', name:"myForm", id:"submit_form_for_supported_by_lawyers") do %>
+				<label>Start Date</label>
+				<%= date_field_tag(:start_date, Date.today, :id => 'start_date_field', :max => Date.today)%>
+
+				<label>End Date</label>
+				<%= date_field_tag(:end_date, Date.today, :id => 'end_date_field', :max => Date.today)%>
+
+				<button type="submit">Submit</button>
+			<% end %>
+			<div style="margin-top: 5%;" id="report">
+				<table class="dataTable in_content_area reports">
+					<thead>
+						<tr>
+							<td>Year</td>
+							<td>No.of Bail Application Moved</td>
+							<td>Allowed</td>
+							<td>Dismissed</td>
+							<td>Pending</td>
+						</tr>
+					</thead>
+					<tbody>
+						<% @data.each do |x| %>
+							<tr>
+								<td><%= x['year'] %></td>
+								<td><%= x['bail_application_moved_on_behalf_of_name_of_accused'] %></td>
+								<td><%= x['allowed'] %></td>
+								<td><%= x['dismissed'] %></td>
+								<td><%= x['pending'] %></td>
+							</tr>
+						<% end %>
+					</tbody>	
+				</table>
+			<script>
+			function download_csv(csv, filename) {
+				var csvFile;
+				var downloadLink;
+
+				// CSV FILE
+				csvFile = new Blob([csv], {type: "text/csv"});
+
+				// Download link
+				downloadLink = document.createElement("a");
+
+				// File name
+				downloadLink.download = filename;
+
+				// We have to create a link to the file
+				downloadLink.href = window.URL.createObjectURL(csvFile);
+
+				// Make sure that the link is not displayed
+				downloadLink.style.display = "none";
+
+				// Add the link to your DOM
+				document.body.appendChild(downloadLink);
+
+				// Lanzamos
+				downloadLink.click();
+
+				document.body.removeChild(downloadLink);
+				
+			}
+
+			function export_table_to_csv(html, filename) {
+				var csv = [];
+			
+				csv.push("From Date : <%= @start_date %>");
+				csv.push("To Date : <%= @end_date %>");
+				var rows = html.querySelectorAll("tr");
+				
+				 
+				for (var i = 0; i < rows.length; i++) {
+					var row = [], cols = rows[i].querySelectorAll("td, th");
+						for (var j = 0; j < cols.length; j++)
+						{
+							row.push(cols[j].innerText);
+						}
+						csv.push(row.join(","));		
+					}
+
+					// Download CSV
+					download_csv(csv.join("\n"), filename);
+			}
+
+			document.getElementById("generate").addEventListener("click", function () {
+					var html = document.getElementById("report");
+				export_table_to_csv(html, "Bail application moved.csv");
+			});
+		</script>
+			</div>
+		</div>	
+	</div>
+</div>

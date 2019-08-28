@@ -63,12 +63,12 @@
 //= require_tree ./views
 //= require router
 //= require category
-//= require psychosocial
 //= require compensation
 //= require accused
-//= require mental_assessment
 //= require caselog
-
+//= require mental_assessment
+//= require others
+//= require referral
 
 //= require turbolinks
 //= require primero_libs/turbolinks-compatibility

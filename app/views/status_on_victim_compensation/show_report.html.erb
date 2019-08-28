@@ -1,0 +1,49 @@
+<div class="container">
+	<div class="row">
+		<div class="large-12 small-12 columns">
+		<h3>Status on victim compensation</h3><br>
+			<div id = "validation_div"></div>
+			<%= form_tag("/all_reports/status_on_victim_compensation/submit_form", class: "form-inline" ,method: "post", class: 'form-inline', name:"myForm", id:"submit_form_for_supported_by_lawyers") do %>
+				<label>Start Date</label>
+				<%= date_field_tag(:start_date, Date.today, :id => 'start_date_field', :max => Date.today)%>
+
+				<label>End Date</label>
+				<%= date_field_tag(:end_date, Date.today, :id => 'end_date_field', :max => Date.today)%>
+
+				<button type="submit">Submit</button>
+			<% end %>
+		<div style="margin-top: 5%;">
+			<table class="dataTable in_content_area reports">
+				<thead>
+					<tr>
+							<td rowspan="2">Case ID</td>
+							<td rowspan="2">Concerned Court/DLSA</td>
+							<td rowspan="2">Client's</td>
+							<td colspan="2">Interim compensation</td>
+							<td colspan="2">Final compensation</td>
+					</tr>
+					<tr>
+						<td>Grant Date</td>
+						<td>Amount (in INR)</td>
+						<td>Grant Date</td>
+						<td>Amount (in INR)</td>
+					</tr>
+				</thead>
+				<tbody>
+					<% @victim_comp.each do |x| %>
+					<tr>
+						<td id="case_id"><%= x[:case_id] %></td>
+						<td id="court"><%= x[:court] %></td>
+						<td id="client_name"><%= x[:client_name] %></td>
+						<td id="grant_date"><%= x[:grant_date] %></td>
+						<td id="amount"><%= x[:amount] %></td>
+						<td id="final_grant_date"><%= x[:final_grant_date] %></td>
+						<td id="final_amount"><%= x[:final_amount] %></td>
+					</tr>
+				<% end %>
+				</tbody>	
+			</table>
+		</div>
+	</div>	
+	</div>
+</div>

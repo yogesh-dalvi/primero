@@ -1,0 +1,26 @@
+<div class="container">
+	<div class="row">
+		<br>
+		<div class="large-12 small-12 columns">
+			<div align="right">
+				<%= link_to "Download pdf",{:controller => "status_on_financial_needs", :action => "generate_pdf", :format=> 'pdf',:data =>  @data}, {:class => "fa fa-file-pdf-o", :style => "font-size:23px;color:#575757", :"data-toggle" => "tooltip", :title => "Download pdf", :"data-placement" => "bottom", :target => "_blank"} %>
+				<a id="generate" class="fa fa-file-excel-o" data-toggle="tooltip" title="Download csv" data-placement="bottom" target = "_blank"></a>
+			</div>
+			<h3>Status of Victim Compensation/Financial Needs in cases where efforts are ongoing</h3>
+			<table class="dataTable in_content_area reports">
+				<thead>
+					<tr>
+							<td>Status</td>
+							<td>Cases</td>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>No. of total cases</td>
+						<td id="by_status"><%= @by_status %></td>
+					</tr>
+				</tbody>	
+			</table>
+		</div>
+	</div>
+</div>
