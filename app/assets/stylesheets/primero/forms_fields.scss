@@ -13,6 +13,14 @@ $lg_input_font_size: 2rem;
   z-index:9999 !important;
 }
 
+fieldset#tab_cp_mental_wellbeing_assessment_scale input[type=radio]+ label {
+    margin-left: 1px;
+    vertical-align: top;
+}
+fieldset#tab_cp_mental_wellbeing_assessment_scale input[type=radio]+ label +br {
+    display: none;
+}
+
 input:focus{
   -webkit-box-shadow: none !important;
   -moz-box-shadow: none !important;
@@ -72,6 +80,10 @@ select:not([class^="ui-datepicker-"]), select:hover:not([class^="ui-datepicker-"
   color: $grey_color;
   padding: 8px;
   font-size: $thirteen_px;
+}
+
+#tab_cp_psychosocial_needs_status .subform_container .chosen-container-single {
+	max-width: 574px !important;
 }
 
 .chosen-container .chosen-drop {
@@ -410,7 +422,6 @@ fieldset {
       span {
         font-weight: normal;
         font-size: $thirteen_px;
-        unicode-bidi: plaintext;
       }
     }
 

@@ -9,6 +9,111 @@ Primero::Application.routes.draw do
 # USER URLS
 #######################
 
+  match '/all_reports' => 'all_reports#index', :as => :reports_list, :via => :get
+  
+  # legal_cases_closed
+  match '/all_reports/legal_cases_closed' => 'legal_cases_closed#index', :as => :legal_cases_closed_index, :via => :get
+  match '/all_reports/legal_cases_closed/submit_form' => 'legal_cases_closed#submit_form', :as => :legal_cases_closed_submit_form, :via => :post
+  match '/all_reports/legal_cases_closed/submit_form' => 'legal_cases_closed#redirect_to_index', :as => :legal_cases_closed_redirect_to_index, :via => :get
+	
+	# bail_application_moved
+  match '/all_reports/bail_application_moved' => 'bail_application_moved#index', :as => :bail_application_moved_index, :via => :get
+  match '/all_reports/bail_application_moved/submit_form' => 'bail_application_moved#submit_form', :as => :bail_application_moved_submit_form, :via => :post
+  match '/all_reports/bail_application_moved/submit_form' => 'bail_application_moved#redirect_to_index', :as => :bail_application_moved_redirect_to_index, :via => :get
+	
+	# cases_closed_by_lawyers
+  match '/all_reports/cases_closed_by_lawyers' => 'cases_closed_by_lawyers#index', :as => :cases_closed_by_lawyers_index, :via => :get
+  match '/all_reports/cases_closed_by_lawyers/submit_form' => 'cases_closed_by_lawyers#submit_form', :as => :cases_closed_by_submit_form, :via => :post
+  match '/all_reports/cases_closed_by_lawyers/submit_form' => 'cases_closed_by_lawyers#redirect_to_index', :as => :cases_closed_by_redirect_to_index, :via => :get
+	
+	# secondary_psychological_care
+  match '/all_reports/secondary_psychological_care' => 'secondary_psychological_care#index', :as => :secondary_psychological_care_lawyers_index, :via => :get
+  match '/all_reports/secondary_psychological_care/submit_form' => 'secondary_psychological_care#submit_form', :as => :secondary_psychological_care_submit_form, :via => :post
+  match '/all_reports/secondary_psychological_care/submit_form' => 'secondary_psychological_care#redirect_to_index', :as => :secondary_psychological_care_redirect_to_index, :via => :get
+	
+	# tertiary_psychological_care
+  match '/all_reports/tertiary_psychological_care' => 'tertiary_psychological_care#index', :as => :tertiary_psychological_care_index, :via => :get
+  match '/all_reports/tertiary_psychological_care/submit_form' => 'tertiary_psychological_care#submit_form', :as => :tertiary_psychological_care_submit_form, :via => :post
+  match '/all_reports/tertiary_psychological_care/submit_form' => 'tertiary_psychological_care#redirect_to_index', :as => :tertiary_psychological_care_redirect_to_index, :via => :get
+  
+  # details of case intake & closure
+  match '/all_reports/detail_case_intake_closure' => 'detail_case_intake_closure#index', :as => :detail_case_intake_closure_index, :via => :get
+  match '/all_reports/detail_case_intake_closure/submit_form' => 'detail_case_intake_closure#submit_form', :as => :detail_case_intake_closure_submit_form, :via => :post
+  match '/all_reports/detail_case_intake_closure/submit_form' => 'detail_case_intake_closure#redirect_to_index', :as => :detail_case_intake_closure_redirect_to_index, :via => :get
+	
+	# status_on_victim_compensation
+  match '/all_reports/status_on_victim_compensation' => 'status_on_victim_compensation#index', :as => :status_on_victim_compensation_index, :via => :get
+  match '/all_reports/status_on_victim_compensation/submit_form' => 'status_on_victim_compensation#submit_form', :as => :status_on_victim_compensation_submit_form, :via => :post
+  match '/all_reports/status_on_victim_compensation/submit_form' => 'status_on_victim_compensation#redirect_to_index', :as => :status_on_victim_compensation_redirect_to_index, :via => :get
+	
+  # victim_compensation_disposed
+  match '/all_reports/victim_compensation_disposed' => 'victim_compensation_disposed#index', :as => :victim_compensation_disposed_index, :via => :get
+  match '/all_reports/victim_compensation_disposed/submit_form' => 'victim_compensation_disposed#submit_form', :as => :victim_compensation_disposed_submit_form, :via => :post
+  match '/all_reports/victim_compensation_disposed/submit_form' => 'victim_compensation_disposed#redirect_to_index', :as => :victim_compensation_disposed_redirect_to_index, :via => :get
+	
+  # list_of_trainings
+  match '/all_reports/list_of_trainings' => 'list_of_trainings#index', :as => :list_of_trainings_index, :via => :get
+  match '/all_reports/list_of_trainings/submit_form' => 'list_of_trainings#submit_form', :as => :list_of_trainings_submit_form, :via => :post
+  match '/all_reports/list_of_trainings/submit_form' => 'list_of_trainings#redirect_to_index', :as => :list_of_trainings_redirect_to_index, :via => :get
+	
+	# high_court_iprobono
+  match '/all_reports/high_court_iprobono' => 'high_court_iprobono#index', :as => :high_court_iprobono_index, :via => :get
+  match '/all_reports/high_court_iprobono/submit_form' => 'high_court_iprobono#submit_form', :as => :high_court_iprobono_submit_form, :via => :post
+  match '/all_reports/high_court_iprobono/submit_form' => 'high_court_iprobono#redirect_to_index', :as => :high_court_iprobono_redirect_to_index, :via => :get
+	
+	# trial_court_cases
+  match '/all_reports/trial_court_cases' => 'trial_court_cases#index', :as => :trial_court_cases_index, :via => :get
+  match '/all_reports/trial_court_cases/submit_form' => 'trial_court_cases#submit_form', :as => :trial_court_cases_submit_form, :via => :post
+  match '/all_reports/trial_court_cases/submit_form' => 'trial_court_cases#redirect_to_index', :as => :trial_court_cases_redirect_to_index, :via => :get
+	
+	# overall_psychosocial_cases
+  match '/all_reports/overall_psychosocial_cases' => 'overall_psychosocial_cases#index', :as => :overall_psychosocial_cases_index, :via => :get
+  match '/all_reports/overall_psychosocial_cases/submit_form' => 'overall_psychosocial_cases#submit_form', :as => :overall_psychosocial_cases_submit_form, :via => :post
+  match '/all_reports/overall_psychosocial_cases/submit_form' => 'overall_psychosocial_cases#redirect_to_index', :as => :overall_psychosocial_cases_redirect_to_index, :via => :get
+  
+  # appeal_in_appellate
+  match '/all_reports/appeal_in_appellate' => 'appeal_in_appellate#index', :as => :appeal_in_appellate_index, :via => :get
+  match '/all_reports/appeal_in_appellate/submit_form' => 'appeal_in_appellate#submit_form', :as => :appeal_in_appellate_submit_form, :via => :post
+  match '/all_reports/appeal_in_appellate/submit_form' => 'appeal_in_appellate#redirect_to_index', :as => :appeal_in_appellate_redirect_to_index, :via => :get
+
+  resource :general_report
+
+  resources :bail_interim_compensation do
+    collection do
+      post :submit_form
+    end
+  end 
+  
+  resources :summary_of_cases
+
+  resources :trial_completed
+  
+  resources :status_of_psychosocial
+  
+	resources :status_on_financial_needs do
+		collection do
+      get :generate_pdf
+    end
+  end 
+	
+	resources :status_as_on
+	resources :cases_where_identified
+	
+	resources :supported_by_lawyers
+	resources :reason_for_adjournments
+	
+	#resources :case_intake_and_closure
+  
+  resources :family_members_impact do
+    collection do
+      post :submit_form
+      end
+    end
+
+	resources :rightful_conviction_indicators
+	
+	resources :sensitisation_trainings
+	
   resources :users do
     collection do
       get :change_password

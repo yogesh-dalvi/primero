@@ -62,8 +62,13 @@
 //= require_tree ./views/management
 //= require_tree ./views
 //= require router
-//= require intakes
-
+//= require category
+//= require compensation
+//= require accused
+//= require caselog
+//= require mental_assessment
+//= require others
+//= require referral
 
 //= require turbolinks
 //= require primero_libs/turbolinks-compatibility

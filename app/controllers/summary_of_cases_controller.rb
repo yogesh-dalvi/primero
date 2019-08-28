@@ -1,0 +1,3 @@
+class SummaryOfCasesController < ApplicationController
+	
+end

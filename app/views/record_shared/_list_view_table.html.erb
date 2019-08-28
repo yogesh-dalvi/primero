@@ -33,7 +33,7 @@
 </div>
 <div class="row">
   <% if options[:display_filter].present? %>
-    <div class="large-9 small-9 columns">
+    <div class="large-12 small-12 columns">
   <% else %>
     <div class="large-12 small-12 columns">
   <% end %>
@@ -55,36 +55,6 @@
     </table>
     <div class="table_spacer"></div>
   </div>
-  <% if options[:display_filter].present? %>
-    <div class="large-3 small-3 columns index_filters">
-      <ul class="tabs" data-tabs id="filter-area">
-        <li class="tabs-title is-active"><a href="#filters" aria-selected="true"><%= t('saved_search.filters_tab') %></a></li>
-        <% if options[:display_saved_search].present? && can?(:read, SavedSearch) %>
-          <li class="tabs-title"><a data-tabs-target="#saved-searches" href="#saved-searches"><%= t('saved_search.saved_searches_tab') %></a></li>
-        <% end %>
-      </ul>
-      <div class="tabs-content" data-tabs-content="filter-area">
-        <div class="tabs-panel is-active" id="filters">
-          <%= render "#{controller.controller_name}/filter", filters_to_show: index_filters_to_show(record) %>
-        </div>
-        <% if options[:display_saved_search].present? && can?(:read, SavedSearch) %>
-          <div class="tabs-panel" id="saved-searches">
-            <h5><%= t('cases.my_filters') %></h5>
-            <ul class="save-searches">
-              <% @saved_searches.each do |filter| %>
-                <li>
-                  <a class="user_filter" data-id="<%= filter.id %>"><%= filter.name %></a>
-                  <%= link_to  filter, method: :delete, data: { confirm: t('saved_searches.delete', filter_name: filter.name) }, class: "delete_saved_search" do %>
-                    <span aria-hidden="true">&times;</span>
-                  <% end %>
-                </li>
-              <% end %>
-            </ul>
-          </div>
-        <% end %>
-      </div>
-
-    </div>
-  <% end %>
+  
 </div>
 <%= render :partial => 'shared/pagination', :locals => {:results => collection, :total => @total_records, :per => @per_page} %>

@@ -1,0 +1,63 @@
+<div class="container">
+	<div class="row">
+		<div>
+            <h3>Status of Court Hearings on Bail, Interim Compensation and Witness protection</h3>
+			<div id = "validation_div"></div>
+			<%= form_tag("/bail_interim_compensation/submit_form", class: "form-inline" ,method: "post", class: 'form-inline', name:"myForm", id:"submit_form_for_monthly_report") do %>
+				<label>Start Date</label>
+				<%= date_field_tag(:start_date, Date.today, :id => 'start_date_field', :max => Date.today)%>
+
+				<label>End Date</label>
+				<%= date_field_tag(:end_date, Date.today, :id => 'end_date_field', :max => Date.today)%>
+
+				<button type="submit">Submit</button>
+			<% end %>
+		</div>
+		<div class="large-12 small-12 columns">
+			<table class="dataTable in_content_area reports">
+				<thead>
+                    <tr>
+                        <td>Legal Support (Stages as per Criminal Justice Procedure)</td>
+                        <td>Year</td>
+                        <td>Court hearings</td>
+                        <td>No. of cases</td>
+                        <td>No. of hearings attended by HAQ lawyer</td>
+                        <td>No. of hearings missed by HAQ lawyer</td>
+                        <td>No information available about hearing date</td>
+                        <td>Vakalatname was not signed</td>
+                        <td>No Lawyer was appointed</td>
+                        <td>Vakalatnama was signed but no lawyer was appointed</td>
+                        <td>No Need of Lawyers Presence</td>
+					</tr>
+				</thead>
+				<tbody>
+					<% @data.each do |i|%>
+							<% i['data'].each_with_index do |j,index| %>
+								<tr>
+									<% if index == 0 %>		
+										<td rowspan = <%=i['length']%> > <%= i['stage'] %> </td>
+									<% end %>
+									<td><%= j['year'] %></td>
+									<td><%= j['court_hearings'] %></td>
+									<td><%= j['no_of_cases'] %></td>
+									<td><%= j['hearing_atend_by_haq_lawyer'] %></td>
+									<td><%= j['no_of_heaing_missed_by_haq_lawyer'] %></td>
+									<td><%= j['no_info_avail_abt_hearing_date'] %></td>
+									<td><%= j['valkatname_not_signed'] %></td>
+									<td><%= j['no_lawyer_appoint'] %></td>
+									<td><%= j['valkatnama_signed_bt_no_lawyer_appoint'] %></td>
+									<td><%= j['no_need_of_lawyer_presence'] %></td>
+								</tr>
+							<% end %>
+					<% end %>
+				</tbody>	
+			</table>
+		</div>
+		
+		
+	</div>
+</div>
+
+
+
+

@@ -1,0 +1,176 @@
+<!doctype html>
+<html lang="en">
+	<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<script>
+		function demoFromHTML() {
+			var pdf = new jsPDF('p', 'pt', 'letter');
+			source = $('#content')[0];
+			specialElementHandlers = {
+				'#bypassme': function (element, renderer) {
+					return true
+				}
+			};
+			margins = {
+				top: 80,
+				bottom: 60,
+				left: 40,
+				width: 522
+			};
+			pdf.fromHTML(
+			source, 
+			margins.left, 
+			margins.top, {
+				'width': margins.width, 
+				'elementHandlers': specialElementHandlers
+			},
+
+			function (dispose) {
+				pdf.save('Test.pdf');
+			}, margins);
+		}
+	</script>
+	<script>
+		function get_data_for_new_regisered_applications() {  	
+			var police_count, exclients_count, word_of_mouth_count, self_count, lawyers_legal_org_count, ngo_count, go_count,       icw_pw_count,any_other_count;
+			police_count=0;
+			exclients_count=0;
+			word_of_mouth_count=0;
+			self_count=0;
+			lawyers_legal_org_count=0;
+			ngo_count=0;
+			go_count=0;
+			icw_pw_count=0;
+			any_other_count=0;
+				console.log("Basic " + btoa("primero" + ":" + "primero"));
+			
+
+				var xhr = new XMLHttpRequest();
+			xhr.open("GET", "http://192.168.2.136:5984/primero_child_development/_design/regapplication/_view/regapp?group=true", true);
+			xhr.withCredentials = true;
+			xhr.setRequestHeader("Authorization", 'Basic ' + btoa('primero:primero'));
+			xhr.onload = function () {
+				console.log(xhr.responseText);
+			};
+			xhr.send();
+			
+			document.getElementById("police_count").innerHTML = police_count; 
+			document.getElementById("exclients_count").innerHTML = exclients_count;
+			document.getElementById("word_of_mouth_count").innerHTML = word_of_mouth_count; 
+			document.getElementById("self_count").innerHTML = self_count; 
+			document.getElementById("lawyers_legal_org_count").innerHTML = lawyers_legal_org_count; 
+			document.getElementById("ngo_count").innerHTML = ngo_count; 
+			document.getElementById("go_count").innerHTML = go_count; 
+			document.getElementById("icw_pw_count").innerHTML = icw_pw_count; 
+			document.getElementById("any_other_count").innerHTML = any_other_count;  
+		}
+
+	</script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.5/jspdf.debug.js"></script>
+	<link href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet"/>
+	<script src="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+	
+	
+    <title>Hello, world!</title>
+  </head>
+  <body>
+	<div id="content">
+		<div class="container">
+			<div class="row">
+				<div id="location">
+					<div>
+					  <label>Location</label>
+					</div>
+					<div class="col-sm-2" id="states">
+					  <select id="report-state">
+						<option value="">select...</option>  
+						<option value="maharashtra_94827">Maharashtra</option>
+						<option value="delhi_64730">Delhi</option>
+						<option value="ncw">NCW</option>
+					  </select>
+					</div>
+				</div>
+				<div id="Cell">
+					<div style="display: inline-block;" class="label-cell">
+					  <label>Cell</label>
+					</div>
+					<div id="Maharashtra" style="display: inline-block;">
+					  <select id="distr-maha">
+						<option value="">select...</option>
+						<option>Dadar</option>
+						<option>Kandivali</option>
+						<option>CBD Belapur</option><option>Kurla</option><option>Vakola</option><option>Vikhroli</option><option>Nashik</option><option>Dhule</option>
+						<option>Pune</option><option>Nanded</option><option>Aurangabad</option><option>Yawatmal</option><option>Wardha</option>
+					  </select>
+					</div>
+					<div style="display: inline-block;" id="Delhi">
+					  <select id="distr-delhi">
+						<option value="">select...</option>
+						<option>Malviya Nagar</option>
+						<option>Sabji Mandi</option>
+						<option>Rani Bagh</option><option>Nand Nagri</option><option>Kamla Market</option><option>Mandir Marg</option><option>Saket</option><option>Dwarka</option>
+						<option>Sri Niwas Puri</option><option>Gazipur</option><option>Kirti Nagar</option><option>Rohini</option><option>Police LinePolice Line</option>
+						<option>Shahdara</option><option>Delhi Cantt</option>
+					  </select>
+					</div>
+					<div style="display: inline-block;" id="NCW">
+					  <select id="distr-ncw">
+						<option value="">select...</option>
+						<option>Kamrup</option>
+						<option>East Khasi Hills-Shillong</option>
+						<option>Greater Chennai</option><option>Salem</option><option>Tirunelveli</option><option>Madurai</option><option>Darbhanga</option><option>Bhagalpur</option>
+						<option>Kishanganj</option><option>Motihari</option><option>Gaya</option><option>Ludhiana</option><option>Amritsar</option>
+						<option>SAS Nagar-Mohali</option><option>Bhopal</option><option>Gwalior</option><option>Indore</option><option>Jabalpur</option>
+						<option>Sagar</option><option>Balasore</option><option>Rourkela</option>
+					  </select>
+					</div>
+				</div>
+				<div class="col-sm-4">
+					<button onclick="get_data_for_new_regisered_applications()" type="button" class="button btn_submit large">Result</button>
+					<button type="button" onclick="javascript:demoFromHTML();" class="button btn_submit large">PDF</button>
+				</div>
+			</div>
+			<table class="table table-striped">
+				<thead>
+					<tr>
+						<th colspan="2" style="text-align:center">Special Cells for Women</th>
+					</tr>
+					<tr>
+						<th colspan="2" style="text-align:center">Consolidated Monthly Progress Report</th>
+					</tr>
+					<tr>
+						<th colspan="2" style="text-align:center">Details</th>
+					</tr>     
+				</thead>
+				<tbody>
+					<tr>
+						<td>New Registered applications</td>
+						<td>Count</td>
+				    </tr>
+					<tr>
+						<td>Police</td>
+						<td>gdfgd</td>
+					</tr>
+					<tr>
+						<td>Ex-clients</td>
+						<td>fdf</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+	<div>
+		<!-- Optional JavaScript -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+        <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+	</div>
+  </body>
+</html>

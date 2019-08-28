@@ -17,6 +17,13 @@ class Lookup < CouchRest::Model::Base
 
   design do
     view :all
+
+    view :by_lookup_stages_of_a_legal_case,
+    :map => "function(doc) {
+      if(doc._id.match(/lookup-stages-of-a-legal-case/)){
+        emit(doc.lookup_values_en, 1);
+      }	
+    }"
   end
 
   #TODO This validate_name_in_base_language is needed in mulitiple models... find a better solution

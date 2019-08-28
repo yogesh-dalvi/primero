@@ -1,0 +1,14 @@
+<div class="container">
+	<div class="row">
+		<div>
+		<h3>Family members directely impacted</h3>
+			<%= form_tag("/family_members_impact/submit_form", class: "form-inline" ,method: "post", class: 'form-inline', name:"myForm", id:"submit_form_for_monthly_report") do %>
+				<label for="email">Start year:</label>
+				<%= select_year(Date.today, start_year: 2000, end_year: Date.today.year, prompt: 'Choose start year...', field_name: 'start_year')%>
+				<label for="pwd">End year</label>
+				<%= select_year(Date.today, start_year: 2000, end_year: Date.today.year, prompt: 'Choose end year...', field_name: 'end_year')%>
+				<button type="submit">Submit</button>
+			<% end %>
+		</div>
+	</div>
+</div>

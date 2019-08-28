@@ -165,6 +165,158 @@ class Child < CouchRest::Model::Base
                     }
                  }
               }"
+              
+    view 	:by_legal_case_closed,
+					:map => "function(doc) {
+							var d = new Date(doc.date_closure);
+							var year = d.getFullYear();
+							var stage = doc.stage.replace(/_/gi,' ');
+							var closure =doc.closure_reason.replace(/_/gi,' ');
+							var lastIndex = stage.lastIndexOf(' ');
+							stage= stage.substring(0, lastIndex);
+							var lastIndex = closure.lastIndexOf(' ');
+							closure= closure.substring(0, lastIndex);
+
+							emit([new Date(doc.registration_date), doc.case_id_display, doc.pseudonym, year,stage ,closure]);
+							}"
+		
+		view 	:by_victim_compensation,
+					:map => "function(doc) {
+							var court=doc.court.replace(/_/gi,' ');
+							var lastIndex = court.lastIndexOf(' ');
+							court= court.substring(0, lastIndex);
+							emit([new Date(doc.registration_date), doc.case_id_display, court, doc.name_first, doc.grant_date, doc.amount_in_inr, doc.grant_date_final_compensation, doc.amount_in_inr_final_compensation]);
+						}"
+		
+		view 	:by_victim_compensation_disposed,
+					:map => "function(doc) {
+							var court=doc.court.replace(/_/gi,' ');
+							var index= court.lastIndexOf(' ');
+							court= court.substring(0, index);
+							
+							var grant=doc.grant_date
+							var amt=doc.amount_in_inr
+							var finalDate=doc.grant_date_final_compensation
+							var finalAmt=doc.amount_in_inr_final_compensation
+							
+							var vc='Received Interim compensation of INR '+amt+' & also received final compensation of INR '+finalAmt+' on '+grant+' & '+finalDate	
+
+							emit([new Date(doc.registration_date),doc.case_id_display, court, doc.pseudonym, vc]);
+						}"
+			
+			view 	:by_cases_where_identi_res_not_met,
+					:map => "function(doc) {
+								var closure =doc.closure_reason.replace(/_/gi,' ');
+								var lastIndex = closure.lastIndexOf(' ');
+								closure= closure.substring(0, lastIndex);
+								emit(closure,doc.cp_psychosocial_needs_status_subform_type_of_need)
+							}"
+													
+			view 	:by_lawyer_case_closed,
+					:map => "function(doc) {
+							var stage = doc.stage.replace(/_/gi,' ');
+							var closure =doc.closure_reason.replace(/_/gi,' ');
+							var lastIndex = stage.lastIndexOf(' ');
+							stage= stage.substring(0, lastIndex);
+							var lastIndex = closure.lastIndexOf(' ');
+							closure= closure.substring(0, lastIndex);
+
+							emit([new Date(doc.registration_date), doc.case_id_display,doc.name_first,doc.case_title,stage,closure]);
+						}"
+			
+			view 	:high_court_iprobono,
+					:map => "function(doc) {
+							var purpose = doc.purpose.replace(/_/gi,' ');
+							var lastIndex = purpose.lastIndexOf(' ');
+							purpose= purpose.substring(0, lastIndex);
+							
+							var court=doc.court.replace(/_/gi,' ');
+							var lastIndex = court.lastIndexOf(' ');
+							court= court.substring(0, lastIndex);
+							
+							case_is_handled_by = doc.case_is_handled_by.replace(/_/gi,' ');
+							var lastIndex = case_is_handled_by.lastIndexOf(' ');
+							case_is_handled_by = case_is_handled_by.substring(0, lastIndex);
+						
+						emit([new Date(doc.registration_date),doc.case_id_display,doc.name,purpose,doc.groundreasons_for_approaching_hc,court,doc.case_number,doc.case_title,case_is_handled_by,doc.date_of_filing,doc.date_of_disposal,doc.outcome,doc.child_status]);
+					}"
+					
+			
+			view 	:list_of_training,
+					:map => "function(doc) {
+						var organised = doc.organised_by.replace(/_/gi,' ');
+						var lastIndex = organised.lastIndexOf(' ');
+						organised= organised.substring(0, lastIndex);
+						
+						var description = doc.description_of_participants.replace(/_/gi,' ');
+						var lastIndex = description.lastIndexOf(' ');
+						description= description.substring(0, lastIndex);
+						
+						const months = ['JAN', 'FEB', 'MAR','APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'];
+						var d = new Date(doc.date_of_training);							
+						var date = d.getDate()  + '-' + months[(d.getMonth())]+ '-' + d.getFullYear()	
+						
+						emit([new Date(doc.registration_date),date,doc.facilitated_by,organised,description,doc.number_of_participants]);
+          }"
+          
+      view  :by_appeal_in_appellate,
+          :map => "function(doc) {
+            emit([new Date(doc.registration_date), doc.child_status]);         
+            }"    
+
+      view 	:by_family_members_directely_impacted,
+      :map => "function(doc) {
+        var cont_edu = doc.family_supports_the_child_in_continuing_education
+        var blame = doc.family_stopped_blaming_the_child
+        var unde_imp = doc.family_understands_importance_of_being_regular_with_court_hearings
+        var knowledge = doc.familys_knowledge_and_understanding_of_csa_has_increased
+
+          emit([new Date(doc.registration_date).getFullYear(),blame,knowledge,cont_edu,unde_imp]);
+      }"    
+
+      view  :by_cases_pending_formal_intake,
+      :map => "function(doc) {
+          emit([new Date(doc.registration_date),doc.case_type_legal_psycho, doc.child_status, doc.approval_status_case_plan]);
+      }" 
+
+      view 	:by_bail_interim_compensation_witness_protection,
+      :map => "function(doc) {
+                  emit([new Date(doc.registration_date),doc.cp_court_hearing_subform_next_date_purpose]);
+              }"
+      
+      view 	:by_secondary_psychological_care,
+					:map => "function(doc) {
+						var sec_needs = doc.whether_child_has_secondary_psychological_needs
+						var cons = doc.whether_secondary_psychological_needs_attended_by_counsellor
+					 
+							emit([new Date(doc.registration_date),sec_needs,cons]);
+						
+					}"
+			
+			view 	:by_tertiary_psychological_care,
+					:map => "function(doc) {
+						var tert_needs = doc.whether_child_has_tertiary_psychological_needs
+						var needs_attend = doc.whether_tertiary_psychological_needs_attended
+					 
+							emit([new Date(doc.registration_date),tert_needs,needs_attend]);
+						
+					}"
+			
+			view 	:by_bail_application_moved,
+					:map => "function(doc) {
+ 
+						emit([new Date(doc.registration_date),doc.cp_bail_information_subform_bail_details]);
+
+						}"						
+			
+			# trial court cases
+			view 	:by_trial_court_cases,
+					:map => "function(doc) {
+ 
+						emit([new Date(doc.registration_date),[doc.case_type_legal_psycho,doc.child_status]]);
+
+					}"
+    
   end
 
   def self.quicksearch_fields

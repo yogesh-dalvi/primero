@@ -1,0 +1,3 @@
+class TrialCompletedController < ApplicationController
+	
+end

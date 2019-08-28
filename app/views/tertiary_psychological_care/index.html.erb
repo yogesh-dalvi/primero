@@ -1,0 +1,16 @@
+<div class="container">
+	<div class="row">
+		<div>
+			<h3>Tertiary Psychological Care</h3>
+			<%= form_tag("/all_reports/tertiary_psychological_care/submit_form", class: "form-inline" ,method: "post", class: 'form-inline', name:"myForm", id:"submit_form_for_monthly_report") do %>
+				<label>Start Date</label>
+				<%= date_field_tag(:start_date, Date.today, :id => 'start_date_field', :max => Date.today)%>
+
+				<label>End Date</label>
+				<%= date_field_tag(:end_date, Date.today, :id => 'end_date_field', :max => Date.today)%>
+
+				<button type="submit">Submit</button>
+			<% end %>
+		</div>
+	</div>
+</div>
