@@ -20,6 +20,22 @@ Primero::Application.routes.draw do
       get :quarterly_pdf
     end
   end
+
+  resources :monthly_reports_test do
+    collection do
+      post :submit_form
+      get :show_qpr
+      get :generate_pdf
+    end
+  end
+  
+  resources :quarterly_reports_test do
+    collection do
+      post :submit_form
+      get :show_qpr
+      get :quarterly_pdf
+    end
+  end
   
 #######################
 # USER URLS

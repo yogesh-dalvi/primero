@@ -162,8 +162,8 @@ Primero = _primero.Views.Base.extend({
       theme: 'dark'
     };
     $(".side-nav").mCustomScrollbar(
-      _.extend(options, {
-        setHeight: 460,
+      _.extend(options, {		  
+        setHeight: 70,
         callbacks:{
           onInit: function() {
             $('.scrolling_indicator.down').css('visibility', 'visible');
@@ -173,11 +173,11 @@ Primero = _primero.Views.Base.extend({
             $('.scrolling_indicator.up').css('visibility', 'visible');
           },
           onTotalScroll: function(){
-            $('.scrolling_indicator.down').css('visibility', 'hidden');
+            $('.scrolling_indicator.down').css('visibility', 'visible');
             $('.scrolling_indicator.up').css('visibility', 'visible');
           },
           onTotalScrollBack: function() {
-            $('.scrolling_indicator.up').css('visibility', 'hidden');
+            $('.scrolling_indicator.up').css('visibility', 'visible');
           }
         }
       })

@@ -1,0 +1,52 @@
+$(document).ready(function() {
+
+  // validation
+  document.getElementById("validation_div").innerHTML= ""
+  document.getElementById("submit_tag").addEventListener("click", function(event){
+    document.getElementById("validation_div").innerHTML= ""
+    var validation_content='';	
+    var start_date = document.getElementById("start_date_field").value;
+    var end_date = document.getElementById("end_date_field").value;
+    var location = document.getElementById("report-location").value;
+    if (start_date == "" || end_date == "" || location == "")
+      {
+        if (start_date == "")
+          {
+      //document.getElementById("start_date_validate").innerHTML = "please select start date"; 
+      validation_content += '<label id = "start_date_validate1" style="color: red">please select start date</label><br>';
+          }
+        if (end_date == "")
+          {
+      //document.getElementById("end_date_validate").innerHTML = "please select end date";
+      validation_content += '<label id = "end_date_validate1" style="color: red">please select end date</label><br>'; 
+          }
+        if (location == "")
+          {
+      //document.getElementById("state_validate").innerHTML = "please select location"; 
+      validation_content += '<label id = "location_validate" style="color: red">please select state</label><br>';
+          }
+        if (start_date!= "" && end_date!= "")
+          {
+            if(new Date(start_date)> new Date(end_date))
+              {
+                //document.getElementById("date_validation").innerHTML = "start date cannot be greater than end date";
+        validation_content += '<label id = "date_validation1" style="color: red">start date cannot be greater than end date</label><br>';
+      }
+            
+          }
+
+        event.preventDefault();
+      }
+    else if (start_date!= "" && end_date!= "")
+      {
+        if(new Date(start_date)> new Date(end_date))
+          {
+            //document.getElementById("date_validation").innerHTML = "start date cannot be greater than end date";
+      validation_content += '<label id = "date_validation1" style="color: red">start date cannot be greater than end date</label><br>';
+      event.preventDefault();
+          }
+        
+      }
+    document.getElementById("validation_div").innerHTML= validation_content;
+
+	});
