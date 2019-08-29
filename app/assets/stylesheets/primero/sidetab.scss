@@ -133,7 +133,7 @@
     @if $global-text-direction == rtl {
       text-align: left;
     } @else {
-      text-align: right;
+      text-align: left;
     }
     font-family: 'Roboto-Medium', sans-serif;
     font-size: $thirteen_px;

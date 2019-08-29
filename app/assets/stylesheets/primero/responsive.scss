@@ -123,7 +123,7 @@
     max-width: 100% !important;
   }
 
-  .col-sm-2 {
+  .col-sm-2, .col-sm-3 {
    max-width: 100% !important;
   }
 
@@ -218,6 +218,52 @@
 
 }
 
+@media only screen and (min-width: 769px) and (max-width: 790px) {
+  #submit_form_for_monthly_report label {
+    text-align: left !important;
+  }
+  .small-6 {
+    flex: 1 1 auto !important;
+    max-width: 100% !important;
+  }
+  .small-9 {
+    flex: 0 0 69% !important;
+    max-width: 69% !important;
+  }
+  .col-sm-2, .col-sm-3 {
+    max-width: 100% !important;
+   }
+
+}
+
+@media only screen and (min-width: 769px) and (max-width: 992px) { 
+  .col-sm-2, .col-sm-3 {
+    max-width: 100% !important;
+   }
+  .small-9 {
+    flex: 0 0 69% !important;
+    max-width: 69% !important;
+  }
+  .index_controls_container .row {
+    flex-wrap: unset !important;
+  }
+  .index_filters label span {
+    width: 5rem  !important;
+  }
+}
+
+@media only screen and (max-width: 1200px) { 
+.col-sm-2, .col-sm-3  {
+  max-width: 100% !important;
+ }
+
+ .form-inline label {
+  justify-content: left !important;
+}
+
+}
+
+
 /*normal media css*/
 .row.align-middle.large-up-5 {
 	align-items: baseline !important;
@@ -228,3 +274,11 @@
 .row.align-middle {
   margin: 0 auto !important; 
 }
+.reveal.tiny {
+	width: 60% !important; 
+}
+
+table.dataTable tbody th, table.dataTable tbody td {
+  font-size: 0.875rem !important;
+}
+

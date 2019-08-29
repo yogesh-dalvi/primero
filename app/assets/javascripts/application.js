@@ -65,6 +65,7 @@
 //= require intakes
 
 
+
 //= require turbolinks
 //= require primero_libs/turbolinks-compatibility
 

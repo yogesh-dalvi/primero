@@ -1,11 +1,22 @@
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-
 <style>
+.col-sm-3 {
+	width: 16%;
+	margin-right: 25px;
+}
+
+#submit_button {
+	margin-top: 20px !important;
+}
+
+.col-sm-2 {
+	width: 13%;
+	margin-right: 25px;
+}
+
+.page_container {
+	max-width: 1170px;
+	margin: 0 auto;
+}
 	.cssShow {
 	display : block;
 	}
@@ -19,7 +30,6 @@ label {
 }
 
 body {font-family: Arial, Helvetica, sans-serif;}
-* {box-sizing: border-box;}
 
 .form-inline {  
   display: flex;
@@ -46,14 +56,34 @@ body {font-family: Arial, Helvetica, sans-serif;}
   color: white;
   cursor: pointer;
 }
-
+header .menu.simple li a {
+	color: #212529 !important;
+}
 .form-inline button:hover {
   background-color: royalblue;
 }
 
 @media (max-width: 800px) {
+  .col-sm-3 {
+    width: 100%;
+    margin-right: 25px;
+  }
+  
+  .col-sm-2 {
+    width: 100%;
+    margin-right: 25px;
+  }
+  
+  .page_container {
+    width: auto;
+  }
+  
   .form-inline input {
     margin: 10px 0;
+  }
+ 
+  #mpr_report {
+	overflow: scroll;
   }
   
   .form-inline {
@@ -62,84 +92,163 @@ body {font-family: Arial, Helvetica, sans-serif;}
   }
 }
 
+@media screen and (min-width: 801px) and (max-width: 1200px) { 
+  .col-sm-2 {
+    width: 17%;
+    margin-right: 25px;
+  }
+  .page_container {
+    width: auto;
+   padding-left:15px;
+   padding-right:15px;
+  }
+}
+
+
+.row.align-middle {
+    margin: 0 auto !important; 
+}
+
+
+.table-bordered td, .table-bordered th {
+  border-right: 1px solid #a49999;;
+}
 
 </style>
 
 <script>
+ 
+     
 $(document).ready(function(){
   $('[data-toggle="tooltip"]').tooltip();   
 });
 
 $(document).ready(function() {
-	document.getElementById("validation_div").innerHTML= ""
-    document.getElementById("submit_tag").addEventListener("click", function(event){
-      document.getElementById("validation_div").innerHTML= ""
-	    var validation_content='';	
-      var start_date = document.getElementById("start_date_field").value;
-      var end_date = document.getElementById("end_date_field").value;
-      var state = document.getElementById("report-state").value;
-      if (start_date == "" || end_date == "" || state == "")
-        {
-          if (start_date == "")
-            {
-			  //document.getElementById("start_date_validate").innerHTML = "please select start date"; 
-			  validation_content += '<label id = "start_date_validate1" style="color: red">please select start date</label><br>';
-            }
-          if (end_date == "")
-            {
-			  //document.getElementById("end_date_validate").innerHTML = "please select end date";
-			  validation_content += '<label id = "end_date_validate1" style="color: red">please select end date</label><br>'; 
-            }
-          if (state == "")
-            {
-			  //document.getElementById("state_validate").innerHTML = "please select state"; 
-			  validation_content += '<label id = "state_validate1" style="color: red">please select state</label><br>';
-            }
-          if (start_date!= "" && end_date!= "")
-            {
-              if(new Date(start_date)> new Date(end_date))
-                {
-                  //document.getElementById("date_validation").innerHTML = "start date cannot be greater than end date";
-				  validation_content += '<label id = "date_validation1" style="color: red">start date cannot be greater than end date</label><br>';
-				}
-              
-            }
 
-          event.preventDefault();
-        }
-      else if (start_date!= "" && end_date!= "")
-        {
-          if(new Date(start_date)> new Date(end_date))
-            {
-              //document.getElementById("date_validation").innerHTML = "start date cannot be greater than end date";
-			  validation_content += '<label id = "date_validation1" style="color: red">start date cannot be greater than end date</label><br>';
-			  event.preventDefault();
-            }
-          
-		}
-		console.log(validation_content);
-		document.getElementById("validation_div").innerHTML= validation_content;
-
-	});
-});
-
-</script>	
-
-<script>
-$(document).ready(function() {
-    $('#report-state').on('change', function() {
-      var state = document.getElementById("report-state").value;
-      if (state!="")
-        {
-      //document.getElementById("state_validate").innerHTML = ""; 
-      var element_exist =  document.getElementById('state_validate1');
-      if (typeof(element_exist) != 'undefined' && element_exist != null)
-        {
-          document.getElementById("state_validate1").innerHTML = ""; 
-        }
-		  
+  // validation
+  document.getElementById("validation_div").innerHTML= "";
+  document.getElementById("submit_tag").addEventListener("click", function(event){
+    
+    document.getElementById("validation_div").innerHTML= "";
+    var validation_content='';
+    var location = document.getElementById("report-location").value;
+    var quater = document.getElementById("quarter-selector").value;  
+    if (location == "" || quater == "")
+      {
+        if (location == "")
+          {
+            validation_content += '<label id = "location_validate" style="color: red">please select state</label>';
+          }
+        if (quater == "")
+          {
+            validation_content += '<label id = "quarter_validate" style="color: red">please select a quarter</label>';
+          }  
+        document.getElementById("validation_div").innerHTML= validation_content;
+        event.preventDefault();
       }
     });
+    
+    $('#quarter-selector').on('change',function(){
+      var quarter = $('#quarter-selector').val();
+      if(quarter!= "")
+        {
+          document.getElementById("quarter_validate").innerHTML = "";
+        }
+        
+    });
+
+    $('#report-cell').on('change',function(){
+      var sub_cell = $('#report-cell').val();
+      if(sub_cell.includes(""))
+        {
+          document.getElementById("report-cell").selectedIndex = 0;
+        }
+    });
+
+    $('#report-district').on('change',function()
+    {
+      //document.getElementById("submit_button").setAttribute("style","margin-top: 4%")
+      $('#cell-div').removeClass('cssShow').addClass('cssHide');
+      var el = $('#report-cell');
+      el.empty(); // remove old subcell options
+
+      var cell = $('#report-district').val();
+
+      if(cell.includes(""))
+        {
+          document.getElementById("report-district").selectedIndex = 0;
+        }
+      else if(cell.length == 1 && !cell.includes(""))
+        {
+          cell_map_json = <%= @cell_map_array.to_json.html_safe%>;
+          if (cell[0] in cell_map_json)
+            {
+              document.getElementById("submit_button").setAttribute("style","margin:auto")
+              subcell = cell_map_json[cell[0]];
+              var el = $("#report-cell");
+              el.empty();
+              subcell.forEach(function(value) {
+                if (value[1] == null)
+                  {
+                    el.append($("<option></option>")
+                  .attr("value", "").text(value[0]));
+                  }else{
+                    el.append($("<option></option>")
+                    .attr("value", value[1]).text(value[0]));
+                  }
+              });
+  
+              $('#cell-div').removeClass('cssHide').addClass('cssShow');
+            }
+        }
+        
+    });
+
+    $('#report-location').on('change', function() {
+      
+      //document.getElementById("submit_button").setAttribute("style","margin-top: 4%")
+      $('#district-div').removeClass('cssShow').addClass('cssHide'); //hide subcell and cell on location change
+      $('#cell-div').removeClass('cssShow').addClass('cssHide');
+
+      var el = $('#report-cell');
+      el.empty(); // remove old subcell options
+
+      var el = $('#report-district');
+      el.empty(); // remove old cell options
+
+      var location = document.getElementById("report-location").value;    
+      if (location!="")
+        {
+          //document.getElementById("state_validate").innerHTML = ""; 
+          var element_exist =  document.getElementById('location_validate');
+          if (typeof(element_exist) != 'undefined' && element_exist != null)
+            {
+              document.getElementById("location_validate").innerHTML = ""; 
+            }
+            
+            location_array = <%= @location_map_array.to_json.html_safe%>;
+            district_array = location_array[location];
+            
+            var el = $('#report-district');
+            el.empty(); // remove old cell options
+
+            district_array.forEach(function(value) {
+              if (value[1] == null)
+                {
+                  el.append($("<option></option>")
+                .attr("value", "").text(value[0]));
+                }else{
+                  el.append($("<option></option>")
+                  .attr("value", value[1]).text(value[0]));
+                }
+            });
+
+            $('#district-div').removeClass('cssHide').addClass('cssShow');
+            
+        }
+        
+    });
+
 
     $('#end_date_field').on('change', function() {
       var end_date = document.getElementById("end_date_field").value;
@@ -200,732 +309,1011 @@ $(document).ready(function() {
 
 </script>
 
-<script></script>
-
-
 <div class="container">
-<br>
-<h2 style="color: #819f56">Quarterly Report</h2>
-<div align='right'>
-<%= link_to "",{:controller => "quarterly_reports", :action => "quarterly_pdf", :format=> 'pdf',:data =>  @data}, {:class => "fa fa-file-pdf-o", :style => "font-size:30px;color:red", :"data-toggle" => "tooltip", :title => "Download pdf", :"data-placement" => "bottom", :target => "_blank"} %>
-<a id="generate" class="fa fa-file-excel-o" style ="font-size:30px;color:green" data-toggle="tooltip" title="Download csv" data-placement="bottom" target ="_blank"></a>
-</div>
-<br>
-<div class="panel panel-default">
-	<div class="panel-body" style="padding: 20px">
-				<div>
-				<div>
-				<div id = "validation_div"></div>
+    <br>
+    <h2 style="color: #819f56">Quarterly Report</h2>
+    <div align="right">
+    <!-- ><%= link_to "",{:controller => "monthly_reports", :action => "generate_pdf", :format=> 'pdf',:data =>  @data}, {:class => "fa fa-file-pdf-o", :style => "font-size:30px;color:red", :"data-toggle" => "tooltip", :title => "Download pdf", :"data-placement" => "bottom", :target => "_blank"} %> <-->
+    <a id="generate" class="fa fa-file-excel-o" style ="font-size:30px;color:green" data-toggle="tooltip" title="Download csv" data-placement="bottom" target = "_blank"></a>
+    </div>
+    <br>
+    <div class="panel panel-default">
+        <div class="panel-body" style="padding: 20px">
+
+                <div id = "validation_div"></div>
                 <% if @date_validation == "true" %>
                       <label style="color: red">start date cannot be greater than end date</label>
-				        <% end %>
-				<%= form_tag("/quarterly_reports/submit_form", method: "post", class: 'form-inline', name:"myForm", id:"submit_form_for_monthly_report") do %>
-               
+                        <% end %>
+                <%= form_tag("/quarterly_reports/submit_form", method: "post", class: 'form-inline', name:"myForm", id:"submit_form_for_monthly_report") do %>
+
                 <div class="col-sm-3">
-                    <label>Start Date</label>
-                    <%= date_field_tag(:start_date,  Date.today-3.month, :id => 'start_date_field', :max => Date.today)%>
-                    <% if @start_date_not_selected == "true" %>
-                      <label style="color: red">please select start date</label>
-                    <% end %>
+                  <label>Select quarter</label>
+                  <%= select_tag 'quarter_select', options_for_select(@quarter_array),{:id => "quarter-selector"} %>
                 </div>
                 <div class="col-sm-3">
-                    <label>End Date</label>
-                    <%= date_field_tag(:end_date, Date.today, :id => 'end_date_field', :max => Date.today)%>
-                    <% if @end_date_not_selected == "true" %>
-                      <label style="color: red">please select end date</label>
-                    <% end %>
+                  <label>Select year</label>
+                  <%= select_year(@start_date_for_display, start_year: 1900, end_year: Date.current.year, name: "year", id: "year-selector") %>
                 </div>
-                <div class="col-sm-2" id="states">
-                    <label>Location</label>
-                    <%= select_tag 'state', options_for_select(@state_array),{:id => "report-state"} %>
-                    <% if @state_not_selected == "true" %>
-                      <label style="color: red">please select state</label>
+
+
+                <div class="col-sm-2" id="locations">
+                    <label>State</label>
+                    <%= select_tag 'location', options_for_select(@location_array),{:id => "report-location"} %>
+                    <% if @location_not_selected == "true" %>
+                      <label style="color: red">please select location</label>
                     <% end %>   
                 </div>
-                <div id="Cell" class="col-sm-2">    
-                    <div id="Maharashtra" class="cell">
-                        <label>Cell</label>
-                        <%= select_tag 'district1', options_for_select(@maha_location_array),{:id => "distr-maha"} %>
-                        
-                    </div>
-                    <div id="Delhi" class="cell">
-                        <label>Cell</label>
-                        <%=  select_tag 'district2', options_for_select(@delh_location_array),{:id => "distr-delhi"} %>
-                        
-                    </div>
-                    <div id="NCW" class="cell">
-                        <label>Cell</label>
-                        <%= select_tag 'district3', options_for_select(@ncw_location_array),{:id => "distr-ncw"} %>
-                        
+
+                <div id="district-div" class="col-sm-2">    
+                    <div class="cell">
+                        <label>District</label>
+                        <%= select_tag 'district', options_for_select(@maha_location_array),{:id => "report-district",:multiple => true} %>
                     </div>
                 </div>
-                <div class="col-sm-2" style="margin-top: 4%;">
-                   <%= submit_tag "Generate Report", :name => 'save', :id => 'submit_tag' ,:class => "button btn_submit large" %>
+                <div id="cell-div" class="col-sm-2">    
+                    <div class="cell">
+                        <label>Cell</label>
+                        <%= select_tag 'cell', options_for_select(@maha_location_array),{:id => "report-cell",:multiple => true} %>
+                    </div>
+                </div>
+                <div class="col-sm-2" id="submit_button">
+                    <%= submit_tag "Generate Report", :name => 'save', :id => 'submit_tag' ,:class => "button btn_submit large" %>
                 </div>
 
             <% end %>
-        </div> 
-    </div>
+            </div> 
+        </div>
+        <br>
     <br>
-<br>
-  
-<table class="dataTable in_content_area"  id="qpr_report">
-  <thead>
-		<tr>
-			<th colspan="4" style="text-align:center" align="center">Special Cells for Women</th>
-		</tr>
-		<tr>
-			<th colspan="4" style="text-align:center" align="center">Quarterly Progress Report</th>
-		</tr>
-	</thead>
-	<tbody>
-		<tr style="border: 1px solid #aec687; border-collapse: none;">
-			<td><b>Sr.No.</b></td>
-			<td><b>Client Profile & Details</b></td>
-			<td colspan="2"><b>Count</b></td>
-		</tr>
-		<tr>
-			<td><b>1</b></td>
-			<td><b>Total clients with whom there was interaction</b></td>
-			<td colspan="2"></td>
-		</tr>
-		<tr>
-			<td>1.1</td>
-			<td>Number of applications registered in this quater only.</td>
-			<td colspan="2"><%=@total_clients %></td>
-		</tr>
-		<tr>	
-			<td>1.2</td>
-			<td>Ongoing clients (applications registered before this quarter but interventions are continuing in this quarter</td>
-			<td colspan="2"><%=@ongoing_clients %></td>
-		</tr>
-		<tr>
-			<td><b>1.3</b></td>
-			<td><b>One­ time intervention in this quarter</b></td>
-			<td colspan="2"></td>
-		</tr>
-		<tr>
-			<td></td>
-			<td>Number of people provided support by the cell without having registered application.</td>
-			<td colspan="2"><%=@no_of_ppl_prvded_supp %></td>
-		</tr>
-		<tr>
-			<td><b>2</b></td>
-			<td><b>Clients (applications registered in this quarter only) referred by</b></td>
-			<td colspan="2"></td>
-		</tr>
-		<tr>
-			<td></td>
-			<td>Ex-Clients</td>
-			<td colspan="2"><%=@exclients_count %></td>
-		</tr>
-		<tr>
-			<td></td>
-			<td>Self (info. through media / poster / internet etc )</td>
-			<td colspan="2"><%=@self_count %></td>
-		</tr>
-		<tr>
-			<td></td>
-			<td>Police</td>
-			<td colspan="2"><%=@police_count %></td>
-		</tr>
-		<tr>
-			<td></td>
-			<td>NGO</td>
-			<td colspan="2"><%=@ngo_count %></td>
-		</tr>
-		<tr>
-			<td></td>
-			<td>Community based organizations ( TMGS / SHG / Mahila Mandal etc.)</td>
-			<td colspan="2"><%=@community_based_org_count %></td>
-		</tr>
-		<tr>
-			<td></td>
-			<td>Independent community worker/ Political worker</td>
-			<td colspan="2"><%=@icw_pw_count %></td>
-		</tr>
-		<tr>
-			<td></td>
-			<td>Word of mouth</td>
-			<td colspan="2"><%=@word_of_mouth_count %></td>
-		</tr>
-		<tr>
-			<td></td>		
-			<td>GO (WCD/ MAVIM/ ICDS/ Asha worker etc)</td>
-			<td colspan="2"><%=@go_count %></td>
-		</tr>
-		<tr>
-			<td></td>
-			<td>Lawyers/ legal organisations</td>
-			<td colspan="2"><%=@lawyers_legal_org_count %></td>
-		</tr>
-		<tr>
-			<td></td>
-			<td>Any other (please specify)</td>
-			<td colspan="2"><%=@any_other_clients_refferd_count %></td>
-		</tr>
-		<tr>
-			<td><b>3</b></td>
-			<td><b>Gender of the complainants/ clients (applications registered in this quarter only)</b></td>
-			<td colspan="2"></td>
-		</tr>
-		<tr>
-			<td></td>
-			<td>Adults (female)</td>
-			<td colspan="2"><%=@adult_female_count %></td>
-		</tr>
-		<tr>
-			<td></td>
-			<td>Adults (male)</td>
-			<td colspan="2"><%=@adult_male_count %></td>
-		</tr>
-		<tr>
-			<td></td>
-			<td>Children (female )</td>
-			<td colspan="2"><%=@child_female_count %></td>
-		</tr>
-		<tr>
-			<td></td>
-			<td>Children (male)</td>
-			<td colspan="2"><%=@child_male_count %></td>
-		</tr>
-		<tr>
-			<td></td>
-			<td>Third gender/ others</td>
-			<td colspan="2"><%=@third_gender_count %></td>
-		</tr>
-		<tr>
-			<td><b>4</b></td>
-			<td><b>Age of the clients (applications registered in this quarter only)</b></td>
-			<td colspan="2"></td>
-		</tr>
-		<tr>
-			<td></td>
-			<td>Less than 14 years</td>
-			<td colspan="2"><%=@less_than_14_count %></td>
-		</tr>
-		<tr>
-			<td></td>
-			<td>15 – 17 years</td>
-			<td colspan="2"><%=@in_15_17_count %></td>
-		</tr>
-		<tr>
-			<td></td>
-			<td>18 – 24 years</td>
-			<td colspan="2"><%=@in_18_24_count %></td>
-		</tr>
-		<tr>
-			<td></td>
-			<td>25 – 34 years</td>
-			<td colspan="2"><%=@in_25_34_count %></td>
-		</tr>
-		<tr>
-			<td></td>
-			<td>35 – 44 years</td>
-			<td colspan="2"><%=@in_35_44_count %></td>
-		</tr>
-		<tr>
-			<td></td>
-			<td>45 – 54 years</td>
-			<td colspan="2"><%=@in_45_54_count %></td>
-		</tr>
-		<tr>
-			<td></td>
-			<td>Above 55 Years</td>
-			<td colspan="2"><%=@above_55_count %></td>
-		</tr>
-		<tr>
-			<td></td>
-			<td>Information not available</td>
-			<td colspan="2"><%=@no_age_info_count %></td>
-		</tr>
-		<tr>
-			<td><b>5</b></td>
-			<td><b>Education of the clients (applications registered in this quarter only)</b></td>
-			<td colspan="2"></td>
-		</tr>
-		<tr>
-			<td></td>
-			<td>Non­ Literate</td>
-			<td colspan="2"><%=@non_literate_count %></td>
-		</tr>
-		<tr>
-			<td></td>
-			<td>Functional literacy</td>
-			<td colspan="2"><%=@functional_literacy_count %></td>
-		</tr>
-		<tr>
-			<td></td>
-			<td>Primary level (class 4)</td>
-			<td colspan="2"><%=@primary_level_class_4_count %></td>
-		</tr>
-		<tr>
-			<td></td>
-			<td>Upto SSC</td>
-			<td colspan="2"><%=@upto_ssc_count %></td>
-		</tr>
-		<tr>
-			<td></td>
-			<td>Upto HSC</td>
-			<td colspan="2"><%=@upto_hsc_count %></td>
-		</tr>
-		<tr>
-			<td></td>
-			<td>Graduation</td>
-			<td colspan="2"><%=@upto_grad_count %></td>
-		</tr>
-		<tr>
-			<td></td>
-			<td>Post Graduation/ Higher studies</td>
-			<td colspan="2"><%=@post_grad_count %></td>
-		</tr>
-		<tr>
-			<td></td>
-			<td>Any other (please specify)</td>
-			<td colspan="2"><%=@any_other_edu_count %></td>
-		</tr>
-		<tr>
-			<td></td>
-			<td>Information not available</td>
-			<td colspan="2"><%=@no_edu_info_count %></td>
-		</tr>
-		<tr>
-			<td><b>6</b></td>
-			<td><b>Reasons for registering at the Special Cell (multiple response)</b></td>
-			<td colspan="2"></td>
-		</tr>
-		<tr>
-			<td></td>
-			<td>Physical violence by husband</td>
-			<td colspan="2"><%=@phy_vio_by_hus_count %></td>
-		</tr>
-		<tr>
-			<td></td>
-			<td>Emotional / mental violence by husband</td>
-			<td colspan="2"><%=@emo_men_vio_by_hus_count %></td>
-		</tr>
-		<tr>
-			<td></td>
-			<td>Sexual violence by husband</td>
-			<td colspan="2"><%=@sex_vio_by_hus_count %></td>
-		</tr>
-		<tr>
-			<td></td>
-			<td>Financial violence by husband</td>
-			<td colspan="2"><%=@fin_vio_by_hus_count %></td>
-		</tr>
-		<tr>
-			<td></td>
-			<td>Out of marriage relationship/second marriage by husband</td>
-			<td colspan="2"><%=@sec_marr_by_hus_count %></td>
-		</tr>
-		<tr>
-			<td></td>
-			<td>Refusal to give streedhan</td>
-			<td colspan="2"><%=@ref_to_strredhan_by_hus_count %></td>
-		</tr>
-		<tr>
-			<td></td>
-			<td>Alcohol abuse/ substance abuse by husband</td>
-			<td colspan="2"><%=@alch_vio_by_hus_count %></td>
-		</tr>
-		<tr>
-			<td></td>
-			<td>Desertion by husband</td>
-			<td colspan="2"><%=@desertion_by_hus_count %></td>
-		</tr>
-		<tr>
-			<td></td>
-			<td>Child custody disputes/ disputes over visitation rights</td>
-			<td colspan="2"><%=@child_custody_vio_count %></td>
-		</tr>
-		<tr>
-			<td></td>
-			<td>Physical violence by marital family</td>
-			<td colspan="2"><%=@phy_vio_by_mart_family_count %></td>
-		</tr>
-		<tr>
-			<td></td>
-			<td>Emotional/ mental violence by marital family</td>
-			<td colspan="2"><%=@emo_vio_by_mart_family_count %></td>
-		</tr>
-		<tr>
-			<td></td>
-			<td>Sexual violence by marital family</td>
-			<td colspan="2"><%=@sex_vio_by_mart_family_count %></td>
-		</tr>
-		<tr>
-			<td></td>
-			<td>Financial violence by marital family</td>
-			<td colspan="2"><%=@fin_vio_by_mart_family_count %></td>
-		</tr>	
-		<tr>
-			<td></td>
-			<td>Harassment of natal family members of the woman by the husband/family</td>
-			<td colspan="2"><%=@harr_natal_family_by_hus_count %></td>
-		</tr>	
-		<tr>
-			<td></td>
-			<td>Deprivation of matrimonial residence</td>
-			<td colspan="2"><%=@dep_matr_res_count %></td>
-		</tr>	
-		<tr>
-			<td></td>
-			<td>Child­battering (by husband/family)</td>
-			<td colspan="2"><%=@childbattering_count %></td>
-		</tr>	
-		<tr>
-			<td></td>
-			<td>Dowry demands (by husband/family)</td>
-			<td colspan="2"><%=@dowry_count %></td>
-		</tr>	
-		<tr>
-			<td></td>
-			<td>Harassment by natal family</td>
-			<td colspan="2"><%=@harr_by_natal_family_count %></td>
-		</tr>	
-		<tr>
-			<td></td>
-			<td>Harassment by children and their spouses</td>
-			<td colspan="2"><%=@harr_by_chil_spouse_count %></td>
-		</tr>	
-		<tr>
-			<td></td>
-			<td>Wife has left the matrimonial home (male clients)</td>
-			<td colspan="2"><%=@wife_left_matr_home_count %></td>
-		</tr>	
-		<tr>
-			<td></td>
-			<td>Harassment at work</td>
-			<td colspan="2"><%=@harr_at_work_count %></td>
-		</tr>
-		<tr>
-			<td></td>
-			<td>Harassment by live­in partner</td>
-			<td colspan="2"><%=@harr_by_live_in_partner_count %></td>
-		</tr>		
-		<tr>
-			<td></td>
-			<td>Sexual assault</td>
-			<td colspan="2"><%=@sex_assault_count %></td>
-		</tr>		
-		<tr>
-			<td></td>
-			<td>Sexual harassment in other situation</td>
-			<td colspan="2"><%=@sex_har_in_other_sit_count %></td>
-		</tr>		
-		<tr>
-			<td></td>
-			<td>Breach of trust in intimate relationship</td>
-			<td colspan="2"><%=@breach_of_trust_count %></td>
-		</tr>		
-		<tr>
-			<td></td>
-			<td>Harassment by neighbours</td>
-			<td colspan="2"><%=@harr_by_neigh_count %></td>
-		</tr>		
-		<tr>
-			<td></td>
-			<td>Any other (please specify) :</td>
-			<td colspan="2"><%=@any_other_harr_count %></td>
-		</tr>
-		<tr>
-			<td><b>7</b></td>
-			<td><b>Previous intervention before coming to the Cell (multiple response)</b></td>
-			<td colspan="2"></td>
-		</tr>
-		<tr>
-			<td></td>
-			<td>Natal family/ marital family</td>
-			<td colspan="2"><%=@prev_inter_natal_family_marital_family_count %></td>
-		</tr>
-		<tr>
-			<td></td>
-			<td>Police</td>
-			<td colspan="2"><%=@prev_inter_police_count %></td>
-		</tr>		
-		<tr>
-			<td></td>
-			<td>Court / lawyers</td>
-			<td colspan="2"><%=@prev_inter_court_count %></td>
-		</tr>	
-		<tr>
-			<td></td>
-			<td>NGOs</td>
-			<td colspan="2"><%=@prev_interv_ngo_count %></td>
-		</tr>	
-		<tr>
-			<td></td>
-			<td>Panchyat members/Jati Panchyat</td>
-			<td colspan="2"><%=@prev_interv_panch_mem_count %></td>
-		</tr>	
-		<tr>
-			<td></td>
-			<td>Any other(please specify):</td>
-			<td colspan="2"><%=@prev_interv_any_other_count %></td>
-		</tr>
-		<tr>
-			<td><b>8</b></td>
-			<td><b>Intervention by the Special Cell (multiple response)</b></td>
-			<td><b>New Clients (applications registered in this quarter)</b></td>
-			<td><b>Ongoing Clients (applications registered before this quarter)</b></td>
-		</tr>
-		<tr>
-			<td></td>
-			<td>Providing emotional support and strengthening psychological self</td>
-			<td><%=@spec_cell_prov_emo_support_count %></td>
-			<td><%=@spec_cell_prov_emo_support_count_ongoing_client %></td>
-		</tr>
-		<tr>
-			<td></td>
-			<td>Negotiating non­violence with stakeholder</td>
-			<td><%=@spec_cell_neg_nonvio_with_stakeholder_count %></td>
-			<td><%=@spec_cell_neg_nonvio_with_stakeholder_count_ongoing_client %></td>
-		</tr>
-		<tr>
-			<td></td>
-			<td>Building support system</td>
-			<td><%=@spec_cell_build_support_system_count %></td>
-			<td><%=@spec_cell_build_support_system_count_ongoing_client %></td>
-		</tr>
-		<tr>
-			<td></td>
-			<td>Enlisting police help or intervention</td>
-			<td><%=@spec_cell_enlist_police_help_count %></td>
-			<td><%=@spec_cell_enlist_police_help_count_ongoing_client %></td>
-		</tr>
-		<tr>
-			<td></td>
-			<td>Legal aid/ legal referral/ pre­litigation counselling</td>
-			<td><%=@spec_cell_pre­litigation_counsel_count %></td>
-			<td><%=@spec_cell_pre­litigation_counsel_count_ongoing_client %></td>
-		</tr>
-		<tr>
-			<td></td>
-			<td>Working with men in the interest of violated woman</td>
-			<td><%=@spec_cell_work_with_men_count %></td>
-			<td><%=@spec_cell_work_with_men_count_ongoing_client %></td>
-		</tr>
-		<tr>
-			<td></td>
-			<td>Advocacy for financial entitlements</td>
-			<td><%=@spec_cell_adv_fin_ent_count %></td>
-			<td><%=@spec_cell_adv_fin_ent_count_ongoing_client %></td>
-		</tr>	
-		<tr>
-			<td></td>
-			<td>Referral for shelter/ other services</td>
-			<td><%=@spec_cell_refferal_for_shelter_count %></td>
-			<td><%=@spec_cell_refferal_for_shelter_count_ongoing_client %></td>
-		</tr>	
-		<tr>
-			<td></td>
-			<td>Developmental counselling</td>
-			<td><%=@spec_cell_dev_counsel_count %></td>
-			<td><%=@spec_cell_dev_counsel_count_ongoing_client %></td>
-		</tr>
-		<tr>
-			<td><b>9</b></td>
-			<td><b>Referrals (multiple response)</b></td>
-			<td><b>New Clients (applications registered in this quarter)</b></td>
-			<td><b>Ongoing Clients (applications registered before this quarter)</b></td>
-		</tr>
-		<tr>
-			<td></td>
-			<td>Police</td>
-			<td><%=@police_refferal_count %></td>
-			<td><%=@police_refferal_count_ongoing_client %></td>
-		</tr>
-		<tr>
-			<td></td>
-			<td>Court/DLSA</td>
-			<td><%=@court_dlsa_refferal_count %></td>
-			<td><%=@court_dlsa_refferal_count_ongoing_client %></td>
-		</tr>
-		<tr>
-			<td></td>
-			<td>Shelter home</td>
-			<td><%=@shelter_refferal_count %></td>
-			<td><%=@shelter_refferal_count_ongoing_client %></td>
-		</tr>
-		<tr>
-			<td></td>
-			<td>Medical</td>
-			<td><%=@medical_refferal_count %></td>
-			<td><%=@medical_refferal_count_ongoing_client %></td>
-		</tr>
-		<tr>
-			<td></td>
-			<td>Lawyer</td>
-			<td><%=@lawer_services_refferal_count %></td>
-			<td><%=@lawer_services_refferal_count_ongoing_client %></td>
-		</tr>
-		<tr>
-			<td></td>
-			<td>Protection Officer</td>
-			<td><%=@protection_officer_refferal_count %></td>
-			<td><%=@protection_officer_refferal_count_ongoing_client %></td>
-		</tr>
-		<tr>
-			<td></td>
-			<td>Any other (specify):­ for work & school</td>
-			<td><%=@any_other_refferal_count %></td>
-			<td><%=@any_other_refferal_count_ongoing_client %></td>
-		</tr>
-		<tr>
-			<td><b>10</b></td>
-			<td><b>Other interventions in the community</b></td>
-			<td colspan="2"><b>Count</b></td>
-		</tr>
-		<tr>
-			<td></td>
-			<td>Home visits</td>
-			<td colspan="2"><%=@othr_inter_home_visit_count %></td>
-		</tr>
-		<tr>
-			<td></td>
-			<td>Visits to institutions (hospitals/ shelter homes etc.)</td>
-			<td colspan="2"><%=@othr_inter_visit_inst_count %></td>
-		</tr>
-		<tr>
-			<td></td>
-			<td>Community education programmes</td>
-			<td colspan="2"><%=@othr_inter_comm_edu_count %></td>
-		</tr>
-		<tr>
-			<td></td>
-			<td>Meetings with local groups/social organisations etc</td>
-			<td colspan="2"><%=@othr_inter_meet_local_count %></td>
-		</tr>
-		<tr>
-			<td></td>
-			<td>Interaction with police</td>
-			<td colspan="2"><%=@othr_inter_inter_with_police_count %></td>
-		</tr>
-		<tr>
-			<td></td>
-			<td>Any other (specify) :­ organizations</td>
-			<td colspan="2"><%=@othr_inter_any_other_count %></td>
-		</tr>
-		<tr>
-			<td><b>11</b></td>
-			<td><b>Outcomes(multiple response)</b></td>
-			<td><b>New Clients (applications registered in this quarter)</b></td>
-			<td><b>Ongoing Clients (applications registered before this quarter)</b></td>
-		</tr>
-		<tr>
-		    <td></td>
-			<td>Helped in case filed for divorce/ separation/mutual divorce</td>
-			<td><%=@outcomes_helped_in_case_filed_for_divorce_count %></td>
-			<td><%=@outcomes_helped_in_case_filed_for_divorce_count_ongoing_client %></td>
-		</tr>
-		<tr>
-		    <td></td>
-			<td>Streedhan retrieval</td>
-			<td><%=@outcome_streedhan_retrival_count %></td>
-			<td><%=@outcome_streedhan_retrival_count_ongoing_client %></td>
-		</tr>		
-		<tr>
-		    <td></td>
-			<td>Case filed under PWDVA 2005</td>
-			<td><%=@outcome_pwdva_2005_count %></td>
-			<td><%=@outcome_pwdva_2005_count_ongoing_client %></td>
-		</tr>
-		<tr>
-		    <td></td>
-			<td>Case filed under 498A</td>
-			<td><%=@outcome_498A_count %></td>
-			<td><%=@outcome_498A_count_ongoing_client %></td>
-		</tr>				
-		<tr>
-		    <td></td>
-			<td>One – time maintenance/ other financial entitlements</td>
-			<td><%=@outcome_maintenence_count %></td>
-			<td><%=@outcome_maintenence_count_ongoing_client %></td>
-		</tr>		
-		<tr>
-		    <td></td>
-			<td>Non­violent reconciliation</td>
-			<td><%=@outcome_non_violent_recon_count %></td>
-			<td><%=@outcome_non_violent_recon_count_ongoing_client %></td>
-		</tr>		
-		<tr>
-		    <td></td>
-			<td>Court orders in the best interest of the woman</td>
-			<td><%=@outcome_court_order_count %></td>
-			<td><%=@outcome_court_order_count_ongoing_client %></td>
-		</tr>		
-		<tr>
-		    <td></td>
-			<td>Any other (specify) : Assurance paper in stalking case from respondent</td>
-			<td><%=@outcome_any_other_count %></td>
-			<td><%=@outcome_any_other_count_ongoing_client %></td>
-		</tr>		
-					
-	</tbody>
-</table>
-</div>
-<script>
-	$(document).ready(function() {
-	$('#states option[value=""]').attr("selected",true);
-	$('#Cell').addClass('cssHide');
-	$('#Maharashtra,#Delhi,#NCW').addClass('cssHide');
-
-	$('#report-state').on('change', function() {
-		if($(this).find('option:selected').val() != ""){
-			var selectedState = $(this).find('option:selected').text();
-			$('#Cell').removeClass('cssHide').addClass('cssShow');
-			$('.cell').each(function() {
-				if ($(this).hasClass('cssShow')){
-					$(this).removeClass('cssShow').addClass('cssHide');
-				}
-			});
-			$('#' + selectedState).removeClass('cssHide').addClass('cssShow');
-		}else{
-			$('#Cell').removeClass('cssShow').addClass('cssHide');
-		}
-	});
- });
-
-</script>
-
-<script>
-$(document).ready(function() {
-    var state= "<%=@selected_state %>";
-    var district= "<%=@selected_district %>";
-    $("#report-state").val(state);
-    $('#Cell').removeClass('cssHide').addClass('cssShow');
     
-  if (state.match(/maharashtra/))
+    <h6>State : <%=@state_name %> </h6>
+    <% if @district_name != "" %>
+      <h6>District : <%=@district_name %></h6>
+    <% end %> 
+    <% if @cell_name != "" %>
+      <h6>Cell : <%=@cell_name %></h6>
+    <% end %>
+
+    <br>
+    <div class="large-12 small-12 columns table-responsive" style="overflow: scroll; margin-top:2%">
+			<table class="dataTable in_content_area reports">
+        <thead>
+          <tr>
+            <th colspan= <%= @array_length %> style="text-align:left; border-right: 2px solid #dee2e6;" align="left">Special Cells for Women</th>
+          </tr>
+          <tr>
+            <th colspan= <%= @array_length %> style="text-align:left; border-right: 2px solid #dee2e6; border-bottom: 2px solid #a49999;" align="left">Quarterly Progress Report</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr style="border:1px solid #a49999; border-collapse: none;">
+            <td style="border-left:1px solid #a49999; border-top:1px solid #a49999; border-bottom: 2px solid #a49999;"><b>Sr.No.</b></td>
+            <td style="border-top:1px solid #a49999; border-bottom: 2px solid #a49999;"><b>Client Profile & Details</b></td>
+            <% if @selected == "state_selected" %>
+              <td style="border-top:1px solid #a49999; border-bottom: 2px solid #a49999;" colspan="2"><b><%=@state_name %></b></td>
+            <% else %>
+              <% @qpr_data.each do |data| %>
+                <td style="border-top:1px solid #a49999; border-bottom: 2px solid #a49999;" colspan="2"><b><%= data['district'] %></b></td>
+              <%end %>
+            <% end %>
+                                                                                                                                      
+          </tr>
+          <tr>
+            <td style="border-left:1px solid #a49999;"><b>1</b></td>
+            <td><b>Total clients with whom there was interaction</b></td>
+            <% @qpr_data.each do |data| %>
+              <td colspan="2"><b><%=data['total_client_with_whom_interaction'] %></b></td>
+            <% end %>
+          </tr>
+          <tr>
+            <td style="border-left:1px solid #a49999;">1.1</td>
+            <td>Number of applications registered in this quarter only.</td>
+            <% @qpr_data.each do |data| %>
+              <td colspan="2"><%=data['total_clients'] %></td>
+            <% end %>
+          </tr>
+          <tr>	
+            <td style="border-left:1px solid #a49999;">1.2</td>
+            <td>Ongoing clients (applications registered before this quarter but interventions are continuing in this quarter)</td>
+            <% @qpr_data.each do |data| %>
+              <td colspan="2"><%=data['ongoing_clients'] %></td>
+            <% end %>
+          </tr>
+          <tr>
+            <td style="border-left:1px solid #a49999;">1.3</td>
+            <td>One­ time intervention in this quarter</td>
+            <% @qpr_data.each do |data| %>
+              <td colspan="2"><%=data['one_time_intervention_in_this_quarter'] %></td>
+            <% end %>
+          </tr>
+          <!-- > <tr>
+            <td style="border-left:1px solid #a49999;"></td>
+            <td>Number of people provided support by the cell without having registered application.</td>
+            <% @qpr_data.each do |data| %>
+              <td colspan="2"><%=data['no_of_ppl_prvded_supp'] %></td>
+            <% end %>
+          </tr><-->
+          <tr>
+            <td style="border-left:1px solid #a49999;"><b>2</b></td>
+            <td><b>Clients (applications registered in this quarter only) referred by</b></td>
+            <% @qpr_data.each do |data| %>
+              <td colspan="2"><b><%=data['clients'] %></b></td>
+            <% end %>
+          </tr>
+          <tr>
+            <td style="border-left:1px solid #a49999;"></td>
+            <td>Ex-Clients</td>
+            <% @qpr_data.each do |data| %>
+              <td colspan="2"><%=data['exclients_count'] %></td>
+            <% end %>
+          </tr>
+          <tr>
+            <td style="border-left:1px solid #a49999;"></td>
+            <td>Self (info. through media / poster / internet etc )</td>
+            <% @qpr_data.each do |data| %>
+              <td colspan="2"><%=data['self_count'] %></td>
+            <% end %>
+          </tr>
+          <tr>
+            <td style="border-left:1px solid #a49999;"></td>
+            <td>Police</td>
+            <% @qpr_data.each do |data| %>
+              <td colspan="2"><%=data['police_count'] %></td>
+            <% end %>
+          </tr>
+          <tr>
+            <td style="border-left:1px solid #a49999;"></td>
+            <td>NGO</td>
+            <% @qpr_data.each do |data| %>
+              <td colspan="2"><%=data['ngo_count'] %></td>
+            <% end %>
+          </tr>
+          <tr>
+            <td style="border-left:1px solid #a49999;"></td>
+            <td>Community based organizations ( TMGS / SHG / Mahila Mandal etc.)</td>
+            <% @qpr_data.each do |data| %>
+              <td colspan="2"><%=data['community_based_org_count'] %></td>
+            <% end %>
+          </tr>
+          <tr>
+            <td style="border-left:1px solid #a49999;"></td>
+            <td>Independent community worker/ Political worker</td>
+            <% @qpr_data.each do |data| %>
+              <td colspan="2"><%=data['icw_pw_count'] %></td>
+            <% end %>
+          </tr>
+          <tr>
+            <td style="border-left:1px solid #a49999;"></td>
+            <td>Word of mouth</td>
+            <% @qpr_data.each do |data| %>
+              <td colspan="2"><%=data['word_of_mouth_count'] %></td>
+            <% end %>
+          </tr>
+          <tr>
+            <td style="border-left:1px solid #a49999;"></td>		
+            <td>GO (WCD/ MAVIM/ ICDS/ Asha worker etc)</td>
+            <% @qpr_data.each do |data| %>
+              <td colspan="2"><%=data['go_count'] %></td>
+            <% end %>
+          </tr>
+          <tr>
+            <td style="border-left:1px solid #a49999;"></td>
+            <td>Lawyers/ legal organisations</td>
+            <% @qpr_data.each do |data| %>
+              <td colspan="2"><%=data['lawyers_legal_org_count'] %></td>
+            <% end %>
+          </tr>
+          <tr>
+            <td style="border-left:1px solid #a49999;"></td>
+            <td>Any other (please specify)</td>
+            <% @qpr_data.each do |data| %>
+              <td colspan="2"><%=data['any_other_clients_refferd_count'] %></td>
+            <% end %>
+          </tr>
+          <tr>
+            <td style="border-left:1px solid #a49999;"><b>3</b></td>
+            <td><b>Gender of the complainants/ clients (applications registered in this quarter only)</b></td>
+            <% @qpr_data.each do |data| %>
+              <td colspan="2"><b><%=data['gender'] %></b></td>
+            <% end %>
+          </tr>
+          <tr>
+            <td style="border-left:1px solid #a49999;"></td>
+            <td>Adults (female)</td>
+            <% @qpr_data.each do |data| %>
+              <td colspan="2"><%=data['adult_female_count'] %></td>
+            <% end %>
+          </tr>
+          <tr>
+            <td style="border-left:1px solid #a49999;"></td>
+            <td>Adults (male)</td>
+            <% @qpr_data.each do |data| %>
+              <td colspan="2"><%=data['adult_male_count'] %></td>
+            <% end %>
+          </tr>
+          <tr>
+            <td style="border-left:1px solid #a49999;"></td>
+            <td>Children (female )</td>
+            <% @qpr_data.each do |data| %>
+              <td colspan="2"><%=data['child_female_count'] %></td>
+            <% end %>
+          </tr>
+          <tr>
+            <td style="border-left:1px solid #a49999;"></td>
+            <td>Children (male)</td>
+            <% @qpr_data.each do |data| %>
+              <td colspan="2"><%=data['child_male_count'] %></td>
+            <% end %>
+          </tr>
+          <tr>
+            <td style="border-left:1px solid #a49999;"></td>
+            <td>Third gender/ others</td>
+            <% @qpr_data.each do |data| %>
+              <td colspan="2"><%=data['third_gender_count'] %></td>
+            <% end %>
+          </tr>
+          <tr>
+            <td style="border-left:1px solid #a49999;"><b>4</b></td>
+            <td><b>Age of the clients (applications registered in this quarter only)</b></td>
+            <% @qpr_data.each do |data| %>
+              <td colspan="2"><b><%=data['age'] %></b></td>
+            <% end %>
+          </tr>
+          <tr>
+            <td style="border-left:1px solid #a49999;"></td>
+            <td>Less than 14 years</td>
+            <% @qpr_data.each do |data| %>
+              <td colspan="2"><%=data['less_than_14_count'] %></td>
+            <% end %>
+          </tr>
+          <tr>
+            <td style="border-left:1px solid #a49999;"></td>
+            <td>15 – 17 years</td>
+            <% @qpr_data.each do |data| %>
+              <td colspan="2"><%=data['in_15_17_count'] %></td>
+            <% end %>
+          </tr>
+          <tr>
+            <td style="border-left:1px solid #a49999;"></td>
+            <td>18 – 24 years</td>
+            <% @qpr_data.each do |data| %>
+              <td colspan="2"><%=data['in_18_24_count'] %></td>
+            <% end %>
+          </tr>
+          <tr>
+            <td style="border-left:1px solid #a49999;"></td>
+            <td>25 – 34 years</td>
+            <% @qpr_data.each do |data| %>
+              <td colspan="2"><%=data['in_25_34_count'] %></td>
+            <% end %>
+          </tr>
+          <tr>
+            <td style="border-left:1px solid #a49999;"></td>
+            <td>35 – 44 years</td>
+            <% @qpr_data.each do |data| %>
+              <td colspan="2"><%=data['in_35_44_count'] %></td>
+            <% end %>
+          </tr>
+          <tr>
+            <td style="border-left:1px solid #a49999;"></td>
+            <td>45 – 54 years</td>
+            <% @qpr_data.each do |data| %>
+              <td colspan="2"><%=data['in_45_54_count'] %></td>
+            <% end %>
+          </tr>
+          <tr>
+            <td style="border-left:1px solid #a49999;"></td>
+            <td>Above 55 Years</td>
+            <% @qpr_data.each do |data| %>
+              <td colspan="2"><%=data['above_55_count'] %></td>
+            <% end %>
+          </tr>
+          <tr>
+            <td style="border-left:1px solid #a49999;"></td>
+            <td>Information not available</td>
+            <% @qpr_data.each do |data| %>
+              <td colspan="2"><%=data['no_age_info_count'] %></td>
+            <% end %>
+          </tr>
+          <tr>
+            <td style="border-left:1px solid #a49999;"><b>5</b></td>
+            <td><b>Education of the clients (applications registered in this quarter only)</b></td>
+            <% @qpr_data.each do |data| %>
+              <td colspan="2"><b><%=data['education'] %></b></td>
+            <% end %>
+          </tr>
+          <tr>
+            <td style="border-left:1px solid #a49999;"></td>
+            <td>Non­ Literate</td>
+            <% @qpr_data.each do |data| %>
+              <td colspan="2"><%=data['non_literate_count'] %></td>
+            <% end %>
+          </tr>
+          <tr>
+            <td style="border-left:1px solid #a49999;"></td>
+            <td>Functional literacy</td>
+            <% @qpr_data.each do |data| %>
+              <td colspan="2"><%=data['functional_literacy_count'] %></td>
+            <% end %>
+          </tr>
+          <tr>
+            <td style="border-left:1px solid #a49999;"></td>
+            <td>Primary level (class 4)</td>
+            <% @qpr_data.each do |data| %>
+              <td colspan="2"><%=data['primary_level_class_4_count'] %></td>
+            <% end %>
+          </tr>
+          <tr>
+            <td style="border-left:1px solid #a49999;"></td>
+            <td>Upto SSC</td>
+            <% @qpr_data.each do |data| %>
+              <td colspan="2"><%=data['upto_ssc_count'] %></td>
+            <% end %>
+          </tr>
+          <tr>
+            <td style="border-left:1px solid #a49999;"></td>
+            <td>Upto HSC</td>
+            <% @qpr_data.each do |data| %>
+              <td colspan="2"><%=data['upto_hsc_count'] %></td>
+            <% end %>
+          </tr>
+          <tr>
+            <td style="border-left:1px solid #a49999;"></td>
+            <td>Graduation</td>
+            <% @qpr_data.each do |data| %>
+              <td colspan="2"><%=data['upto_grad_count'] %></td>
+            <% end %>
+          </tr>
+          <tr>
+            <td style="border-left:1px solid #a49999;"></td>
+            <td>Post Graduation/ Higher studies</td>
+            <% @qpr_data.each do |data| %>
+              <td colspan="2"><%=data['post_grad_count'] %></td>
+            <% end %>
+          </tr>
+          <tr>
+            <td style="border-left:1px solid #a49999;"></td>
+            <td>Any other (please specify)</td>
+            <% @qpr_data.each do |data| %>
+              <td colspan="2"><%=data['any_other_edu_count'] %></td>
+            <% end %>
+          </tr>
+          <tr>
+            <td style="border-left:1px solid #a49999;"></td>
+            <td>Information not available</td>
+            <% @qpr_data.each do |data| %>
+              <td colspan="2"><%=data['no_edu_info_count'] %></td>
+            <% end %>
+          </tr>
+          <tr>
+            <td style="border-left:1px solid #a49999;"><b>6</b></td>
+            <td><b>Reasons for registering at the Special Cell (multiple response)</b></td>
+            <% @qpr_data.each do |data| %>
+              <td colspan="2"><b><%=data['reasons_special_cell'] %></b></td>
+            <% end %>
+          </tr>
+          <tr>
+            <td style="border-left:1px solid #a49999;"></td>
+            <td>Physical violence by husband</td>
+            <% @qpr_data.each do |data| %>
+              <td colspan="2"><%=data['phy_vio_by_hus_count'] %></td>
+            <% end %>
+          </tr>
+          <tr>
+            <td style="border-left:1px solid #a49999;"></td>
+            <td>Emotional / mental violence by husband</td>
+            <% @qpr_data.each do |data| %>
+              <td colspan="2"><%=data['emo_men_vio_by_hus_count'] %></td>
+            <% end %>
+          </tr>
+          <tr>
+            <td style="border-left:1px solid #a49999;"></td>
+            <td>Sexual violence by husband</td>
+            <% @qpr_data.each do |data| %>
+              <td colspan="2"><%=data['sex_vio_by_hus_count'] %></td>
+            <% end %>
+          </tr>
+          <tr>
+            <td style="border-left:1px solid #a49999;"></td>
+            <td>Financial violence by husband</td>
+            <% @qpr_data.each do |data| %>
+              <td colspan="2"><%=data['fin_vio_by_hus_count'] %></td>
+            <% end %>
+          </tr>
+          <tr>
+            <td style="border-left:1px solid #a49999;"></td>
+            <td>Out of marriage relationship/second marriage by husband</td>
+            <% @qpr_data.each do |data| %>
+              <td colspan="2"><%=data['sec_marr_by_hus_count'] %></td>
+            <% end %>
+          </tr>
+          <tr>
+            <td style="border-left:1px solid #a49999;"></td>
+            <td>Refusal to give streedhan</td>
+            <% @qpr_data.each do |data| %>
+              <td colspan="2"><%=data['ref_to_strredhan_by_hus_count'] %></td>
+            <% end %>
+          </tr>
+          <tr>
+            <td style="border-left:1px solid #a49999;"></td>
+            <td>Alcohol abuse/ substance abuse by husband</td>
+            <% @qpr_data.each do |data| %>
+              <td colspan="2"><%=data['alch_vio_by_hus_count'] %></td>
+            <% end %>
+          </tr>
+          <tr>
+            <td style="border-left:1px solid #a49999;"></td>
+            <td>Desertion by husband</td>
+            <% @qpr_data.each do |data| %>
+              <td colspan="2"><%=data['desertion_by_hus_count'] %></td>
+            <% end %>
+          </tr>
+          <tr>
+            <td style="border-left:1px solid #a49999;"></td>
+            <td>Child custody disputes/ disputes over visitation rights</td>
+            <% @qpr_data.each do |data| %>
+              <td colspan="2"><%=data['child_custody_vio_count'] %></td>
+            <% end %>
+          </tr>
+          <tr>
+            <td style="border-left:1px solid #a49999;"></td>
+            <td>Physical violence by marital family</td>
+            <% @qpr_data.each do |data| %>
+              <td colspan="2"><%=data['phy_vio_by_mart_family_count'] %></td>
+            <% end %>
+          </tr>
+          <tr>
+            <td style="border-left:1px solid #a49999;"></td>
+            <td>Emotional/ mental violence by marital family</td>
+            <% @qpr_data.each do |data| %>
+              <td colspan="2"><%=data['emo_vio_by_mart_family_count'] %></td>
+            <% end %>
+          </tr>
+          <tr>
+            <td style="border-left:1px solid #a49999;"></td>
+            <td>Sexual violence by marital family</td>
+            <% @qpr_data.each do |data| %>
+              <td colspan="2"><%=data['sex_vio_by_mart_family_count'] %></td>
+            <% end %>
+          </tr>
+          <tr>
+            <td style="border-left:1px solid #a49999;"></td>
+            <td>Financial violence by marital family</td>
+            <% @qpr_data.each do |data| %>
+              <td colspan="2"><%=data['fin_vio_by_mart_family_count'] %></td>
+            <% end %>
+          </tr>	
+          <tr>
+            <td style="border-left:1px solid #a49999;"></td>
+            <td>Harassment of natal family members of the woman by the husband/family</td>
+            <% @qpr_data.each do |data| %>
+              <td colspan="2"><%=data['harr_natal_family_by_hus_count'] %></td>
+            <% end %>
+          </tr>	
+          <tr>
+            <td style="border-left:1px solid #a49999;"></td>
+            <td>Deprivation of matrimonial residence</td>
+            <% @qpr_data.each do |data| %>
+              <td colspan="2"><%=data['dep_matr_res_count'] %></td>
+            <% end %>
+          </tr>	
+          <tr>
+            <td style="border-left:1px solid #a49999;"></td>
+            <td>Child­battering (by husband/family)</td>
+            <% @qpr_data.each do |data| %>
+              <td colspan="2"><%=data['childbattering_count'] %></td>
+            <% end %>
+          </tr>	
+          <tr>
+            <td style="border-left:1px solid #a49999;"></td>
+            <td>Dowry demands (by husband/family)</td>
+            <% @qpr_data.each do |data| %>
+              <td colspan="2"><%=data['dowry_count'] %></td>
+            <% end %>
+          </tr>	
+          <tr>
+            <td style="border-left:1px solid #a49999;"></td>
+            <td>Harassment by natal family</td>
+            <% @qpr_data.each do |data| %>
+              <td colspan="2"><%=data['harr_by_natal_family_count'] %></td>
+            <% end %>
+          </tr>	
+          <tr>
+            <td style="border-left:1px solid #a49999;"></td>
+            <td>Harassment by children and their spouses</td>
+            <% @qpr_data.each do |data| %>
+              <td colspan="2"><%=data['harr_by_chil_spouse_count'] %></td>
+            <% end %>
+          </tr>	
+          <tr>
+            <td style="border-left:1px solid #a49999;"></td>
+            <td>Wife has left the matrimonial home (male clients)</td>
+            <% @qpr_data.each do |data| %>
+              <td colspan="2"><%=data['wife_left_matr_home_count'] %></td>
+            <% end %>
+          </tr>	
+          <tr>
+            <td style="border-left:1px solid #a49999;"></td>
+            <td>Harassment at work</td>
+            <% @qpr_data.each do |data| %>
+              <td colspan="2"><%=data['harr_at_work_count'] %></td>
+            <% end %>
+          </tr>
+          <tr>
+            <td style="border-left:1px solid #a49999;"></td>
+            <td>Harassment by live­in partner</td>
+            <% @qpr_data.each do |data| %>
+              <td colspan="2"><%=data['harr_by_live_in_partner_count'] %></td>
+            <% end %>
+          </tr>		
+          <tr>
+            <td style="border-left:1px solid #a49999;"></td>
+            <td>Sexual assault</td>
+            <% @qpr_data.each do |data| %>
+              <td colspan="2"><%=data['sex_assault_count'] %></td>
+            <% end %>
+          </tr>		
+          <tr>
+            <td style="border-left:1px solid #a49999;"></td>
+            <td>Sexual harassment in other situation</td>
+            <% @qpr_data.each do |data| %>
+              <td colspan="2"><%=data['sex_har_in_other_sit_count'] %></td>
+            <% end %>
+          </tr>		
+          <tr>
+            <td style="border-left:1px solid #a49999;"></td>
+            <td>Breach of trust in intimate relationship</td>
+            <% @qpr_data.each do |data| %>
+              <td colspan="2"><%=data['breach_of_trust_count'] %></td>
+            <% end %>
+          </tr>		
+          <tr>
+            <td style="border-left:1px solid #a49999;"></td>
+            <td>Harassment by neighbours</td>
+            <% @qpr_data.each do |data| %>
+              <td colspan="2"><%=data['harr_by_neigh_count'] %></td>
+            <% end %>
+          </tr>		
+          <tr>
+            <td style="border-left:1px solid #a49999;"></td>
+            <td>Any other (please specify) :</td>
+            <% @qpr_data.each do |data| %>
+              <td colspan="2"><%=data['any_other_harr_count'] %></td>
+            <% end %>
+          </tr>
+          <tr>
+            <td style="border-left:1px solid #a49999;"><b>7</b></td>
+            <td><b>Previous intervention before coming to the Cell (multiple response)</b></td>
+            <% @qpr_data.each do |data| %>
+              <td colspan="2"><b><%=data['prev_inter_bef_comming_to_cell'] %></b></td>
+            <% end %>
+          </tr>
+          <tr>
+            <td style="border-left:1px solid #a49999;"></td>
+            <td>Natal family/ marital family</td>
+            <% @qpr_data.each do |data| %>
+              <td colspan="2"><%=data['prev_inter_natal_family_marital_family_count'] %></td>
+            <% end %>
+          </tr>
+          <tr>
+            <td style="border-left:1px solid #a49999;"></td>
+            <td>Police</td>
+            <% @qpr_data.each do |data| %>
+              <td colspan="2"><%=data['prev_inter_police_count'] %></td>
+            <% end %>
+          </tr>		
+          <tr>
+            <td style="border-left:1px solid #a49999;"></td>
+            <td>Court / lawyers</td>
+            <% @qpr_data.each do |data| %>
+              <td colspan="2"><%=data['prev_inter_court_count'] %></td>
+            <% end %>
+          </tr>	
+          <tr>
+            <td style="border-left:1px solid #a49999;"></td>
+            <td>NGOs</td>
+            <% @qpr_data.each do |data| %>
+              <td colspan="2"><%=data['prev_interv_ngo_count'] %></td>
+            <% end %>
+          </tr>	
+          <tr>
+            <td style="border-left:1px solid #a49999;"></td>
+            <td>Panchyat members/Jati Panchyat</td>
+            <% @qpr_data.each do |data| %>
+              <td colspan="2"><%=data['prev_interv_panch_mem_count'] %></td>
+            <% end %>
+          </tr>	
+          <tr>
+            <td style="border-left:1px solid #a49999;"></td>
+            <td>Any other(please specify):</td>
+            <% @qpr_data.each do |data| %>
+              <td colspan="2"><%=data['prev_interv_any_other_count'] %></td>
+            <% end %>
+          </tr>
+          <tr>
+            <td style="border-left:1px solid #a49999;"><b>8</b></td>
+            <td><b>Intervention by the Special Cell (multiple response)</b></td>
+            <% @qpr_data.each do |data| %>
+              <td style = "border-right: 1px solid #dee2e6;"><b>New Clients (applications registered in this quarter) ( <%=data['intervension_by_spec_cell'] %> )</b></td>
+              <td><b>Ongoing Clients (applications registered before this quarter) ( <%=data['intervension_by_spec_cell_ongoing'] %> )</b></td>
+            <% end %>
+          </tr>
+          <tr>
+            <td style="border-left:1px solid #a49999;"></td>
+            <td>Providing emotional support and strengthening psychological self</td>
+            <% @qpr_data.each do |data| %>
+              <td style = "border-right: 1px solid #dee2e6;"><%=data['spec_cell_prov_emo_support_count'] %></td>
+              <td><%=data['spec_cell_prov_emo_support_count_ongoing_client'] %></td>
+            <% end %>
+          </tr>
+          <tr>
+            <td style="border-left:1px solid #a49999;"></td>
+            <td>Negotiating non­violence with stakeholder</td>
+            <% @qpr_data.each do |data| %>
+              <td style = "border-right: 1px solid #dee2e6;"><%=data['spec_cell_neg_nonvio_with_stakeholder_count'] %></td>
+              <td><%=data['spec_cell_neg_nonvio_with_stakeholder_count_ongoing_client'] %></td>
+            <% end %>
+          </tr>
+          <tr>
+            <td style="border-left:1px solid #a49999;"></td>
+            <td>Building support system</td>
+            <% @qpr_data.each do |data| %>
+              <td style = "border-right: 1px solid #dee2e6;"><%=data['spec_cell_build_support_system_count'] %></td>
+              <td><%=data['spec_cell_build_support_system_count_ongoing_client'] %></td>
+            <% end %>
+          </tr>
+
+          <tr>
+            <td style="border-left:1px solid #a49999;"></td>
+            <td>Enlisting police help or intervention</td>
+            <% @qpr_data.each do |data| %>
+              <td style = "border-right: 1px solid #dee2e6;"><%=data['spec_cell_enlist_police_help_count'] %></td>
+              <td><%=data['spec_cell_enlist_police_help_count_ongoing_client'] %></td>
+            <% end %>
+          </tr>
+
+          <tr>
+            <td style="border-left:1px solid #a49999;"></td>
+            <td>Legal aid/ legal referral/ pre­litigation counselling</td>
+             <% @qpr_data.each do |data| %>
+              <td style = "border-right: 1px solid #dee2e6;"><%=data['spec_cell_pre­litigation_counsel_count'] %></td>
+              <td><%=data['spec_cell_pre­litigation_counsel_count_ongoing_client'] %></td>
+            <% end %>
+          </tr>
+
+          <tr>
+            <td style="border-left:1px solid #a49999;"></td>
+            <td>Working with men in the interest of violated woman</td>
+            <% @qpr_data.each do |data| %>
+              <td style = "border-right: 1px solid #dee2e6;"><%=data['spec_cell_work_with_men_count'] %></td>
+              <td><%=data['spec_cell_work_with_men_count_ongoing_client'] %></td>
+            <% end %>
+          </tr>
+
+          <tr>
+            <td style="border-left:1px solid #a49999;"></td>
+            <td>Advocacy for financial entitlements</td>
+            <% @qpr_data.each do |data| %>
+              <td style = "border-right: 1px solid #dee2e6;"><%=data['spec_cell_adv_fin_ent_count'] %></td>
+              <td><%=data['spec_cell_adv_fin_ent_count_ongoing_client'] %></td>
+            <% end %>
+          </tr>
+            
+          <tr>
+            <td style="border-left:1px solid #a49999;"></td>
+            <td>Referral for shelter/ other services</td>
+            <% @qpr_data.each do |data| %>
+              <td style = "border-right: 1px solid #dee2e6;"><%=data['spec_cell_refferal_for_shelter_count'] %></td>
+              <td><%=data['spec_cell_refferal_for_shelter_count_ongoing_client'] %></td>
+            <% end %>
+          </tr>
+            
+          <tr>
+            <td style="border-left:1px solid #a49999;"></td>
+            <td>Developmental counselling</td>
+            <% @qpr_data.each do |data| %>
+              <td style = "border-right: 1px solid #dee2e6;"><%=data['spec_cell_dev_counsel_count'] %></td>
+              <td><%=data['spec_cell_dev_counsel_count_ongoing_client'] %></td>
+            <% end %>
+          </tr>
+
+          <tr>
+            <td style="border-left:1px solid #a49999;"><b>9</b></td>
+            <td><b>Referrals (multiple response)</b></td>
+            <% @qpr_data.each do |data| %>
+              <td style = "border-right: 1px solid #dee2e6;"><b>New Clients (applications registered in this quarter) ( <%=data['refferals'] %> ) </b></td>
+              <td><b>Ongoing Clients (applications registered before this quarter) ( <%=data['refferals_ongoing'] %> )</b></td>
+            <% end %>
+          </tr>
+          <tr>
+            <td style="border-left:1px solid #a49999;"></td>
+            <td>Police</td>
+            <% @qpr_data.each do |data| %>
+              <td style = "border-right: 1px solid #dee2e6;"><%=data['police_refferal_count'] %></td>
+              <td><%=data['police_refferal_count_ongoing_client'] %></td>
+            <% end %>
+          </tr>
+
+          <tr>
+            <td style="border-left:1px solid #a49999;"></td>
+            <td>Court/DLSA</td>
+            <% @qpr_data.each do |data| %>
+              <td style = "border-right: 1px solid #dee2e6;"><%=data['court_dlsa_refferal_count'] %></td>
+              <td><%=data['court_dlsa_refferal_count_ongoing_client'] %></td>
+            <% end %>
+          </tr>
+
+          <tr>
+            <td style="border-left:1px solid #a49999;"></td>
+            <td>Shelter home</td>
+            <% @qpr_data.each do |data| %>
+              <td style = "border-right: 1px solid #dee2e6;"><%=data['shelter_refferal_count'] %></td>
+              <td><%=data['shelter_refferal_count_ongoing_client'] %></td>
+            <% end %>
+          </tr>
+
+          <tr>
+            <td style="border-left:1px solid #a49999;"></td>
+            <td>Medical</td>
+            <% @qpr_data.each do |data| %>
+              <td style = "border-right: 1px solid #dee2e6;"><%=data['medical_refferal_count'] %></td>
+              <td><%=data['medical_refferal_count_ongoing_client'] %></td>
+            <% end %>
+          </tr>
+
+          <tr>
+            <td style="border-left:1px solid #a49999;"></td>
+            <td>Lawyer</td>
+            <% @qpr_data.each do |data| %>
+              <td style = "border-right: 1px solid #dee2e6;"><%=data['lawer_services_refferal_count'] %></td>
+              <td><%=data['lawer_services_refferal_count_ongoing_client'] %></td>
+            <% end %>
+          </tr>
+
+          <tr>
+            <td style="border-left:1px solid #a49999;"></td>
+            <td>Protection Officer</td>
+            <% @qpr_data.each do |data| %>
+              <td style = "border-right: 1px solid #dee2e6;"><%=data['protection_officer_refferal_count'] %></td>
+              <td><%=data['protection_officer_refferal_count_ongoing_client'] %></td>
+            <% end %>
+          </tr>
+
+          <tr>
+            <td style="border-left:1px solid #a49999;"></td>
+            <td>Any other (specify):­ for work & school</td>
+            <% @qpr_data.each do |data| %>
+              <td style = "border-right: 1px solid #dee2e6;"><%=data['any_other_refferal_count'] %></td>
+              <td><%=data['any_other_refferal_count_ongoing_client'] %></td>
+            <% end %>
+          </tr>
+
+          <tr>
+            <td style="border-left:1px solid #a49999;"><b>10</b></td>
+            <td><b>Other interventions in the community</b></td>
+            <% @qpr_data.each do |data| %>
+              <td colspan="2"><b>Count  <%=data['other_intervention'] %></b></td>
+            <% end %>
+          </tr>
+          <tr>
+            <td style="border-left:1px solid #a49999;"></td>
+            <td>Home visits</td>
+            <% @qpr_data.each do |data| %>
+              <td colspan="2"><%=data['othr_inter_home_visit_count'] %></td>
+            <% end %>
+          </tr>
+
+          <tr>
+            <td style="border-left:1px solid #a49999;"></td>
+            <td>Visits to institutions (hospitals/ shelter homes etc.)</td>
+            <% @qpr_data.each do |data| %>
+              <td colspan="2"><%=data['othr_inter_visit_inst_count'] %></td>
+            <% end %>
+          </tr>
+
+          <tr>
+            <td style="border-left:1px solid #a49999;"></td>
+            <td>Community education programmes</td>
+            <% @qpr_data.each do |data| %>
+              <td colspan="2"><%=data['othr_inter_comm_edu_count'] %></td>
+            <% end %>
+          </tr>
+
+          <tr>
+            <td style="border-left:1px solid #a49999;"></td>
+            <td>Meetings with local groups/social organisations etc</td>
+            <% @qpr_data.each do |data| %>
+              <td colspan="2"><%=data['othr_inter_meet_local_count'] %></td>
+            <% end %>
+          </tr>
+
+          <tr>
+            <td style="border-left:1px solid #a49999;"></td>
+            <td>Interaction with police</td>
+            <% @qpr_data.each do |data| %>
+              <td colspan="2"><%=data['othr_inter_inter_with_police_count'] %></td>
+            <% end %>
+          </tr>
+
+          <tr>
+            <td style="border-left:1px solid #a49999;"></td>
+            <td>Any other (specify) :­ organizations</td>
+            <% @qpr_data.each do |data| %>
+              <td colspan="2"><%=data['othr_inter_any_other_count'] %></td>
+            <% end %>
+          </tr>
+
+          <tr>
+            <td style="border-left:1px solid #a49999;"><b>11</b></td>
+            <td><b>Outcomes(multiple response)</b></td>
+            <% @qpr_data.each do |data| %>
+              <td style = "border-right: 1px solid #dee2e6;"><b>New Clients (applications registered in this quarter) ( <%=data['outcomes'] %> )</b></td>
+              <td><b>Ongoing Clients (applications registered before this quarter) ( <%=data['outcomes_ongoing'] %> )</b></td>
+            <% end %>
+          </tr>
+          <tr>
+              <td style="border-left:1px solid #a49999;"></td>
+            <td>Helped in case filed for divorce/ separation/mutual divorce</td>
+            <% @qpr_data.each do |data| %>
+              <td style = "border-right: 1px solid #dee2e6;"><%=data['outcomes_helped_in_case_filed_for_divorce_count'] %></td>
+              <td><%=data['outcomes_helped_in_case_filed_for_divorce_count_ongoing_client'] %></td>
+            <% end %>
+          </tr>
+
+          <tr>
+              <td style="border-left:1px solid #a49999;"></td>
+            <td>Streedhan retrieval</td>
+            <% @qpr_data.each do |data| %>
+              <td style = "border-right: 1px solid #dee2e6;"><%=data['outcome_streedhan_retrival_count'] %></td>
+              <td><%=data['outcome_streedhan_retrival_count_ongoing_client'] %></td>
+            <% end %>
+          </tr>
+            
+          <tr>
+              <td style="border-left:1px solid #a49999;"></td>
+            <td>Case filed under PWDVA 2005</td>
+            <% @qpr_data.each do |data| %>
+              <td style = "border-right: 1px solid #dee2e6;"><%=data['outcome_pwdva_2005_count'] %></td>
+              <td><%=data['outcome_pwdva_2005_count_ongoing_client'] %></td>
+            <% end %>
+          </tr>
+
+          <tr>
+              <td style="border-left:1px solid #a49999;"></td>
+            <td>Case filed under 498A</td>
+            <% @qpr_data.each do |data| %>
+              <td style = "border-right: 1px solid #dee2e6;"><%=data['outcome_498A_count'] %></td>
+              <td><%=data['outcome_498A_count_ongoing_client'] %></td>
+            <% end %>
+          </tr>
+            
+          <tr>
+              <td style="border-left:1px solid #a49999;"></td>
+            <td>One – time maintenance/ other financial entitlements</td>
+            <% @qpr_data.each do |data| %>
+              <td style = "border-right: 1px solid #dee2e6;"><%=data['outcome_maintenence_count'] %></td>
+              <td><%=data['outcome_maintenence_count_ongoing_client'] %></td>
+            <% end %>
+          </tr>
+            
+          <tr>
+              <td style="border-left:1px solid #a49999;"></td>
+            <td>Non­violent reconciliation</td>
+            <% @qpr_data.each do |data| %>
+              <td style = "border-right: 1px solid #dee2e6;"><%=data['outcome_non_violent_recon_count'] %></td>
+              <td><%=data['outcome_non_violent_recon_count_ongoing_client'] %></td>
+            <% end %>
+          </tr>
+            
+          <tr>
+              <td style="border-left:1px solid #a49999;"></td>
+            <td>Court orders in the best interest of the woman</td>
+            <% @qpr_data.each do |data| %>
+              <td style = "border-right: 1px solid #dee2e6;"><%=data['outcome_court_order_count'] %></td>
+              <td><%=data['outcome_court_order_count_ongoing_client'] %></td>
+            <% end %>
+          </tr>
+            
+          <tr>
+            <td style="border-left:1px solid #a49999; border-bottom:1px solid #a49999;"></td>
+            <td style="border-bottom:1px solid #a49999;">Any other (specify) : Assurance paper in stalking case from respondent</td>
+            <% @qpr_data.each do |data| %>
+              <td style = "border-right: 1px solid #dee2e6; border-bottom:1px solid #a49999;"><%=data['outcome_any_other_count'] %></td>
+              <td style="border-bottom:1px solid #a49999;"><%=data['outcome_any_other_count_ongoing_client'] %></td>
+            <% end %>
+          </tr>
+            
+                
+        </tbody>
+
+
+
+      </table>
+      </div>
+</div>
+
+<script>
+
+  var state= "<%=@selected_state %>";
+  var district = <%=@selected_district.to_json.html_safe %>;
+  var cell =  <%=@selected_cell.to_json.html_safe %>;
+  var quarter = "<%=@quarter_to_display%>";
+  var year = "<%=@year_to_display%>";
+
+  $("#report-location").val(state);
+  $("#quarter-selector").val(quarter);
+
+  //select district and cell
+
+  if (district!= null)
+  { 
+    if (district[0]!= "")
+      {
+        console.log('district')
+        district_array = <%=@district_to_show_in_view.to_json.html_safe %>;
+        var el = $('#report-district');
+        el.empty(); // remove old cell options
+
+        district_array.forEach(function(value) {
+          if (value[1] == null)
+            {
+              el.append($("<option></option>")
+            .attr("value", "").text(value[0]));
+            }else{
+              el.append($("<option></option>")
+              .attr("value", value[1]).text(value[0]));
+            }
+        });
+        $('#district-div').removeClass('cssHide').addClass('cssShow');
+      }else
+      {
+        $('#district-div').removeClass('cssShow').addClass('cssHide');
+        var el = $('#report-district');
+        el.empty(); // remove old cell options
+      }
+  }
+  else
     {
-      $('#Maharashtra').removeClass('cssHide').addClass('cssShow');
-      if (district!="")
+      $('#district-div').removeClass('cssShow').addClass('cssHide');
+      var el = $('#report-district');
+      el.empty(); // remove old cell options
+    }  
+
+
+  if (cell!= null)
+    { 
+      if (cell[0]!= "")
         {
-          $("#distr-maha").val(district);
+          cell_array = <%=@cell_to_show_in_view.to_json.html_safe %>;
+          var el = $('#report-cell');
+          el.empty(); // remove old cell options
+  
+          cell_array.forEach(function(value) {
+            if (value[1] == null)
+              {
+                el.append($("<option></option>")
+              .attr("value", "").text(value[0]));
+              }else{
+                el.append($("<option></option>")
+                .attr("value", value[1]).text(value[0]));
+              }
+          });
+          $('#cell-div').removeClass('cssHide').addClass('cssShow');
+          }
+      else
+        {
+          $('#cell-div').removeClass('cssShow').addClass('cssHide');
+          var el = $('#report-cell');
+          el.empty(); // remove old subcell options
         }
     }
-  else if (state.match(/delhi/)) {
-    $('#Delhi').removeClass('cssHide').addClass('cssShow');
-    if (district!="")
+    else
       {
-        $("#distr-delhi").val(district);
-      }
-  }
-  else if (state.match(/ncw/)) {
-    $('#NCW').removeClass('cssHide').addClass('cssShow');
-    if (district!="")
-      {
-        $("#distr-ncw").val(district);
-      }
-  }
-});
-
-  document.getElementById("start_date_field").defaultValue = "<%= @start_date_for_display %>";
-  document.getElementById("end_date_field").defaultValue = "<%=@end_date_for_display %>";
-     
-</script>
-
-<script>
+        $('#cell-div').removeClass('cssShow').addClass('cssHide');
+        var el = $('#report-cell');
+        el.empty(); // remove old subcell options
+      }  
+      
   function download_csv(csv, filename) {
       var csvFile;
       var downloadLink;
@@ -957,10 +1345,14 @@ $(document).ready(function() {
 
   function export_table_to_csv(html, filename) {
     var csv = [];
-    csv.push("Location : <%=@state_in_pdf %>");
-    if ("<%=@district_in_pdf %>" != "")
+    csv.push("Location : <%=@state_name %>");
+    if ("<%=@district_name %>" != "")
       {
-        csv.push("Cell : <%=@district_in_pdf %>");
+        csv.push("Cell : <%=@district_in_csv %>");
+      }
+    if ("<%=@cell_name %>" != "")
+      {
+        csv.push("Cell : <%=@cell_in_csv %>");
       }
     csv.push("From Date : <%=@start_date_in_pdf %>");
     csv.push("To Date : <%=@end_date_in_pdf %>");
@@ -981,9 +1373,11 @@ $(document).ready(function() {
   }
 
   document.getElementById("generate").addEventListener("click", function () {
-      var html = document.getElementById("qpr_report");
-    export_table_to_csv(html, "quarterly_report.csv");
+      var html = document.getElementById("mpr_report");
+    export_table_to_csv(html, "quarter_report.csv");
   });
 
 </script>
+
+
 

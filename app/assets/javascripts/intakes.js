@@ -7,49 +7,53 @@ $(document).ready(function(){
 	});
 	
 	$('body').delegate("select", "change", function (e) {	
-		var mainElem = $(this).closest('fieldset').attr('id');
-		displayHideDropDownFields($(this),"#" + mainElem);
+		var mainElem = $(this).closest('fieldset');
+		displayHideDropDownFields($(this), mainElem);
 	});
 	
 	$('#record_case_data_child_ongoing_clients').change(function(){
-		var mainElem = $(this).closest('fieldset').attr('id');
-		$("#record_case_data_child_location_chosen").closest('.row').hide().nextAll().hide() ;
-		$("#record_case_data_child_ongoing_clients").closest('.row').show();
+		var mainElem = $(this).closest('fieldset');
 		var locationVal = $('#record_case_data_child_location').find(":selected").text().toLowerCase();	
-		if($(this).is(':checked')){
-		    $('#cp_case_intake_'+ locationVal +'_subform_ongoing_client').closest('.row').show();
+		if($("#record_case_data_child_ongoing_clients").is(':checked')){
+			$("#record_case_data_child_location_chosen").closest('.row').hide().nextAll().hide() ;
+			$("#record_case_data_child_ongoing_clients").closest('.row').show();
+			$('#cp_case_intake_'+ locationVal +'_subform_ongoing_client').closest('.row').show();
 		}else{
-			var defaultInd = displayDefault(false);
-			if(defaultInd > 0){
-				$('#' + mainElem + ' select').each(function(){
-					displayHideDropDownFields($(this),"#" + mainElem);					
-				});		
-			}	
-		    $('#cp_case_intake_'+ locationVal +'_subform_ongoing_client').closest('.row').hide();
+			defaultElements();
+			$('#' + mainElem.attr('id') + ' select').each(function(){
+				displayHideDropDownFields($(this), mainElem);
+			});
+			$('#cp_case_intake_'+ locationVal +'_subform_ongoing_client').closest('.row').hide();
 		}
 	});
 	
-	$('body').delegate(".collapse_expand_subform","click", function(e) {	
-		var subform = $(this).closest('.subform_container').attr('id');	
-		setTimeout(function(){
-			$("#" + subform + " fieldset label").each(function(){
-				if($(this).text() == "Ongoing Followup"){
-					$(this).closest('.row').nextAll().hide();			
-					return false;
+	$('body').delegate(".collapse_expand_subform","click", function(e) {
+		var subformElem = $(this).closest('.subform_container');
+		var subform = $(this).closest('.subform_container').attr('id');
+		var expanded = $(this).hasClass('expanded');	
+		if(expanded){
+			$('#' + subform + ' div.row').each(function(){
+				if(!$(this).hasClass('collapse_expand_subform_header')){
+					$(this).hide();
 				}
-			});		
+			})
+			$("#ongoing_client_child_" + subform.substring(18, subform.length) + "_ongoing_followup").closest('.row').show();
+			$("#ongoing_client_child_" + subform.substring(18, subform.length) + "_nature_of_interaction_chosen").closest('.row').show();
+			$("#ongoing_client_child_" + subform.substring(18, subform.length) + "_intervention_by_special_cell__chosen").closest('.row').show();
+			$("#ongoing_client_child_" + subform.substring(18, subform.length) + "_referrals_new_clients_ongoing_clients__chosen").closest('.row').show();
+			$("#ongoing_client_child_" + subform.substring(18, subform.length) + "_other_interventions_taking_place_outside_the_cell_chosen").closest('.row').show();
+			$("#ongoing_client_child_" + subform.substring(18, subform.length) + "_outcomes_new_clients_ongoing_clients_chosen").closest('.row').show();
 			
-		$("#ongoing_client_child_" + subform.substring(18, subform.length) + "_nature_of_interaction_chosen").closest('.row').show();
-		$("#ongoing_client_child_" + subform.substring(18, subform.length) + "_intervention_by_special_cell__chosen").closest('.row').show();
-		$("#ongoing_client_child_" + subform.substring(18, subform.length) + "_referrals_new_clients_ongoing_clients__chosen").closest('.row').show();
-		$("#ongoing_client_child_" + subform.substring(18, subform.length) + "_other_interventions_taking_place_outside_the_cell_chosen").closest('.row').show();
-		$("#ongoing_client_child_" + subform.substring(18, subform.length) + "_outcomes_new_clients_ongoing_clients_chosen").closest('.row').show();
-
-		$('#' + subform + ' select').each(function(){
-			displayHideDropDownFields($(this), '#' + subform);
-		});
-			
-		}, 100);
+			$('#' + subform + ' select').each(function(){
+				displayHideDropDownFields($(this), subformElem);
+			});
+		}else{
+			$('#' + subform + ' div.row').each(function(){
+				if(!$(this).hasClass('collapse_expand_subform_header')){
+					$(this).hide();
+				}
+			})
+		}
 	});
 	
 	$('body').delegate("a:contains('Add')","click", function(e) {
@@ -79,7 +83,7 @@ function displayDefault(fromChangeEvent){
 	var client = 0;
 	setTimeout(function () {
 		var locationVal = $('#record_case_data_child_location').find(":selected").text().toLowerCase();	
-		var mainElem = $('#record_case_data_child_location').closest('fieldset').attr('id');
+		var mainElem = $('#record_case_data_child_location').closest('fieldset');
 		location = $('#record_case_data_child_location').find(":selected").index();
 		client = $('#record_case_data_child_register_client').find(":selected").index();
 		
@@ -92,7 +96,7 @@ function displayDefault(fromChangeEvent){
 					$('#cp_case_intake_'+ locationVal +'_subform_ongoing_client').closest('.row').show();
 				}else{
 					defaultElements();
-					$('#' + mainElem + ' select').each(function(){
+					$('#' + mainElem.attr('id') + ' select').each(function(){
 						displayHideDropDownFields($(this), '#' + mainElem);
 					});
 					$('#cp_case_intake_'+ locationVal +'_subform_ongoing_client').closest('.row').hide();
@@ -140,6 +144,13 @@ function defaultElements(){
 }
 
 function displayHideDropDownFields(element,mainElement){	
+
+	var divRowArr = [];
+	if(mainElement.attr('id').includes('subform')){
+		divRowArr = $('#' + mainElement.attr('id') + ' div.row');
+	}else{
+		divRowArr = $('#' + mainElement.attr('id') + ' > div.row:not(:has("fieldset"))');
+	}
 	
 	var elemId = $(element).attr('id');
 	var selectText = $('#' + elemId).find(":selected").text();
@@ -158,7 +169,7 @@ function displayHideDropDownFields(element,mainElement){
 		if (selectText == 'Others specify') {			
 			$(otherSpecifyElem).show();
 			
-			$(mainElement + " label").each(function () {
+			$(divRowArr).find('label').each(function () {
 				var labelText = $(this).text();
 				var otherElemLabelText = $(this).closest('.row').next().find('label').text();
 				if (jQuery.inArray(labelText, urarr) != -1) {
@@ -176,7 +187,7 @@ function displayHideDropDownFields(element,mainElement){
 				}
 			}
 
-			$(mainElement + " label").each(function () {
+			$(divRowArr).find('label').each(function () {
 				var labelText = $(this).text();
 				var otherElemLabelText = $(this).closest('.row').next().find('label').text();
 				if (selectText == labelText) {
@@ -203,7 +214,7 @@ function displayHideDropDownFields(element,mainElement){
 			}).get();
 
 			if (chosenElems == '') {
-				$(mainElement + " label").each(function () {
+				$(divRowArr).find('label').each(function () {
 					var labelText = $(this).text();
 					if (jQuery.inArray(labelText, urarr) != -1 || jQuery.inArray(labelText, chosenElem) != -1) {
 						$(this).closest('.row').hide();
@@ -221,7 +232,7 @@ function displayHideDropDownFields(element,mainElement){
 							$(otherSpecifyElem).hide();
 						}
 					} else {
-						$(mainElement + " label").each(function () {
+						$(divRowArr).find('label').each(function () {
 							var labelText = $(this).text();
 							if (val == labelText) {
 								if (jQuery.inArray(labelText, chosenElems) != -1) {
