@@ -5,7 +5,7 @@ LOCATION_ARRAY = [['--select--',nil],['Maharashtra', "maharashtra_94827"], ['Del
 
 # Location array/district array
 MAHARASHTRA = [['--clear--',nil],['Dadar','dadar_41085'],['Kandivali','kandivali_80846'],['CBD Belapur','cbd_belapur_91917'],['Kurla','kurla_84966'],['Vakola','vakola_11821'],['Vikhroli','vikhroli_82157'],['Nashik','nashik_66641'],['Dhule','dhule_65349'],['Pune','pune_75723'],['Nanded','nanded_83848'],['Aurangabad','aurangabad_86607'],['Yawatmal','yawatmal_66643'],['Wardha','wardha_68524']]
-DELHI = [['--clear--',nil],['Malviya Nagar','malviya_nagar_13216'],['Sabji Mandi','sabji_mandi_46220'],['Rani Bagh','rani_bagh_07203'],['Nand Nagri','nand_nagri_62927'],['kamla_market_35409','Kamla Market'],['Mandir Marg','mandir_marg_39616'],['Saket','saket_32633'],['Dwarka','dwarka_77685'],['Sri Niwas Puri','sri_niwas_puri_31688'],['Gazipur','gazipur_51503'],['Kirti Nagar','kirti_nagar_21146'],['Rohini','rohini_96317'],['Police Line','police_line_08887'],['Shahdara','shahdara_31895'],['Delhi Cantt','delhi_cantt_47837']]
+DELHI = [['--clear--',nil],['Malviya Nagar','malviya_nagar_13216'],['Sabji Mandi','sabji_mandi_46220'],['Rani Bagh','rani_bagh_07203'],['Nand Nagri','nand_nagri_62927'],['Kamla Market','kamla_market_35409'],['Mandir Marg','mandir_marg_39616'],['Saket','saket_32633'],['Dwarka','dwarka_77685'],['Sri Niwas Puri','sri_niwas_puri_31688'],['Gazipur','gazipur_51503'],['Kirti Nagar','kirti_nagar_21146'],['Rohini','rohini_96317'],['Police Line','police_line_08887'],['Shahdara','shahdara_31895'],['Delhi Cantt','delhi_cantt_47837']]
 NCW = [['--clear--',nil],['Assam','assam_0122'],['Meghalaya','meghalaya_0122'],['Tamil Nadu','tamil_nadu_0122'],['Bihar','bihar_0122'],['Punjab','punjab_0122'],['Madhya Pradesh','madhya_pradesh_0122'],['Odisha','odisha_0122']]
 #---------------------------------------------------------
 
@@ -35,6 +35,3 @@ LOCATION_MAP_ARRAY={:maharashtra_94827 => MAHARASHTRA, :delhi_64730 => DELHI,:nc
 MONTH_ARRAY = [['--select--',nil],['January','01'],['February','02'],['March','03'],['April','04'],['May','05'],['June','06'],['July','07'],['August','08'],['September','09'],['October','10'],['November','11'],['December','12']]
 QUARTER_ARRAY = [['--select--',nil],['January-March','01-03'],['April-June','04-06'],['July-September','07-09'],['October-December','10-12']]
 
-
-# NOTE: 
-# IF IN 

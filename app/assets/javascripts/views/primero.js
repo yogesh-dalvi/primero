@@ -163,7 +163,7 @@ Primero = _primero.Views.Base.extend({
     };
     $(".side-nav").mCustomScrollbar(
       _.extend(options, {		  
-        setHeight: 70,
+        setHeight: 460,
         callbacks:{
           onInit: function() {
             $('.scrolling_indicator.down').css('visibility', 'visible');
