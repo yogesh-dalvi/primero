@@ -63,7 +63,7 @@
 //= require_tree ./views
 //= require router
 //= require intakes
-
+//= require cell_activity
 
 
 //= require turbolinks

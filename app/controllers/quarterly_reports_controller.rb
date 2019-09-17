@@ -31,17 +31,6 @@ class QuarterlyReportsController < ApplicationController
     @end_date_for_display = params[:e_d].to_s
   end
 
-  def generate_pdf
-    
-    respond_to do |format|
-      format.html
-      format.pdf do
-        pdf = MonthlyReportPdf.new(@users,params[:data])
-        send_data pdf.render, filename: 'report.pdf', type: 'application/pdf',disposition: "inline"
-      end
-    end
-  end
-
   def submit_form
     state = params[:location]
     district = params[:district]
@@ -107,22 +96,23 @@ class QuarterlyReportsController < ApplicationController
     @selected_district= selected_district
     @selected_cell= selected_cell
 
+    @district_to_show_in_view = @location_map_array[@selected_state.to_sym]
+
     # check if district is selected or not i.e whether it is nil or blank
     if @selected_district!=nil
       if !@selected_district.include? ""
-        @district_to_show_in_view = @location_map_array[@selected_state.to_sym]
 
         if @selected_district.length > 1
           # if more than 1 district selected
           @selected = "multi_district_selected"
           check_key_present selected_state, @selected_district, start_date, end_date, "", @selected 
         else
+          @cell_to_show_in_view = @cell_map_array[@selected_district[0].to_sym]
           # if only 1 district is selected
           # check if cell is selected or not i.e whether it is nil or blank
           if @selected_cell!=nil 
             if !@selected_cell.include? ""
-              @cell_to_show_in_view = @cell_map_array[@selected_district[0].to_sym]
-              
+
               @selected = "inner_cell_selected"
               check_key_present selected_state, @selected_cell, start_date, end_date, selected_district[0], @selected
             else
@@ -1013,6 +1003,13 @@ class QuarterlyReportsController < ApplicationController
     start_month = Date.parse(start_date).strftime("%m")
     @quarter_to_display = start_month+"-"+end_month
     @start_date_for_display = Date.parse(start_date)
+    @quarter = ""
+    for i in QUARTER_ARRAY
+      if i[1] == @quarter_to_display
+        @quarter = i[0]
+        break
+      end  
+    end
    
     # showing districts and cells 
     # @data.push(@police_count,@exclients_count,@word_of_mouth_count,@self_count,@lawyers_legal_org_count,@ngo_count,@go_count,@icw_pw_count,@any_other_count,@one_time_intervention_count,@home_visit_count,@collateral_visits_count,@individual_meeting_count,@group_meeting_count,@participation_count,@programs_organised_count,@conducted_session_or_prog_count,@police_reffered_to_count,@medical_count,@shelter_count,@legal_services_count,@protection_officer_count,@lok_shiyakat_niwaran_count,@on_going_intevention_count,@engaing_police_help_count,@state_in_pdf,@district_in_pdf,@start_date_in_pdf,@end_date_in_pdf)
@@ -1590,189 +1587,194 @@ class QuarterlyReportsController < ApplicationController
 
     if district.empty?
       ongoing_clients_in_this_quarter = Child.by_state_date_ongoing_clients_not_registered_in_this_quarter.startkey([state,1,start_date_for_ongoing_clients]).endkey([state,1,end_date_for_ongoing_clients,{}])['rows']
-      intervention_by_special_cell = Child.by_state_date_intervention_by_special_cell_for_ongoing_clients.startkey([state,1,start_date_for_ongoing_clients]).endkey([state,1,end_date_for_ongoing_clients,{}]).reduce.group['rows']
-      # negotiating_nonviolence = Child.by_state_date_negotiating_nonviolence_for_ongoing_clients.startkey([state,1,start_date_for_ongoing_clients]).endkey([state,1,end_date_for_ongoing_clients,{}]).reduce.group['rows']
-      # referrals_new_clients_ongoing_clients = Child.by_state_date_referrals_new_clients_ongoing_clients_for_ongoing_clients.startkey([state,1,start_date_for_ongoing_clients]).endkey([state,1,end_date_for_ongoing_clients,{}]).reduce.group['rows']
-      # outcomes_new_clients_ongoing_clients = Child.by_state_date_outcomes_new_clients_ongoing_clients_for_ongoing_clients.startkey([state,1,start_date_for_ongoing_clients]).endkey([state,1,end_date_for_ongoing_clients,{}]).reduce.group['rows']
+      intervention_by_special_cell = Child.by_state_date_ongoing_clients.startkey([state,1,start_date_for_ongoing_clients]).endkey([state,1,end_date_for_ongoing_clients,{}]).reduce.group['rows']
     else
       ongoing_clients_in_this_quarter = Child.by_ongoing_clients_not_registered_in_this_quarter.startkey([state,district,start_date_for_ongoing_clients]).endkey([state,district,end_date_for_ongoing_clients,{}])['rows']
-      intervention_by_special_cell = Child.by_intervention_by_special_cell_for_ongoing_clients.startkey([state,district,start_date_for_ongoing_clients]).endkey([state,district,end_date_for_ongoing_clients,{}]).reduce.group['rows']
-      # negotiating_nonviolence = Child.by_negotiating_nonviolence_for_ongoing_clients.startkey([state,district,start_date_for_ongoing_clients]).endkey([state,district,end_date_for_ongoing_clients,{}]).reduce.group['rows']
-      # referrals_new_clients_ongoing_clients = Child.by_referrals_new_clients_ongoing_clients_for_ongoing_clients.startkey([state,district,start_date_for_ongoing_clients]).endkey([state,district,end_date_for_ongoing_clients,{}]).reduce.group['rows']
-      # outcomes_new_clients_ongoing_clients = Child.by_outcomes_new_clients_ongoing_clients_for_ongoing_clients.startkey([state,district,start_date_for_ongoing_clients]).endkey([state,district,end_date_for_ongoing_clients,{}]).reduce.group['rows']    
+      intervention_by_special_cell = Child.by_ongoing_clients.startkey([state,district,start_date_for_ongoing_clients]).endkey([state,district,end_date_for_ongoing_clients,{}]).reduce.group['rows']
     end
 
+    follow_up_array=[]
     for i in ongoing_clients_in_this_quarter
       if i['key'][3]!= nil  
-        if !i['key'][3].empty?
-          date = Date.parse(i['key'][3])
-          if date >= Date.parse(start_date) and date < Date.parse(end_date)
-            @ongoing_clients += 1
+        if i['key'][3].length > 0
+          for j in i['key'][3]
+            if j.has_key? "ongoing_followup" and !j["ongoing_followup"].empty?
+              date = Date.parse(j["ongoing_followup"])
+              if date >= Date.parse(start_date) and date < Date.parse(end_date)
+                @ongoing_clients += 1
+                break
+              end
+            end
           end
         end
       end
     end  
 
     for i in intervention_by_special_cell
+      ongoing_present = 0
       if !i['key'][0].empty? && !i['key'][2].empty?
-        if i['key'][3]!= nil
-          if !i['key'][3].empty?
-            date = Date.parse(i['key'][3])
-            if date >= Date.parse(start_date) and date < Date.parse(end_date)
+        if i['key'][4].length >0
+          for j in i['key'][4]
+            if j.has_key? "ongoing_followup" and !j["ongoing_followup"].empty?
+              date = Date.parse(j["ongoing_followup"])
+              if date >= Date.parse(start_date) and date < Date.parse(end_date)
+                ongoing_present += 1
+                break
+              end
+            end
+          end
 
-              if i['key'][4].length >0
-                intervention_by_special_cell_array = []
-                negotiating_non_violence = []
-                referrals_new_clients_ongoing_clients = []
-                outcomes_new_clients_ongoing_clients = []
-                for j in i['key'][4]
-                  if j.has_key? "ongoing_followup" and !j["ongoing_followup"].empty?
-                    followup_date = Date.parse(j["ongoing_followup"])
-                    if followup_date >= Date.parse(start_date) and followup_date < Date.parse(end_date)
-                      # intervention by special cell calculation for that case
-                      if j.has_key? "intervention_by_special_cell" and j["intervention_by_special_cell"].length > 0
-                        for intervention in j["intervention_by_special_cell"]
-                          intervention_by_special_cell_array.push(intervention)
-                        end
-                      end
-                      #negotiating no-violence calculation for that case
-                      if j.has_key? "negotiating_nonviolence" and !j["negotiating_nonviolence"].empty?
-                          negotiating_non_violence.push(j["negotiating_nonviolence"])
-                      end
-                      # refferals new clients ongoing clients
-                      if j.has_key? "referrals_new_clients_ongoing_clients" and j["referrals_new_clients_ongoing_clients"].length > 0
-                        for refferals in j["referrals_new_clients_ongoing_clients"]
-                          referrals_new_clients_ongoing_clients.push(refferals)
-                        end
-                      end
-                      # outcomes_new_clients_ongoing_clients
-                      if j.has_key? "outcomes_new_clients_ongoing_clients" and !j["outcomes_new_clients_ongoing_clients"].empty?
-                        outcomes_new_clients_ongoing_clients.push(j["outcomes_new_clients_ongoing_clients"])
-                      end
+          if ongoing_present!=0
+            intervention_by_special_cell_array = []
+            negotiating_non_violence = []
+            referrals_new_clients_ongoing_clients = []
+            outcomes_new_clients_ongoing_clients = []
+            for j in i['key'][4]
+              if j.has_key? "ongoing_followup" and !j["ongoing_followup"].empty?
+                followup_date = Date.parse(j["ongoing_followup"])
+                if followup_date >= Date.parse(start_date) and followup_date < Date.parse(end_date)
+                  # intervention by special cell calculation for that case
+                  if j.has_key? "intervention_by_special_cell" and j["intervention_by_special_cell"].length > 0
+                    for intervention in j["intervention_by_special_cell"]
+                      intervention_by_special_cell_array.push(intervention)
                     end
                   end
-                end
-                # intervention by special cell
-                if intervention_by_special_cell_array.length > 0
-                  intervention_by_special_cell_array = intervention_by_special_cell_array.uniq #make array unique
-                  # Assign counter
-                  providing_emotional_support_and_strengthening_psychological_self_counter = 0
-                  enlisting_police_help_or_intervention_counter = 0
-                  legal_aid_legal_referral_pre_litigation_counselling_counter = 0
-                  working_with_men_in_the_interest_of_violated_woman_counter = 0
-                  advocacy_for_financial_entitlements_counter = 0
-                  building_support_system_counter = 0
-                  referral_for_shelter_medical_other_services_counter = 0
-                  developmental_counselling_counter = 0
-                  for j in intervention_by_special_cell_array
-                    if providing_emotional_support_and_strengthening_psychological_self_counter == 0 and j.include? "providing_emotional_support_and_strengthening_psychological_self"
-                      providing_emotional_support_and_strengthening_psychological_self_counter += 1
-                      @spec_cell_prov_emo_support_count_ongoing_client += 1
-                    elsif building_support_system_counter == 0 and j.include? "building_support_system"
-                      building_support_system_counter += 1
-                      @spec_cell_build_support_system_count_ongoing_client += 1
-                    elsif enlisting_police_help_or_intervention_counter == 0 and j.include? "enlisting_police_help_or_intervention"
-                      enlisting_police_help_or_intervention_counter += 1
-                      @spec_cell_enlist_police_help_count_ongoing_client += 1
-                    elsif legal_aid_legal_referral_pre_litigation_counselling_counter == 0 and j.include? "legal_aid_legal_referral_pre_litigation_counselling"
-                      legal_aid_legal_referral_pre_litigation_counselling_counter += 1
-                      @spec_cell_pre­litigation_counsel_count_ongoing_client += 1
-                    elsif working_with_men_in_the_interest_of_violated_woman_counter == 0 and j.include? "working_with_men_in_the_interest_of_violated_woman"
-                      working_with_men_in_the_interest_of_violated_woman_counter += 1
-                      @spec_cell_work_with_men_count_ongoing_client += 1
-                    elsif advocacy_for_financial_entitlements_counter == 0 and j.include? "advocacy_for_financial_entitlements"
-                      advocacy_for_financial_entitlements_counter += 1
-                      @spec_cell_adv_fin_ent_count_ongoing_client += 1
-                    elsif referral_for_shelter_medical_other_services_counter == 0 and j.include? "referral_for_shelter_medical_other_services"
-                      referral_for_shelter_medical_other_services_counter += 1
-                      @spec_cell_refferal_for_shelter_count_ongoing_client += 1
-                    elsif developmental_counselling_counter == 0 and j.include? "developmental_counselling"
-                      developmental_counselling_counter += 1
-                      @spec_cell_dev_counsel_count_ongoing_client += 1
+                  #negotiating no-violence calculation for that case
+                  if j.has_key? "negotiating_nonviolence" and !j["negotiating_nonviolence"].empty?
+                      negotiating_non_violence.push(j["negotiating_nonviolence"])
+                  end
+                  # refferals new clients ongoing clients
+                  if j.has_key? "referrals_new_clients_ongoing_clients" and j["referrals_new_clients_ongoing_clients"].length > 0
+                    for refferals in j["referrals_new_clients_ongoing_clients"]
+                      referrals_new_clients_ongoing_clients.push(refferals)
                     end
                   end
-                end
-                # negotiating non-violence
-                if negotiating_non_violence.length > 0
-                  negotiating_non_violence = negotiating_non_violence.uniq
-                  negotiating_non_violence_with_stakeholder_counter = 0
-                  for j in negotiating_non_violence
-                    if negotiating_non_violence_with_stakeholder_counter == 0 and j.include? "negotiating_non_violence_with_stakeholder"
-                      negotiating_non_violence_with_stakeholder_counter += 1
-                      @spec_cell_neg_nonvio_with_stakeholder_count_ongoing_client  += 1
-                    end
+                  # outcomes_new_clients_ongoing_clients
+                  if j.has_key? "outcomes_new_clients_ongoing_clients" and !j["outcomes_new_clients_ongoing_clients"].empty?
+                    outcomes_new_clients_ongoing_clients.push(j["outcomes_new_clients_ongoing_clients"])
                   end
                 end
-                # refferals new clients ongoing clients
-                if referrals_new_clients_ongoing_clients.length > 0
-                  referrals_new_clients_ongoing_clients = referrals_new_clients_ongoing_clients.uniq
-                  police_counter = 0
-                  medical_service_counter = 0
-                  court_lawyers_legal_organisations_counter = 0
-                  shelter_home_counter = 0
-                  protection_officer_counter = 0
-                  any_other_counter = 0
+              end
+            end
+            # intervention by special cell
+            if intervention_by_special_cell_array.length > 0
+              intervention_by_special_cell_array = intervention_by_special_cell_array.uniq #make array unique
+              # Assign counter
+              providing_emotional_support_and_strengthening_psychological_self_counter = 0
+              enlisting_police_help_or_intervention_counter = 0
+              legal_aid_legal_referral_pre_litigation_counselling_counter = 0
+              working_with_men_in_the_interest_of_violated_woman_counter = 0
+              advocacy_for_financial_entitlements_counter = 0
+              building_support_system_counter = 0
+              referral_for_shelter_medical_other_services_counter = 0
+              developmental_counselling_counter = 0
+              for j in intervention_by_special_cell_array
+                if providing_emotional_support_and_strengthening_psychological_self_counter == 0 and j.include? "providing_emotional_support_and_strengthening_psychological_self"
+                  providing_emotional_support_and_strengthening_psychological_self_counter += 1
+                  @spec_cell_prov_emo_support_count_ongoing_client += 1
+                elsif building_support_system_counter == 0 and j.include? "building_support_system"
+                  building_support_system_counter += 1
+                  @spec_cell_build_support_system_count_ongoing_client += 1
+                elsif enlisting_police_help_or_intervention_counter == 0 and j.include? "enlisting_police_help_or_intervention"
+                  enlisting_police_help_or_intervention_counter += 1
+                  @spec_cell_enlist_police_help_count_ongoing_client += 1
+                elsif legal_aid_legal_referral_pre_litigation_counselling_counter == 0 and j.include? "legal_aid_legal_referral_pre_litigation_counselling"
+                  legal_aid_legal_referral_pre_litigation_counselling_counter += 1
+                  @spec_cell_pre­litigation_counsel_count_ongoing_client += 1
+                elsif working_with_men_in_the_interest_of_violated_woman_counter == 0 and j.include? "working_with_men_in_the_interest_of_violated_woman"
+                  working_with_men_in_the_interest_of_violated_woman_counter += 1
+                  @spec_cell_work_with_men_count_ongoing_client += 1
+                elsif advocacy_for_financial_entitlements_counter == 0 and j.include? "advocacy_for_financial_entitlements"
+                  advocacy_for_financial_entitlements_counter += 1
+                  @spec_cell_adv_fin_ent_count_ongoing_client += 1
+                elsif referral_for_shelter_medical_other_services_counter == 0 and j.include? "referral_for_shelter_medical_other_services"
+                  referral_for_shelter_medical_other_services_counter += 1
+                  @spec_cell_refferal_for_shelter_count_ongoing_client += 1
+                elsif developmental_counselling_counter == 0 and j.include? "developmental_counselling"
+                  developmental_counselling_counter += 1
+                  @spec_cell_dev_counsel_count_ongoing_client += 1
+                end
+              end
+            end
+            # negotiating non-violence
+            if negotiating_non_violence.length > 0
+              negotiating_non_violence = negotiating_non_violence.uniq
+              negotiating_non_violence_with_stakeholder_counter = 0
+              for j in negotiating_non_violence
+                if negotiating_non_violence_with_stakeholder_counter == 0 and j.include? "negotiating_non_violence_with_stakeholder"
+                  negotiating_non_violence_with_stakeholder_counter += 1
+                  @spec_cell_neg_nonvio_with_stakeholder_count_ongoing_client  += 1
+                end
+              end
+            end
+            # refferals new clients ongoing clients
+            if referrals_new_clients_ongoing_clients.length > 0
+              referrals_new_clients_ongoing_clients = referrals_new_clients_ongoing_clients.uniq
+              police_counter = 0
+              medical_service_counter = 0
+              court_lawyers_legal_organisations_counter = 0
+              shelter_home_counter = 0
+              protection_officer_counter = 0
+              any_other_counter = 0
 
-                  for j in referrals_new_clients_ongoing_clients
-                    if police_counter == 0 and j.include? "police"
-                      police_counter += 1
-                      @police_refferal_count_ongoing_client += 1
-                    elsif medical_service_counter == 0 and j.include? "medical_service"
-                      medical_service_counter += 1
-                      @medical_refferal_count_ongoing_client += 1
-                    elsif court_lawyers_legal_organisations_counter == 0 and j.include? "court_lawyers_legal_organisations"
-                      court_lawyers_legal_organisations_counter += 1
-                      @court_dlsa_refferal_count_ongoing_client += 1
-                    elsif shelter_home_counter == 0 and j.include? "shelter_home"
-                      shelter_home_counter += 1
-                      @shelter_refferal_count_ongoing_client += 1
-                    elsif protection_officer_counter == 0 and j.include? "protection_officer"
-                      protection_officer_counter += 1
-                      @protection_officer_refferal_count_ongoing_client += 1
-                    elsif any_other_counter == 0 and j.include? "any_other"
-                      any_other_counter += 1
-                      @any_other_refferal_count_ongoing_client += 1
-                    end
-                  end
+              for j in referrals_new_clients_ongoing_clients
+                if police_counter == 0 and j.include? "police"
+                  police_counter += 1
+                  @police_refferal_count_ongoing_client += 1
+                elsif medical_service_counter == 0 and j.include? "medical_service"
+                  medical_service_counter += 1
+                  @medical_refferal_count_ongoing_client += 1
+                elsif court_lawyers_legal_organisations_counter == 0 and j.include? "court_lawyers_legal_organisations"
+                  court_lawyers_legal_organisations_counter += 1
+                  @court_dlsa_refferal_count_ongoing_client += 1
+                elsif shelter_home_counter == 0 and j.include? "shelter_home"
+                  shelter_home_counter += 1
+                  @shelter_refferal_count_ongoing_client += 1
+                elsif protection_officer_counter == 0 and j.include? "protection_officer"
+                  protection_officer_counter += 1
+                  @protection_officer_refferal_count_ongoing_client += 1
+                elsif any_other_counter == 0 and j.include? "any_other"
+                  any_other_counter += 1
+                  @any_other_refferal_count_ongoing_client += 1
                 end
-                # outcomes_new_clients_ongoing_clients
-                if outcomes_new_clients_ongoing_clients.length > 0
-                  outcomes_new_clients_ongoing_clients = outcomes_new_clients_ongoing_clients.uniq
-                  divorce_counter = 0
-                  helped_in_reteival_of_streedhan = 0
-                  helped_in_filing_application_under_pwdva_2005 = 0
-                  helped_in_registering_fir_under_section_498a = 0
-                  helped_the_woman_in_accessing_her_financial_entitlements = 0
-                  non_violent_reconciliation = 0
-                  court_orders_in_the_best_interest_of_the_woman = 0
-                  others_specify = 0
-                  for j in outcomes_new_clients_ongoing_clients
-                    if divorce_counter == 0 and j.include? "helped_in_filing_for_divorce_separation_talaq_khula" 
-                      divorce_counter += 1
-                      @outcomes_helped_in_case_filed_for_divorce_count_ongoing_client += i['value']
-                    elsif helped_in_reteival_of_streedhan == 0 and j.include? "helped_in_reteival_of_streedhan"
-                      helped_in_reteival_of_streedhan += 1
-                      @outcome_streedhan_retrival_count_ongoing_client += i['value']
-                    elsif helped_in_filing_application_under_pwdva_2005 == 0 and j.include? "helped_in_filing_application_under_pwdva_2005"
-                      helped_in_filing_application_under_pwdva_2005 += 1
-                      @outcome_pwdva_2005_count_ongoing_client += i['value']
-                    elsif helped_in_registering_fir_under_section_498a == 0 and j.include? "helped_in_registering_fir_under_section_498a"
-                      helped_in_registering_fir_under_section_498a += 1
-                      @outcome_498A_count_ongoing_client += i['value']
-                    elsif helped_the_woman_in_accessing_her_financial_entitlements == 0 and j.include? "helped_the_woman_in_accessing_her_financial_entitlements"
-                      helped_the_woman_in_accessing_her_financial_entitlements += 1
-                      @outcome_maintenence_count_ongoing_client += i['value']
-                    elsif non_violent_reconciliation == 0 and j.include? "non_violent_reconciliation"
-                      non_violent_reconciliation += 1
-                      @outcome_non_violent_recon_count_ongoing_client += i['value']
-                    elsif court_orders_in_the_best_interest_of_the_woman == 0 and j.include? "court_orders_in_the_best_interest_of_the_woman"
-                      court_orders_in_the_best_interest_of_the_woman += 1
-                      @outcome_court_order_count_ongoing_client += i['value']
-                    elsif others_specify == 0 and j.include? "others_specify"
-                      others_specify += 1
-                      @outcome_any_other_count_ongoing_client += i['value']
-                    end
-                  end
+              end
+            end
+            # outcomes_new_clients_ongoing_clients
+            if outcomes_new_clients_ongoing_clients.length > 0
+              outcomes_new_clients_ongoing_clients = outcomes_new_clients_ongoing_clients.uniq
+              divorce_counter = 0
+              helped_in_reteival_of_streedhan = 0
+              helped_in_filing_application_under_pwdva_2005 = 0
+              helped_in_registering_fir_under_section_498a = 0
+              helped_the_woman_in_accessing_her_financial_entitlements = 0
+              non_violent_reconciliation = 0
+              court_orders_in_the_best_interest_of_the_woman = 0
+              others_specify = 0
+              for j in outcomes_new_clients_ongoing_clients
+                if divorce_counter == 0 and j.include? "helped_in_filing_for_divorce_separation_talaq_khula" 
+                  divorce_counter += 1
+                  @outcomes_helped_in_case_filed_for_divorce_count_ongoing_client += i['value']
+                elsif helped_in_reteival_of_streedhan == 0 and j.include? "helped_in_reteival_of_streedhan"
+                  helped_in_reteival_of_streedhan += 1
+                  @outcome_streedhan_retrival_count_ongoing_client += i['value']
+                elsif helped_in_filing_application_under_pwdva_2005 == 0 and j.include? "helped_in_filing_application_under_pwdva_2005"
+                  helped_in_filing_application_under_pwdva_2005 += 1
+                  @outcome_pwdva_2005_count_ongoing_client += i['value']
+                elsif helped_in_registering_fir_under_section_498a == 0 and j.include? "helped_in_registering_fir_under_section_498a"
+                  helped_in_registering_fir_under_section_498a += 1
+                  @outcome_498A_count_ongoing_client += i['value']
+                elsif helped_the_woman_in_accessing_her_financial_entitlements == 0 and j.include? "helped_the_woman_in_accessing_her_financial_entitlements"
+                  helped_the_woman_in_accessing_her_financial_entitlements += 1
+                  @outcome_maintenence_count_ongoing_client += i['value']
+                elsif non_violent_reconciliation == 0 and j.include? "non_violent_reconciliation"
+                  non_violent_reconciliation += 1
+                  @outcome_non_violent_recon_count_ongoing_client += i['value']
+                elsif court_orders_in_the_best_interest_of_the_woman == 0 and j.include? "court_orders_in_the_best_interest_of_the_woman"
+                  court_orders_in_the_best_interest_of_the_woman += 1
+                  @outcome_court_order_count_ongoing_client += i['value']
+                elsif others_specify == 0 and j.include? "others_specify"
+                  others_specify += 1
+                  @outcome_any_other_count_ongoing_client += i['value']
                 end
               end
             end

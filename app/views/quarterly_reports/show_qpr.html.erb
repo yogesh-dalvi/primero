@@ -1,3 +1,4 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <style>
 .col-sm-3 {
 	width: 16%;
@@ -314,7 +315,7 @@ $(document).ready(function() {
     <h2 style="color: #819f56">Quarterly Report</h2>
     <div align="right">
     <!-- ><%= link_to "",{:controller => "monthly_reports", :action => "generate_pdf", :format=> 'pdf',:data =>  @data}, {:class => "fa fa-file-pdf-o", :style => "font-size:30px;color:red", :"data-toggle" => "tooltip", :title => "Download pdf", :"data-placement" => "bottom", :target => "_blank"} %> <-->
-    <a id="generate" class="fa fa-file-excel-o" style ="font-size:30px;color:green" data-toggle="tooltip" title="Download csv" data-placement="bottom" target = "_blank"></a>
+    <a id="generate" class="fa fa-file-excel-o" style ="font-size:30px;color:green" data-toggle="tooltip" title="Download excel" data-placement="bottom" target = "_blank"></a>
     </div>
     <br>
     <div class="panel panel-default">
@@ -366,38 +367,57 @@ $(document).ready(function() {
         <br>
     <br>
     
-    <h6>State : <%=@state_name %> </h6>
-    <% if @district_name != "" %>
-      <h6>District : <%=@district_name %></h6>
-    <% end %> 
-    <% if @cell_name != "" %>
-      <h6>Cell : <%=@cell_name %></h6>
-    <% end %>
+    <div id="qpr_report" style="border-style: solid;border-color: #819f5673;">
 
-    <br>
-    <div class="large-12 small-12 columns table-responsive" style="overflow: scroll; margin-top:2%">
+    <table class="dataTable in_content_area reports">
+    <thead>
+      <tr>
+        <th style="text-align:center; border-right: 2px solid #dee2e6;" align="center">Special Cells for Women</th>
+      </tr>
+      <tr>
+        <th style="text-align:center; border-right: 2px solid #dee2e6; border-bottom: 2px solid #a49999;" align="center">Quarterly Progress Report</th>
+      </tr>
+    </thead>
+    </table>
+
+    <table hidden>
+      <tr>
+        <td style="text-align:left" align="left">State : <%=@state_name %></td>
+      </tr>
+      <% if @district_name != "" %>
+        <tr>
+          <td style="text-align:left" align="left">District : <%=@district_name %></td>
+        </tr>
+      <% end %> 
+      <% if @cell_name != "" %>
+        <tr>
+          <td style="text-align:left" align="left">Cell : <%=@cell_name %></td>
+        </tr>
+      <% end %> 
+      <tr>
+        <td style="text-align:left" align="left">Quarter: <%=@quarter %></td>
+      </tr>
+      <tr>
+        <td style="text-align:left" align="left">Year: <%=@year_to_display %></td>
+      </tr>
+    </table>    
+
+    <div class="table-responsive" style="overflow: scroll; margin-top:2%" >
 			<table class="dataTable in_content_area reports">
         <thead>
-          <tr>
-            <th colspan= <%= @array_length %> style="text-align:left; border-right: 2px solid #dee2e6;" align="left">Special Cells for Women</th>
-          </tr>
-          <tr>
-            <th colspan= <%= @array_length %> style="text-align:left; border-right: 2px solid #dee2e6; border-bottom: 2px solid #a49999;" align="left">Quarterly Progress Report</th>
+          <tr style="border:1px solid #a49999; border-collapse: none;">
+            <th style="border-left:1px solid #a49999; border-top:1px solid #a49999; border-bottom: 2px solid #a49999;"><b>Sr.No.</b></th>
+            <th style="border-top:1px solid #a49999; border-bottom: 2px solid #a49999;"><b>Client Profile & Details</b></th>
+            <% if @selected == "state_selected" %>
+              <th style="border-top:1px solid #a49999; border-bottom: 2px solid #a49999;" colspan="2"><b><%=@state_name %></b></th>
+            <% else %>
+              <% @qpr_data.each do |data| %>
+                <th style="border-top:1px solid #a49999; border-bottom: 2px solid #a49999;" colspan="2"><b><%= data['district'] %></b></th>
+              <%end %>
+            <% end %>                                                                                                                         
           </tr>
         </thead>
         <tbody>
-          <tr style="border:1px solid #a49999; border-collapse: none;">
-            <td style="border-left:1px solid #a49999; border-top:1px solid #a49999; border-bottom: 2px solid #a49999;"><b>Sr.No.</b></td>
-            <td style="border-top:1px solid #a49999; border-bottom: 2px solid #a49999;"><b>Client Profile & Details</b></td>
-            <% if @selected == "state_selected" %>
-              <td style="border-top:1px solid #a49999; border-bottom: 2px solid #a49999;" colspan="2"><b><%=@state_name %></b></td>
-            <% else %>
-              <% @qpr_data.each do |data| %>
-                <td style="border-top:1px solid #a49999; border-bottom: 2px solid #a49999;" colspan="2"><b><%= data['district'] %></b></td>
-              <%end %>
-            <% end %>
-                                                                                                                                      
-          </tr>
           <tr>
             <td style="border-left:1px solid #a49999;"><b>1</b></td>
             <td><b>Total clients with whom there was interaction</b></td>
@@ -406,33 +426,26 @@ $(document).ready(function() {
             <% end %>
           </tr>
           <tr>
-            <td style="border-left:1px solid #a49999;">1.1</td>
+            <td style="border-left:1px solid #a49999;"></td>
             <td>Number of applications registered in this quarter only.</td>
             <% @qpr_data.each do |data| %>
               <td colspan="2"><%=data['total_clients'] %></td>
             <% end %>
           </tr>
           <tr>	
-            <td style="border-left:1px solid #a49999;">1.2</td>
+            <td style="border-left:1px solid #a49999;"></td>
             <td>Ongoing clients (applications registered before this quarter but interventions are continuing in this quarter)</td>
             <% @qpr_data.each do |data| %>
               <td colspan="2"><%=data['ongoing_clients'] %></td>
             <% end %>
           </tr>
           <tr>
-            <td style="border-left:1px solid #a49999;">1.3</td>
+            <td style="border-left:1px solid #a49999;"></td>
             <td>One­ time intervention in this quarter</td>
             <% @qpr_data.each do |data| %>
               <td colspan="2"><%=data['one_time_intervention_in_this_quarter'] %></td>
             <% end %>
           </tr>
-          <!-- > <tr>
-            <td style="border-left:1px solid #a49999;"></td>
-            <td>Number of people provided support by the cell without having registered application.</td>
-            <% @qpr_data.each do |data| %>
-              <td colspan="2"><%=data['no_of_ppl_prvded_supp'] %></td>
-            <% end %>
-          </tr><-->
           <tr>
             <td style="border-left:1px solid #a49999;"><b>2</b></td>
             <td><b>Clients (applications registered in this quarter only) referred by</b></td>
@@ -931,11 +944,18 @@ $(document).ready(function() {
             <% end %>
           </tr>
           <tr>
-            <td style="border-left:1px solid #a49999;"><b>8</b></td>
-            <td><b>Intervention by the Special Cell (multiple response)</b></td>
+            <td rowspan = 2 style="border-left:1px solid #a49999;"><b>8</b></td>
+            <td rowspan = 2><b>Intervention by the Special Cell (multiple response)</b></td>
             <% @qpr_data.each do |data| %>
-              <td style = "border-right: 1px solid #dee2e6;"><b>New Clients (applications registered in this quarter) ( <%=data['intervension_by_spec_cell'] %> )</b></td>
-              <td><b>Ongoing Clients (applications registered before this quarter) ( <%=data['intervension_by_spec_cell_ongoing'] %> )</b></td>
+              <td style = "border-right: 1px solid #dee2e6;"><b>New Clients (applications registered in this quarter)</b></td>
+              <td><b>Ongoing Clients (applications registered before this quarter)</b></td>
+            <% end %>
+          </tr>
+
+          <tr>
+            <% @qpr_data.each do |data| %>
+              <td style = "border-right: 1px solid #dee2e6;"><b><%=data['intervension_by_spec_cell'] %></b></td>
+              <td><b><%=data['intervension_by_spec_cell_ongoing'] %></b></td>
             <% end %>
           </tr>
           <tr>
@@ -1018,13 +1038,22 @@ $(document).ready(function() {
           </tr>
 
           <tr>
-            <td style="border-left:1px solid #a49999;"><b>9</b></td>
-            <td><b>Referrals (multiple response)</b></td>
+            <td rowspan = 2 style="border-left:1px solid #a49999;"><b>9</b></td>
+            <td rowspan = 2 ><b>Referrals (multiple response)</b></td>
             <% @qpr_data.each do |data| %>
-              <td style = "border-right: 1px solid #dee2e6;"><b>New Clients (applications registered in this quarter) ( <%=data['refferals'] %> ) </b></td>
-              <td><b>Ongoing Clients (applications registered before this quarter) ( <%=data['refferals_ongoing'] %> )</b></td>
+              <td style = "border-right: 1px solid #dee2e6;"><b>New Clients (applications registered in this quarter)</b></td>
+              <td><b>Ongoing Clients (applications registered before this quarter)</b></td>
             <% end %>
           </tr>
+
+          <tr>
+            <% @qpr_data.each do |data| %>
+              <td style = "border-right: 1px solid #dee2e6;"><b><%=data['refferals'] %></b></td>
+              <td><b><%=data['refferals_ongoing'] %></b></td>
+            <% end %>
+          </tr>
+
+
           <tr>
             <td style="border-left:1px solid #a49999;"></td>
             <td>Police</td>
@@ -1092,7 +1121,7 @@ $(document).ready(function() {
             <td style="border-left:1px solid #a49999;"><b>10</b></td>
             <td><b>Other interventions in the community</b></td>
             <% @qpr_data.each do |data| %>
-              <td colspan="2"><b>Count  <%=data['other_intervention'] %></b></td>
+              <td colspan="2"><b><%=data['other_intervention'] %></b></td>
             <% end %>
           </tr>
           <tr>
@@ -1144,13 +1173,22 @@ $(document).ready(function() {
           </tr>
 
           <tr>
-            <td style="border-left:1px solid #a49999;"><b>11</b></td>
-            <td><b>Outcomes(multiple response)</b></td>
+            <td rowspan = 2 style="border-left:1px solid #a49999;"><b>11</b></td>
+            <td rowspan = 2 ><b>Outcomes(multiple response)</b></td>
             <% @qpr_data.each do |data| %>
-              <td style = "border-right: 1px solid #dee2e6;"><b>New Clients (applications registered in this quarter) ( <%=data['outcomes'] %> )</b></td>
-              <td><b>Ongoing Clients (applications registered before this quarter) ( <%=data['outcomes_ongoing'] %> )</b></td>
+              <td style = "border-right: 1px solid #dee2e6;"><b>New Clients (applications registered in this quarter)</b></td>
+              <td><b>Ongoing Clients (applications registered before this quarter)</b></td>
             <% end %>
           </tr>
+
+          <tr>
+            <% @qpr_data.each do |data| %>
+              <td style = "border-right: 1px solid #dee2e6;"><b><%=data['outcomes'] %></b></td>
+              <td><b><%=data['outcomes_ongoing'] %></b></td>
+            <% end %>
+          </tr>
+
+
           <tr>
               <td style="border-left:1px solid #a49999;"></td>
             <td>Helped in case filed for divorce/ separation/mutual divorce</td>
@@ -1231,12 +1269,13 @@ $(document).ready(function() {
       </table>
       </div>
 </div>
+</div>
 
 <script>
 
   var state= "<%=@selected_state %>";
-  var district = <%=@selected_district.to_json.html_safe %>;
-  var cell =  <%=@selected_cell.to_json.html_safe %>;
+  var district = <%=@district_to_show_in_view.to_json.html_safe %>;
+  var cell =  <%=@cell_to_show_in_view.to_json.html_safe %>;
   var quarter = "<%=@quarter_to_display%>";
   var year = "<%=@year_to_display%>";
 
@@ -1249,7 +1288,6 @@ $(document).ready(function() {
   { 
     if (district[0]!= "")
       {
-        console.log('district')
         district_array = <%=@district_to_show_in_view.to_json.html_safe %>;
         var el = $('#report-district');
         el.empty(); // remove old cell options
@@ -1314,68 +1352,33 @@ $(document).ready(function() {
         el.empty(); // remove old subcell options
       }  
       
-  function download_csv(csv, filename) {
-      var csvFile;
-      var downloadLink;
-
-      // CSV FILE
-      csvFile = new Blob([csv], {type: "text/csv"});
-
-      // Download link
-      downloadLink = document.createElement("a");
-
-      // File name
-      downloadLink.download = filename;
-
-      // We have to create a link to the file
-      downloadLink.href = window.URL.createObjectURL(csvFile);
-
-      // Make sure that the link is not displayed
-      downloadLink.style.display = "none";
-
-      // Add the link to your DOM
-      document.body.appendChild(downloadLink);
-
-      // Lanzamos
-      downloadLink.click();
-
-      document.body.removeChild(downloadLink);
-      
-  }
-
-  function export_table_to_csv(html, filename) {
-    var csv = [];
-    csv.push("Location : <%=@state_name %>");
-    if ("<%=@district_name %>" != "")
-      {
-        csv.push("Cell : <%=@district_in_csv %>");
-      }
-    if ("<%=@cell_name %>" != "")
-      {
-        csv.push("Cell : <%=@cell_in_csv %>");
-      }
-    csv.push("From Date : <%=@start_date_in_pdf %>");
-    csv.push("To Date : <%=@end_date_in_pdf %>");
-    var rows = html.querySelectorAll("tr");
-    
-     
-    for (var i = 0; i < rows.length; i++) {
-      var row = [], cols = rows[i].querySelectorAll("td, th");
-        for (var j = 0; j < cols.length; j++)
-        {
-          row.push(cols[j].innerText);
-        }
-        csv.push(row.join(","));		
-      }
-
-      // Download CSV
-      download_csv(csv.join("\n"), filename);
-  }
-
   document.getElementById("generate").addEventListener("click", function () {
-      var html = document.getElementById("mpr_report");
-    export_table_to_csv(html, "quarter_report.csv");
+	//generateExcel($("#qpr_report"));
+	createDownloadLink("#generate",generateExcel($("#qpr_report")),"qpr_report.xlsx");
   });
+  
+  function generateExcel(el) {
+		var clon = el.clone();
+		var html = clon.wrap('<div>').parent().html();
+
+		//add more symbols if needed...
+		while (html.indexOf('á') != -1) html = html.replace(/á/g, '&aacute;');
+		while (html.indexOf('é') != -1) html = html.replace(/é/g, '&eacute;');
+		while (html.indexOf('í') != -1) html = html.replace(/í/g, '&iacute;');
+		while (html.indexOf('ó') != -1) html = html.replace(/ó/g, '&oacute;');
+		while (html.indexOf('ú') != -1) html = html.replace(/ú/g, '&uacute;');
+		while (html.indexOf('º') != -1) html = html.replace(/º/g, '&ordm;');
+		html = html.replace(/<td>/g, "<td>");			
+		
+		return html;
+	}
+	
+	function createDownloadLink(anchorSelector, str, fileName){			
+			var url = "data:application/vnd.ms-excel," + encodeURIComponent(str);
+			$(anchorSelector).attr("download", fileName);               
+			$(anchorSelector).attr("href", url);
+			
+		}
 
 </script>
 

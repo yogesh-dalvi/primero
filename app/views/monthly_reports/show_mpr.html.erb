@@ -1,3 +1,4 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <style>
 .col-sm-3 {
 	width: 16%;
@@ -313,7 +314,7 @@ $(document).ready(function() {
     <h2 style="color: #819f56">Monthly Report</h2>
     <div align="right">
     <!-- ><%= link_to "",{:controller => "monthly_reports", :action => "generate_pdf", :format=> 'pdf',:data =>  @data}, {:class => "fa fa-file-pdf-o", :style => "font-size:30px;color:red", :"data-toggle" => "tooltip", :title => "Download pdf", :"data-placement" => "bottom", :target => "_blank"} %> <-->
-    <a id="generate" class="fa fa-file-excel-o" style ="font-size:30px;color:green" data-toggle="tooltip" title="Download csv" data-placement="bottom" target = "_blank"></a>
+    <a id="generate" class="fa fa-file-excel-o" style ="font-size:30px;color:green" data-toggle="tooltip" title="Download excel" data-placement="bottom" target = "_blank"></a>
     </div>
     <br>
     <div class="panel panel-default">
@@ -364,38 +365,57 @@ $(document).ready(function() {
         <br>
     <br>
     
-    <h6>State : <%=@state_name %> </h6>
-    <% if @district_name != "" %>
-      <h6>District : <%=@district_name %></h6>
-    <% end %> 
-    <% if @cell_name != "" %>
-      <h6>Cell : <%=@cell_name %></h6>
-    <% end %>
+    <div id="mpr_report" style="border-style: solid;border-color: #819f5673;">
+    <div>
+    <table class="dataTable in_content_area reports">
+    <thead>
+      <tr>
+        <th style="text-align:center" align="center">Special Cells for Women</th>
+      </tr>
+      <tr>
+        <th style="text-align:center" align="center">Consolidated Monthly Progress Report</th>
+      </tr>
+    </thead>
+    </table>
 
-    <br>
+    <table hidden>
+      <tr>
+        <td style="text-align:left" align="left">State : <%=@state_name %></td>
+      </tr>
+      <% if @district_name != "" %>
+        <tr>
+          <td style="text-align:left" align="left">District : <%=@district_name %></td>
+        </tr>
+      <% end %> 
+      <% if @cell_name != "" %>
+        <tr>
+          <td style="text-align:left" align="left">Cell : <%=@cell_name %></td>
+        </tr>
+      <% end %> 
+      <tr>
+        <td style="text-align:left" align="left">Month: <%=@month %></td>
+      </tr>
+      <tr>
+        <td style="text-align:left" align="left">Year: <%=@year_to_display %></td>
+      </tr>
+    </table>
 
-    <div class="table-responsive"  id="mpr_report">  
+    <div class="table-responsive" style="overflow: scroll; margin-top:2%" >
       <table class="dataTable in_content_area reports">
         <thead>
-          <tr>
-            <th colspan= <%= @array_length %> style="text-align:center" align="center">Special Cells for Women</th>
-          </tr>
-          <tr>
-            <th colspan= <%= @array_length %> style="text-align:center" align="center">Consolidated Monthly Progress Report</th>
+        <tr style="border:1px solid #a49999; border-collapse: none;">
+          <th style="border-left:1px solid #a49999; border-top:1px solid #a49999; border-bottom: 2px solid #a49999;"><b>Sr.No.</b></th>
+          <th style="border-top:1px solid #a49999; border-bottom: 2px solid #a49999;"><b>Client Profile & Details</b></th>
+          <% if @selected == "state_selected" %>
+          <th style="border-top:1px solid #a49999; border-bottom: 2px solid #a49999;"><b><%=@state_name %></b></th>
+          <% else %>
+            <% @mpr_data.each do |data| %>
+              <th style="border-top:1px solid #a49999; border-bottom: 2px solid #a49999;"><b><%= data['district'] %></b></th>
+            <%end %>
+          <% end %>
           </tr>
         </thead>
         <tbody>
-          <tr style="border: 1px solid #aec687; border-collapse: none;">
-            <td><b>Sr.No.</b></td>
-            <td><b>Client Profile & Details</b></td>
-            <% if @selected == "state_selected" %>
-              <td><b>Count</b></td>
-            <% else %>
-              <% @mpr_data.each do |data| %>
-                <td><b><%= data["district"] %></b></td>
-              <%end %>
-            <% end %> 
-          </tr>
           <tr>
               <td><b>1</b></td>
               <td><b>New Registered applications</b></td>
@@ -471,14 +491,14 @@ $(document).ready(function() {
             <td><b>2</b></td>
             <td><b>Ongoing intervention (from previous months/not registered in this month)</b></td>
             <% @mpr_data.each do |data| %>
-              <td id="on_going_intevention_count"><%= data["on_going_intevention_count"] %></td>
+              <td id="on_going_intevention_count"><b><%= data["on_going_intevention_count"] %></b></td>
             <%end %>
           </tr>
                 <tr>
             <td><b>3</b></td>
             <td><b>One Time Intervention</b></td>
             <% @mpr_data.each do |data| %>
-              <td id="one_time_intervention_count"><%= data["one_time_intervention_count"] %></td>
+              <td id="one_time_intervention_count"><b><%= data["one_time_intervention_count"] %></b></td>
             <%end %>
           </tr>
           <tr>
@@ -507,45 +527,45 @@ $(document).ready(function() {
             <td><b>5</b></td>
             <td><b>Individual meeting/sessions</b></td>
             <% @mpr_data.each do |data| %>
-              <td id="individual_meeting_count"><%= data["individual_meeting_count"] %></td>
+              <td id="individual_meeting_count"><b><%= data["individual_meeting_count"] %></b></td>
             <%end %>
           </tr>
 
           <tr>
             <td><b>6</b></td>
-            <b><td>	Group meetings and sessions (Joint meeting) </td></b>
+            <td><b>Group meetings and sessions (Joint meeting)</b></td>
             <% @mpr_data.each do |data| %>
-              <td id="group_meeting_count"><%= data["group_meeting_count"] %></td>
+              <td id="group_meeting_count"><b><%= data["group_meeting_count"] %></b></td>
             <%end %>
           </tr>
 
           <tr>
             <td><b>7</b></td>
-            <b><td>	Engaging police help </td></b>
+            <td><b>Engaging police help </b></td>
             <% @mpr_data.each do |data| %>
-              <td id="engaing_police_help_count"><%= data["engaing_police_help_count"] %></td>
+              <td id="engaing_police_help_count"><b><%= data["engaing_police_help_count"] %></b></td>
             <%end %>
           </tr>
 
           <tr>
             <td><b>8</b></td>
-            <b><td>Participation in workshops/conferences/ programmes/seminars/ meetings</td></b>
+            <td><b>Participation in workshops/conferences/ programmes/seminars/ meetings</b></td>
             <% @mpr_data.each do |data| %>
-              <td id="participation_count"><%= data["participation_count"] %></td>
+              <td id="participation_count"><b><%= data["participation_count"] %></b></td>
             <%end %>
           </tr>
           <tr>
             <td><b>9</b></td>
-            <b><td>Programmes organised</td></b>
+            <td><b>Programmes organised</b></td>
             <% @mpr_data.each do |data| %>
-              <td id="programs_organised_count"><%= data["programs_organised_count"] %></td>
+              <td id="programs_organised_count"><b><%= data["programs_organised_count"] %></b></td>
             <%end %>
           </tr>
           <tr>
             <td><b>10</b></td>
-            <b><td>Conducted or facilitated a session or programme as a resource person</td></b>
+            <td><b>Conducted or facilitated a session or programme as a resource person</b></td>
             <% @mpr_data.each do |data| %>
-              <td id="conducted_session_or_prog_count"><%= data["conducted_session_or_prog_count"] %></td>
+              <td id="conducted_session_or_prog_count"><b><%= data["conducted_session_or_prog_count"] %><b></td>
             <%end %>
           </tr>
           <tr>
@@ -601,11 +621,12 @@ $(document).ready(function() {
       </table>
       </div>
 </div>
+</div>
 
 <script>
 var state= "<%=@selected_state %>";
-var district = <%=@selected_district.to_json.html_safe %>;
-var cell =  <%=@selected_cell.to_json.html_safe %>;
+var district = <%=@district_to_show_in_view.to_json.html_safe %>;
+var cell =  <%=@cell_to_show_in_view.to_json.html_safe %>;
 var month = "<%=@month_to_display%>";
 var year = "<%=@year_to_display%>";
 
@@ -619,7 +640,7 @@ if (district!= null)
 { 
   if (district[0]!= "")
     {
-      console.log('district')
+      
       district_array = <%=@district_to_show_in_view.to_json.html_safe %>;
       var el = $('#report-district');
       el.empty(); // remove old cell options
@@ -684,67 +705,32 @@ if (cell!= null)
       el.empty(); // remove old subcell options
     }  
       
-  function download_csv(csv, filename) {
-      var csvFile;
-      var downloadLink;
-
-      // CSV FILE
-      csvFile = new Blob([csv], {type: "text/csv"});
-
-      // Download link
-      downloadLink = document.createElement("a");
-
-      // File name
-      downloadLink.download = filename;
-
-      // We have to create a link to the file
-      downloadLink.href = window.URL.createObjectURL(csvFile);
-
-      // Make sure that the link is not displayed
-      downloadLink.style.display = "none";
-
-      // Add the link to your DOM
-      document.body.appendChild(downloadLink);
-
-      // Lanzamos
-      downloadLink.click();
-
-      document.body.removeChild(downloadLink);
-      
-  }
-
-  function export_table_to_csv(html, filename) {
-    var csv = [];
-    csv.push("Location : <%=@state_name %>");
-    if ("<%=@district_name %>" != "")
-      {
-        csv.push("Cell : <%=@district_in_csv %>");
-      }
-    if ("<%=@cell_name %>" != "")
-      {
-        csv.push("Cell : <%=@cell_in_csv %>");
-      }
-    csv.push("From Date : <%=@start_date_in_pdf %>");
-    csv.push("To Date : <%=@end_date_in_pdf %>");
-    var rows = html.querySelectorAll("tr");
-    
-     
-    for (var i = 0; i < rows.length; i++) {
-      var row = [], cols = rows[i].querySelectorAll("td, th");
-        for (var j = 0; j < cols.length; j++)
-        {
-          row.push(cols[j].innerText);
-        }
-        csv.push(row.join(","));		
-      }
-
-      // Download CSV
-      download_csv(csv.join("\n"), filename);
-  }
-
   document.getElementById("generate").addEventListener("click", function () {
-      var html = document.getElementById("mpr_report");
-    export_table_to_csv(html, "monthly_report.csv");
-  });
+    //generateExcel($("#qpr_report"));
+    createDownloadLink("#generate",generateExcel($("#mpr_report")),"mpr_report.xlsx");
+    });
+    
+    function generateExcel(el) {
+      var clon = el.clone();
+      var html = clon.wrap('<div>').parent().html();
+
+      //add more symbols if needed...
+      while (html.indexOf('á') != -1) html = html.replace(/á/g, '&aacute;');
+      while (html.indexOf('é') != -1) html = html.replace(/é/g, '&eacute;');
+      while (html.indexOf('í') != -1) html = html.replace(/í/g, '&iacute;');
+      while (html.indexOf('ó') != -1) html = html.replace(/ó/g, '&oacute;');
+      while (html.indexOf('ú') != -1) html = html.replace(/ú/g, '&uacute;');
+      while (html.indexOf('º') != -1) html = html.replace(/º/g, '&ordm;');
+      html = html.replace(/<td>/g, "<td>");			
+      
+      return html;
+    }
+    
+    function createDownloadLink(anchorSelector, str, fileName){			
+        var url = "data:application/vnd.ms-excel," + encodeURIComponent(str);
+        $(anchorSelector).attr("download", fileName);               
+        $(anchorSelector).attr("href", url);
+        
+   }
 
 </script>
