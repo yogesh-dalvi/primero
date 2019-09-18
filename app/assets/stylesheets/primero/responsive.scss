@@ -1,9 +1,5 @@
 @media only screen and (min-width: 320px) and (max-width: 406px) {
   #search_form{display: none !important;}
-
-  #tab_cp_case_intake_form .chosen-container {
-    position: static;
-  }
 }
 
 @media only screen and (min-width: 320px) and (max-width: 480px) {
@@ -117,9 +113,6 @@
     margin-bottom: 25px !important;
     height: 30px !important;
   }
-  #tab_cp_case_intake_form .chosen-container {
-    position: static;
-  }
 }
 
 @media only screen and (min-width: 481px) and (max-width: 768px) { 
@@ -222,9 +215,6 @@
     padding-top: 15px;
     padding-bottom: 15px;
   }
-  #tab_cp_case_intake_form .chosen-container {
-    position: static;
-  }
 
 }
 
@@ -243,9 +233,6 @@
   .col-sm-2, .col-sm-3 {
     max-width: 100% !important;
    }
-   #tab_cp_case_intake_form .chosen-container {
-    position: static;
-  }
 
 }
 
@@ -263,9 +250,6 @@
   .index_filters label span {
     width: 5rem  !important;
   }
-  #tab_cp_case_intake_form .chosen-container {
-    position: static;
-  }
 }
 
 @media only screen and (max-width: 1200px) { 
@@ -275,9 +259,6 @@
 
  .form-inline label {
   justify-content: left !important;
-}
-#tab_cp_case_intake_form .chosen-container {
-  position: static;
 }
 
 }
@@ -300,5 +281,4 @@
 table.dataTable tbody th, table.dataTable tbody td {
   font-size: 0.875rem !important;
 }
-
 

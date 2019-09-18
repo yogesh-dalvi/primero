@@ -4,8 +4,8 @@
 	margin-right: 25px;
 }
 
-#submit_button {
-	margin-top: 20px !important;
+submit_button {
+	margin-top: 2% !important;
 }
 
 .col-sm-2 {
@@ -194,7 +194,6 @@ $(document).ready(function() {
           cell_map_json = <%= @cell_map_array.to_json.html_safe%>;
           if (cell[0] in cell_map_json)
             {
-              document.getElementById("submit_button").setAttribute("style","margin:auto")
               subcell = cell_map_json[cell[0]];
               var el = $("#report-cell");
               el.empty();
@@ -333,16 +332,16 @@ $(document).ready(function() {
           <%= form_tag("/quarterly_reports/submit_form", method: "post", class: 'form-inline', name:"myForm", id:"submit_form_for_monthly_report") do %>
                 
                 <div class="col-sm-3">
-                  <label>Select quarter</label>
+                  <label>Select quarter<span style="color: red">*</span></label>
                   <%= select_tag 'quarter_select', options_for_select(@quarter_array),{:id => "quarter-selector"} %>
                 </div>
                 <div class="col-sm-3">
-                  <label>Select year</label>
+                  <label>Select year<span style="color: red">*</span></label>
                   <%= select_year(Date.current, start_year: 1900, end_year: Date.current.year, name: "year", id: "year-selector") %>
                 </div>
 
                 <div class="col-sm-2" id="locations">
-                    <label>State</label>
+                    <label>State<span style="color: red">*</span></label>
                     <%= select_tag 'location', options_for_select(@location_array),{:id => "report-location"} %>
                     <% if @location_not_selected == "true" %>
                       <label style="color: red">please select location</label>
@@ -361,7 +360,7 @@ $(document).ready(function() {
                         <%= select_tag 'cell', options_for_select(@maha_location_array),{:id => "report-cell",:multiple => true} %>
                     </div>
                 </div>
-                <div class="col-sm-2" id="submit_button">
+                <div class="col-sm-2" id="submit_button" style="margin-top: 2%;">
                    <%= submit_tag "Generate Report", :name => 'save', :id => 'submit_tag' ,:class => "button btn_submit large" %>
                 </div>
 
