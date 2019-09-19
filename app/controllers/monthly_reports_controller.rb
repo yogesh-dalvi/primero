@@ -559,12 +559,6 @@ class MonthlyReportsController < ApplicationController
           end
         end
       end
-
-      for i in conducted_session_or_prog_count_array
-          @conducted_session_or_prog_count+= i['value']
-      end
-      
-
       
       for i in new_refferals_array
         if !i['key'][0].empty? && !i['key'][2].empty?

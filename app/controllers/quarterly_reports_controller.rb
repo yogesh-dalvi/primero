@@ -101,7 +101,7 @@ class QuarterlyReportsController < ApplicationController
     # check if district is selected or not i.e whether it is nil or blank
     if @selected_district!=nil
       if !@selected_district.include? ""
-
+        
         if @selected_district.length > 1
           # if more than 1 district selected
           @selected = "multi_district_selected"
