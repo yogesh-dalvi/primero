@@ -31,6 +31,17 @@ class MonthlyReportsController < ApplicationController
     @end_date_for_display = params[:e_d].to_s
   end
 
+  def generate_pdf
+    
+    respond_to do |format|
+      format.html
+      format.pdf do
+        pdf = MonthlyReportPdf.new(@users,params[:data])
+        send_data pdf.render, filename: 'report.pdf', type: 'application/pdf',disposition: "inline"
+      end
+    end
+  end
+
   def submit_form
     state = params[:location]
     district = params[:district]
@@ -93,22 +104,21 @@ class MonthlyReportsController < ApplicationController
     @selected_district= selected_district
     @selected_cell= selected_cell
 
-    @district_to_show_in_view = @location_map_array[@selected_state.to_sym]
-
     # check if district is selected or not i.e whether it is nil or blank
     if @selected_district!=nil
       if !@selected_district.include? ""
-        
+        @district_to_show_in_view = @location_map_array[@selected_state.to_sym]
+
         if @selected_district.length > 1
           # if more than 1 district selected
           @selected = "multi_district_selected"
           check_key_present selected_state, @selected_district, start_date, end_date, "", @selected 
         else
-          @cell_to_show_in_view = @cell_map_array[@selected_district[0].to_sym]
           # if only 1 district is selected
           # check if cell is selected or not i.e whether it is nil or blank
           if @selected_cell!=nil 
             if !@selected_cell.include? ""
+              @cell_to_show_in_view = @cell_map_array[@selected_district[0].to_sym]
 
               @selected = "inner_cell_selected"
               check_key_present selected_state, @selected_cell, start_date, end_date, selected_district[0], @selected
@@ -401,13 +411,6 @@ class MonthlyReportsController < ApplicationController
 
     @year_to_display = Date.parse(start_date).strftime("%Y")
     @month_to_display = Date.parse(end_date).strftime("%m")
-    @month = ""
-    for i in MONTH_ARRAY
-      if i[1] == @month_to_display
-        @month = i[0]
-        break
-      end  
-    end
 
     # @data.push(@police_count,@exclients_count,@word_of_mouth_count,@self_count,@lawyers_legal_org_count,@ngo_count,@go_count,@icw_pw_count,@any_other_count,@one_time_intervention_count,@home_visit_count,@collateral_visits_count,@individual_meeting_count,@group_meeting_count,@participation_count,@programs_organised_count,@conducted_session_or_prog_count,@police_reffered_to_count,@medical_count,@shelter_count,@legal_services_count,@protection_officer_count,@lok_shiyakat_niwaran_count,@on_going_intevention_count,@engaing_police_help_count,@state_in_pdf,@district_in_pdf,@start_date_in_pdf,@end_date_in_pdf)
   end
@@ -484,7 +487,6 @@ class MonthlyReportsController < ApplicationController
       @participation_count=0
       @conducted_session_or_prog_count=0
       @programs_organised_count=0
-      @ongoing_clients = 0
       end_date_for_ongoing_clients = start_date
       start_date_for_ongoing_clients = "1000-01-01"
 
@@ -512,15 +514,10 @@ class MonthlyReportsController < ApplicationController
 
       for i in ongoing_clients_in_this_quarter
         if i['key'][3]!= nil  
-          if i['key'][3].length!= 0
-            for j in i['key'][3]
-              if j.has_key? "ongoing_followup" and !j["ongoing_followup"].empty?
-                date = Date.parse(j["ongoing_followup"])
-                if date >= Date.parse(start_date) and date < Date.parse(end_date)
-                  @on_going_intevention_count += 1
-                  break
-                end
-              end
+          if !i['key'][3].empty?
+            date = Date.parse(i['key'][3])
+            if date >= Date.parse(start_date) and date < Date.parse(end_date)
+              @on_going_intevention_count += 1
             end
           end
         end
@@ -559,6 +556,12 @@ class MonthlyReportsController < ApplicationController
           end
         end
       end
+
+      for i in conducted_session_or_prog_count_array
+          @conducted_session_or_prog_count+= i['value']
+      end
+      
+
       
       for i in new_refferals_array
         if !i['key'][0].empty? && !i['key'][2].empty?
@@ -663,7 +666,7 @@ class MonthlyReportsController < ApplicationController
       'participation_count' => @participation_count,
       'conducted_session_or_prog_count' => @conducted_session_or_prog_count,
       'programs_organised_count' => @programs_organised_count,
-      'new_reg_app' => @exclients_count + @self_count + @police_count + @ngo_count + @community_based_org_count + @icw_pw_count + @word_of_mouth_count + @go_count + @lawyers_legal_org_count + @any_other_count,
+      'new_reg_app' => @engaing_police_help_count + @on_going_intevention_count + @exclients_count + @self_count + @police_count + @ngo_count + @community_based_org_count + @icw_pw_count + @word_of_mouth_count + @go_count + @lawyers_legal_org_count + @any_other_count,
       'home_visit_outreach_detail' => @home_visit_count + @collateral_visits_count,
       'individual_meeting_session' => @group_meeting_count + @engaing_police_help_count + @participation_count + @programs_organised_count + @conducted_session_or_prog_count,
       'reffered_to' => @police_reffered_to_count + @medical_count + @shelter_count + @legal_services_count + @protection_officer_count + @lok_shiyakat_niwaran_count
