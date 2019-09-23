@@ -6,7 +6,7 @@ $(document).ready(function(){
 		displayDefault(true);
 	});
 	
-	$('body').delegate("select", "change", function (e) {	
+	$('body').delegate("select", "change", function (e) {
 		var mainElem = $(this).closest('fieldset');
 		displayHideDropDownFields($(this), mainElem);
 	});
@@ -102,6 +102,7 @@ function displayDefault(fromChangeEvent){
 					$('#cp_case_intake_'+ locationVal +'_subform_ongoing_client').closest('.row').hide();
 				}
 			}else{
+				
 				defaultElements();
 				$("#record_case_data_child_ongoing_clients").closest('.row').hide();		
 			}		
@@ -145,7 +146,7 @@ function defaultElements(){
 }
 
 function displayHideDropDownFields(element,mainElement){	
-
+	
 	var divRowArr = [];
 	if(mainElement.attr('id').includes('subform')){
 		divRowArr = $('#' + mainElement.attr('id') + ' div.row');
@@ -203,17 +204,35 @@ function displayHideDropDownFields(element,mainElement){
 
 			});
 		}
-	} else {
-		var chosenElemId = '#' + elemId + '_chosen';
-		var chosenElem = $(chosenElemId).find('.search-choice span').map(function () {
-			return $(this).text();
-		}).get();
-
-		setTimeout(function () {
-			var chosenElems = $(chosenElemId).find('.search-choice span').map(function () {
+	} else {		
+		var chosenElemId = '#' + elemId;
+		var siblingSize = $(chosenElemId).siblings().size();
+		var chosenElem = []
+		if(siblingSize > 0 ) {
+			chosenElem = $(chosenElemId).next().find('.search-choice span').map(function () {
 				return $(this).text();
 			}).get();
-
+		}else{
+			var latest_value = $("option:selected:last",chosenElemId).last().val();
+			console.log(latest_value);
+			chosenElem = $(chosenElemId + " :selected:last").map(function(i, el) {
+				return $(el).text();
+			}).get();
+		}
+		console.log("chosenElem :" + chosenElem);
+		setTimeout(function () {
+			var siblingsSize = $(chosenElemId).siblings().size();
+			var chosenElems = []
+			if(siblingsSize > 0 ) {
+				chosenElems = $(chosenElemId).next().find('.search-choice span').map(function () {
+					return $(this).text();
+				}).get();
+			}else{
+				chosenElems = $(chosenElemId + " :selected").map(function(i, el) {
+					return $(el).text();
+				}).get();
+			}
+			console.log("chosenElems :" + chosenElems);
 			if (chosenElems == '') {
 				$(divRowArr).find('label').each(function () {
 					var labelText = $(this).text();
@@ -234,11 +253,12 @@ function displayHideDropDownFields(element,mainElement){
 						}
 					} else {
 						$(divRowArr).find('label').each(function () {
-							var labelText = $(this).text();
+							var labelText = $(this).text();							
 							if (val == labelText) {
-								if (jQuery.inArray(labelText, chosenElems) != -1) {
+								if (jQuery.inArray(labelText, chosenElems) != -1) {									
 									$(this).closest('.row').show();
 								} else {
+									
 									$(this).closest('.row').hide();
 								}
 							}
@@ -251,4 +271,3 @@ function displayHideDropDownFields(element,mainElement){
 		}, 500);
 	}
 }
-

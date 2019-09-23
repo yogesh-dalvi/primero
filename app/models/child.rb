@@ -377,27 +377,27 @@ class Child < CouchRest::Model::Base
     :map => "function(doc) {
             if(doc.location!=null  && doc.district!=null && doc.registration_date!=null && doc.age!=null )
               {     
-                if (doc.age < 14)
+                if (doc.age <= 14)
                   {
                     emit([doc.location,doc.district,new Date(doc.registration_date),'less_than_14'],1)
                   }
-                else if (doc.age >= 15 && doc.age < 17)
+                else if (doc.age >= 15 && doc.age <= 17)
                   {
                     emit([doc.location,doc.district,new Date(doc.registration_date),'in_15_17'],1)
                   }
-                else if (doc.age >= 18 && doc.age < 24)
+                else if (doc.age >= 18 && doc.age <= 24)
                   {
                     emit([doc.location,doc.district,new Date(doc.registration_date),'in_18_24'],1)
                   }
-                else if (doc.age >= 25 && doc.age < 34 )
+                else if (doc.age >= 25 && doc.age <= 34 )
                   {
                     emit([doc.location,doc.district,new Date(doc.registration_date),'in_25_34'],1)
                   }
-                else if (doc.age >= 35 && doc.age < 44 )
+                else if (doc.age >= 35 && doc.age <= 44 )
                   {
                     emit([doc.location,doc.district,new Date(doc.registration_date),'in_35_44'],1)
                   }
-                else if (doc.age >= 45 && doc.age < 54 )
+                else if (doc.age >= 45 && doc.age <= 54 )
                   {
                     emit([doc.location,doc.district,new Date(doc.registration_date),'in_45_54'],1)
                   }
@@ -419,27 +419,27 @@ class Child < CouchRest::Model::Base
     :map => "function(doc) {
             if(doc.location!=null  && doc.district!=null && doc.registration_date!=null && doc.age!=null)
               {     
-                if (doc.age < 14)
+                if (doc.age <= 14)
                   {
                     emit([doc.location,1,new Date(doc.registration_date),'less_than_14'],1)
                   }
-                else if (doc.age >= 15 && doc.age < 17)
+                else if (doc.age >= 15 && doc.age <= 17)
                   {
                     emit([doc.location,1,new Date(doc.registration_date),'in_15_17'],1)
                   }
-                else if (doc.age >= 18 && doc.age < 24)
+                else if (doc.age >= 18 && doc.age <= 24)
                   {
                     emit([doc.location,1,new Date(doc.registration_date),'in_18_24'],1)
                   }
-                else if (doc.age >= 25 && doc.age < 34 )
+                else if (doc.age >= 25 && doc.age <= 34 )
                   {
                     emit([doc.location,1,new Date(doc.registration_date),'in_25_34'],1)
                   }
-                else if (doc.age >= 35 && doc.age < 44 )
+                else if (doc.age >= 35 && doc.age <= 44 )
                   {
                     emit([doc.location,1,new Date(doc.registration_date),'in_35_44'],1)
                   }
-                else if (doc.age >= 45 && doc.age < 54 )
+                else if (doc.age >= 45 && doc.age <= 54 )
                   {
                     emit([doc.location,1,new Date(doc.registration_date),'in_45_54'],1)
                   }

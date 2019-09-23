@@ -1,0 +1,76 @@
+$(document).ready(function(){
+	$("#record_case_data_child_location_chosen").closest('.row').nextAll().hide() ;
+	displayDefault(false);
+		
+	$('#record_case_data_child_location').change(function () {
+		displayDefault(true);
+	});
+	
+	
+    
+});
+function displayDefault(fromChangeEvent){
+	var location = 0;
+	var client = 0;
+	setTimeout(function () {
+		var locationVal = $('#record_case_data_child_location').find(":selected").text().toLowerCase();	
+		var mainElem = $('#record_case_data_child_location').closest('fieldset');
+		location = $('#record_case_data_child_location').find(":selected").index();
+		client = $('#record_case_data_child_register_client').find(":selected").index();
+		
+		if (location > 0) {
+			if(client > 0 && !fromChangeEvent){
+				$("#record_case_data_child_ongoing_clients").closest('.row').show();	
+				if($("#record_case_data_child_ongoing_clients").is(':checked')){
+					$("#record_case_data_child_location_chosen").closest('.row').hide().nextAll().hide() ;
+					$("#record_case_data_child_ongoing_clients").closest('.row').show();
+					$('#cp_case_intake_'+ locationVal +'_subform_ongoing_client').closest('.row').show();
+				}else{
+					defaultElements();
+					$('#' + mainElem.attr('id') + ' select').each(function(){
+						displayHideDropDownFields($(this), '#' + mainElem);
+					});
+					$('#cp_case_intake_'+ locationVal +'_subform_ongoing_client').closest('.row').hide();
+				}
+			}else{
+				defaultElements();
+				$("#record_case_data_child_ongoing_clients").closest('.row').hide();		
+			}		
+			
+		} else {
+			$("#record_case_data_child_district_chosen").closest('.row').hide();
+			$("#record_case_data_child_register_client_chosen").closest('.row').hide();
+			$("#record_case_data_child_clients_referred_by_chosen").closest('.row').hide();
+			$("#record_case_data_child_sex_chosen").closest('.row').hide();
+			$("#record_case_data_child_age").closest('.row').hide();
+			$("#record_case_data_child_education_of_the_client_chosen").closest('.row').hide();
+			$("#record_case_data_child_reasons_for_registering_at_special_cell__chosen").closest('.row').hide();
+			$("#record_case_data_child_previous_intervention_before_coming_to_the_cell__chosen").closest('.row').hide();
+			$("#record_case_data_child_nature_of_interaction").closest('.row').hide();
+			$("#record_case_data_child_intervention_by_special_cell__chosen").closest('.row').hide();
+			$("#record_case_data_child_referrals_new_clients_ongoing_clients__chosen").closest('.row').hide();
+			$('#record_case_data_child_other_interventions_taking_place_outside_the_cell_chosen').closest('.row').hide();
+			$("#record_case_data_child_outcomes_new_clients_ongoing_clients_chosen").closest('.row').hide();
+			$("#record_case_data_child_programme_participationorganisationfacilitation").closest('.row').hide();
+		}
+	}, 500);
+	return location;	
+}
+
+function defaultElements(){
+	$("#record_case_data_child_location_chosen").closest('.row').show()
+	$("#record_case_data_child_district_chosen").closest('.row').show();
+	$("#record_case_data_child_register_client_chosen").closest('.row').show();
+	$("#record_case_data_child_clients_referred_by_chosen").closest('.row').show();
+	$("#record_case_data_child_sex_chosen").closest('.row').show();
+	$("#record_case_data_child_age").closest('.row').show();
+	$("#record_case_data_child_education_of_the_client_chosen").closest('.row').show();
+	$("#record_case_data_child_reasons_for_registering_at_special_cell__chosen").closest('.row').show();
+	$("#record_case_data_child_previous_intervention_before_coming_to_the_cell__chosen").closest('.row').show();
+	$("#record_case_data_child_nature_of_interaction").closest('.row').show();
+	$("#record_case_data_child_intervention_by_special_cell__chosen").closest('.row').show();
+	$("#record_case_data_child_referrals_new_clients_ongoing_clients__chosen").closest('.row').show();
+	$('#record_case_data_child_other_interventions_taking_place_outside_the_cell_chosen').closest('.row').show();
+	$("#record_case_data_child_outcomes_new_clients_ongoing_clients_chosen").closest('.row').show();
+	$("#record_case_data_child_programme_participationorganisationfacilitation").closest('.row').show();
+}
