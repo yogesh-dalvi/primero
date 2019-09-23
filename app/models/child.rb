@@ -663,32 +663,26 @@ class Child < CouchRest::Model::Base
         if(doc.hasOwnProperty('cp_case_intake_delhi_subform_ongoing_client')){
           if(doc.cp_case_intake_delhi_subform_ongoing_client.length>0)
           {	
-            var length = doc.cp_case_intake_delhi_subform_ongoing_client.length
-            if(doc.cp_case_intake_delhi_subform_ongoing_client[length-1].hasOwnProperty('ongoing_followup'))
-            {
+            
               emit([doc.location,1,new Date(doc.registration_date),doc.cp_case_intake_delhi_subform_ongoing_client]);
-            }
+          
 
           }
         }
         if(doc.hasOwnProperty('cp_case_intake_maharashtra_subform_ongoing_client')){ 		
           if(doc.cp_case_intake_maharashtra_subform_ongoing_client.length>0)
           {
-            var length = doc.cp_case_intake_maharashtra_subform_ongoing_client.length
-            if(doc.cp_case_intake_maharashtra_subform_ongoing_client[length-1].hasOwnProperty('ongoing_followup'))
-            {
+            
               emit([doc.location,1,new Date(doc.registration_date),doc.cp_case_intake_maharashtra_subform_ongoing_client]);
-            }
+            
           }
         }		
         if(doc.hasOwnProperty('cp_case_intake_ncw_subform_ongoing_client')){ 
           if(doc.cp_case_intake_ncw_subform_ongoing_client.length>0)
           {
-            var length = doc.cp_case_intake_ncw_subform_ongoing_client.length
-            if(doc.cp_case_intake_ncw_subform_ongoing_client[length-1].hasOwnProperty('ongoing_followup'))
-            {
+            
               emit([doc.location,1,new Date(doc.registration_date),doc.cp_case_intake_ncw_subform_ongoing_client]);
-            }
+            
           }
         }		     
       }
@@ -700,32 +694,26 @@ class Child < CouchRest::Model::Base
         if(doc.hasOwnProperty('cp_case_intake_delhi_subform_ongoing_client')){
           if(doc.cp_case_intake_delhi_subform_ongoing_client.length>0)
           {	
-            var length = doc.cp_case_intake_delhi_subform_ongoing_client.length
-            if(doc.cp_case_intake_delhi_subform_ongoing_client[length-1].hasOwnProperty('ongoing_followup'))
-            {
+           
               emit([doc.location,1,new Date(doc.registration_date),doc.cp_case_intake_delhi_subform_ongoing_client]);
-            }
+            
 
           }
         }
         if(doc.hasOwnProperty('cp_case_intake_maharashtra_subform_ongoing_client')){ 		
           if(doc.cp_case_intake_maharashtra_subform_ongoing_client.length>0)
           {
-            var length = doc.cp_case_intake_maharashtra_subform_ongoing_client.length
-            if(doc.cp_case_intake_maharashtra_subform_ongoing_client[length-1].hasOwnProperty('ongoing_followup'))
-            {
+            
               emit([doc.location,1,new Date(doc.registration_date),doc.cp_case_intake_maharashtra_subform_ongoing_client]);
-            }
+            
           }
         }		
         if(doc.hasOwnProperty('cp_case_intake_ncw_subform_ongoing_client')){ 
           if(doc.cp_case_intake_ncw_subform_ongoing_client.length>0)
           {
-            var length = doc.cp_case_intake_ncw_subform_ongoing_client.length
-            if(doc.cp_case_intake_ncw_subform_ongoing_client[length-1].hasOwnProperty('ongoing_followup'))
-            {
+         
               emit([doc.location,1,new Date(doc.registration_date),doc.cp_case_intake_ncw_subform_ongoing_client]);
-            }
+            
           }
         }		     
       }
@@ -737,35 +725,26 @@ class Child < CouchRest::Model::Base
           if(doc.hasOwnProperty('cp_case_intake_delhi_subform_ongoing_client')){
             if(doc.cp_case_intake_delhi_subform_ongoing_client.length>0)
             {	
-              var length = doc.cp_case_intake_delhi_subform_ongoing_client.length;
-              var follow_up_date = doc.cp_case_intake_delhi_subform_ongoing_client[length-1].ongoing_followup;
-              if(doc.cp_case_intake_delhi_subform_ongoing_client[length-1].hasOwnProperty('intervention_by_special_cell'))
-              {
-                emit([doc.location,doc.district,new Date(doc.registration_date),follow_up_date,doc.cp_case_intake_delhi_subform_ongoing_client],1);
-              }
+              
+                emit([doc.location,doc.district,new Date(doc.registration_date),doc.cp_case_intake_delhi_subform_ongoing_client],1);
+              
 
             }
           }
           if(doc.hasOwnProperty('cp_case_intake_maharashtra_subform_ongoing_client')){ 		
             if(doc.cp_case_intake_maharashtra_subform_ongoing_client.length>0)
             {
-              var length = doc.cp_case_intake_maharashtra_subform_ongoing_client.length;
-              var follow_up_date = doc.cp_case_intake_maharashtra_subform_ongoing_client[length-1].ongoing_followup;
-              if(doc.cp_case_intake_maharashtra_subform_ongoing_client[length-1].hasOwnProperty('intervention_by_special_cell'))
-              {
-                emit([doc.location,doc.district,new Date(doc.registration_date),follow_up_date,doc.cp_case_intake_maharashtra_subform_ongoing_client],1);
-              }
+             
+                emit([doc.location,doc.district,new Date(doc.registration_date),doc.cp_case_intake_maharashtra_subform_ongoing_client],1);
+              
             }
           }		
           if(doc.hasOwnProperty('cp_case_intake_ncw_subform_ongoing_client')){ 
             if(doc.cp_case_intake_ncw_subform_ongoing_client.length>0)
             {
-              var length = doc.cp_case_intake_ncw_subform_ongoing_client.length;
-              var follow_up_date = doc.cp_case_intake_ncw_subform_ongoing_client[length-1].ongoing_followup;
-              if(doc.cp_case_intake_ncw_subform_ongoing_client[length-1].hasOwnProperty('intervention_by_special_cell'))
-              {
-                emit([doc.location,doc.district,new Date(doc.registration_date),follow_up_date,doc.cp_case_intake_ncw_subform_ongoing_client],1);
-              }
+             
+                emit([doc.location,doc.district,new Date(doc.registration_date),doc.cp_case_intake_ncw_subform_ongoing_client],1);
+              
             }
           }		     
         }
@@ -779,35 +758,26 @@ class Child < CouchRest::Model::Base
           if(doc.hasOwnProperty('cp_case_intake_delhi_subform_ongoing_client')){
             if(doc.cp_case_intake_delhi_subform_ongoing_client.length>0)
             {	
-              var length = doc.cp_case_intake_delhi_subform_ongoing_client.length;
-              var follow_up_date = doc.cp_case_intake_delhi_subform_ongoing_client[length-1].ongoing_followup;
-              if(doc.cp_case_intake_delhi_subform_ongoing_client[length-1].hasOwnProperty('intervention_by_special_cell'))
-              {
-                emit([doc.location,1,new Date(doc.registration_date),follow_up_date,doc.cp_case_intake_delhi_subform_ongoing_client],1);
-              }
+              
+                emit([doc.location,1,new Date(doc.registration_date),doc.cp_case_intake_delhi_subform_ongoing_client],1);
+              
 
             }
           }
           if(doc.hasOwnProperty('cp_case_intake_maharashtra_subform_ongoing_client')){ 		
             if(doc.cp_case_intake_maharashtra_subform_ongoing_client.length>0)
             {
-              var length = doc.cp_case_intake_maharashtra_subform_ongoing_client.length;
-              var follow_up_date = doc.cp_case_intake_maharashtra_subform_ongoing_client[length-1].ongoing_followup;
-              if(doc.cp_case_intake_maharashtra_subform_ongoing_client[length-1].hasOwnProperty('intervention_by_special_cell'))
-              {
-                emit([doc.location,1,new Date(doc.registration_date),follow_up_date,doc.cp_case_intake_maharashtra_subform_ongoing_client],1);
-              }
+              
+                emit([doc.location,1,new Date(doc.registration_date),doc.cp_case_intake_maharashtra_subform_ongoing_client],1);
+              
             }
           }		
           if(doc.hasOwnProperty('cp_case_intake_ncw_subform_ongoing_client')){ 
             if(doc.cp_case_intake_ncw_subform_ongoing_client.length>0)
             {
-              var length = doc.cp_case_intake_ncw_subform_ongoing_client.length
-              var follow_up_date = doc.cp_case_intake_ncw_subform_ongoing_client[length-1].ongoing_followup;
-              if(doc.cp_case_intake_ncw_subform_ongoing_client[length-1].hasOwnProperty('intervention_by_special_cell'))
-              {
-                emit([doc.location,1,new Date(doc.registration_date),follow_up_date,doc.cp_case_intake_ncw_subform_ongoing_client],1);
-              }
+              
+                emit([doc.location,1,new Date(doc.registration_date),doc.cp_case_intake_ncw_subform_ongoing_client],1);
+              
             }
           }		     
         }

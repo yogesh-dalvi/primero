@@ -511,6 +511,7 @@ class MonthlyReportsController < ApplicationController
       end
 
       for i in ongoing_clients_in_this_quarter
+        puts i
         if i['key'][3]!= nil  
           if i['key'][3].length!= 0
             for j in i['key'][3]
