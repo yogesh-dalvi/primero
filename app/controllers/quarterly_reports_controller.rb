@@ -1296,6 +1296,8 @@ class QuarterlyReportsController < ApplicationController
             @lawyers_legal_org_count += i['value']
           elsif i['key'][3].include? "community_based_organisations"
             @community_based_org_count += i['value']
+          elsif i['key'][3].include? "any_other" or i['key'][3].include? "others_specify"
+            @any_other_clients_refferd_count += i['value']
           else
             @any_other_clients_refferd_count += i['value']
           end
@@ -1364,7 +1366,7 @@ class QuarterlyReportsController < ApplicationController
             @upto_grad_count += i['value']
           elsif i['key'][3].include? "post_graduation_master_s_degree"
             @post_grad_count += i['value']
-          elsif i['key'][3].include? "religious_education" or i['key'][3].include? "any_other" or i['key'][3].include? "diploma"
+          elsif i['key'][3].include? "any_other" or i['key'][3].include? "others_specify"
             @any_other_edu_count += i['value']  
           elsif i['key'][3].include? "information_not_available"
             @no_edu_info_count += i['value']
@@ -1403,7 +1405,7 @@ class QuarterlyReportsController < ApplicationController
               @breach_of_trust_count += i['value']
             elsif j.include? "harassment_by_neighbours"
               @harr_by_neigh_count += i['value']
-            elsif j.include? "others_specify"
+            elsif j.include? "any_other" or j.include? "others_specify"
               @any_other_harr_count += i['value']
             end
           end
@@ -1461,13 +1463,13 @@ class QuarterlyReportsController < ApplicationController
               @prev_inter_natal_family_marital_family_count += i['value']
             elsif j.include? "police"
               @prev_inter_police_count += i['value']
-            elsif j.include? "court_lawyers"
+            elsif j.include? "court_lawyers" or j.include? "lawyers_legal_organisations"
               @prev_inter_court_count += i['value']
             elsif j.include? "non_governmental_organisation_ngo"
               @prev_interv_ngo_count += i['value']
             elsif j.include? "panchayat_member_jati_panchayat" or j.include? "jamat_samaj_jat_panchayat"
               @prev_interv_panch_mem_count += i['value']
-            elsif j.include? "any_other"
+            elsif j.include? "any_other" or j.include? "others_specify"
               @prev_interv_any_other_count += i['value']
             end
           end
@@ -1526,7 +1528,7 @@ class QuarterlyReportsController < ApplicationController
               @shelter_refferal_count += i['value']
             elsif j.include? "protection_officer"
               @protection_officer_refferal_count += i['value']
-            elsif j.include? "any_other"
+            elsif j.include? "any_other" or j.include? "others_specify"
               @any_other_refferal_count += i['value']
             end
           end
@@ -1558,7 +1560,7 @@ class QuarterlyReportsController < ApplicationController
     for i in outcomes_new_clients_ongoing_clients
       if !i['key'][0].empty? && !i['key'][2].empty?
         if i['key'][3]!=nil
-          if i['key'][3].include? "helped_in_filing_for_divorce_separation_talaq_khula" or i['key'][3].include? "helped_in_filing_case_in_court_for_divorce_separation_mediation"
+          if i['key'][3].include? "helped_in_filing_for_divorce_separation_talaq_khula" or i['key'][3].include? "helped_in_filing_case_in_court_for_divorce_separation_mediation" or i['key'][3].include? "helped_in_filing_case_in_court_for_divorce_separation"
             @outcomes_helped_in_case_filed_for_divorce_count += i['value']
           elsif i['key'][3].include? "helped_in_reteival_of_streedhan"
             @outcome_streedhan_retrival_count += i['value']
@@ -1572,7 +1574,7 @@ class QuarterlyReportsController < ApplicationController
             @outcome_non_violent_recon_count += i['value']
           elsif i['key'][3].include? "court_orders_in_the_best_interest_of_the_woman"
             @outcome_court_order_count += i['value']
-          elsif i['key'][3].include? "others_specify"
+          elsif i['key'][3].include? "any_other" or i['key'][3].include? "others_specify"
             @outcome_any_other_count += i['value']
           end
         end
@@ -1733,9 +1735,11 @@ class QuarterlyReportsController < ApplicationController
                 elsif protection_officer_counter == 0 and j.include? "protection_officer"
                   protection_officer_counter += 1
                   @protection_officer_refferal_count_ongoing_client += 1
-                elsif any_other_counter == 0 and j.include? "any_other"
-                  any_other_counter += 1
-                  @any_other_refferal_count_ongoing_client += 1
+                elsif any_other_counter == 0 
+                  if j.include? "any_other" or j.include? "others_specify"
+                    any_other_counter += 1
+                    @any_other_refferal_count_ongoing_client += 1
+                  end
                 end
               end
             end
@@ -1751,9 +1755,11 @@ class QuarterlyReportsController < ApplicationController
               court_orders_in_the_best_interest_of_the_woman = 0
               others_specify = 0
               for j in outcomes_new_clients_ongoing_clients
-                if divorce_counter == 0 and j.include? "helped_in_filing_for_divorce_separation_talaq_khula" 
-                  divorce_counter += 1
-                  @outcomes_helped_in_case_filed_for_divorce_count_ongoing_client += i['value']
+                if divorce_counter == 0
+                  if j.include? "helped_in_filing_for_divorce_separation_talaq_khula" or j.include? "helped_in_filing_case_in_court_for_divorce_separation_mediation" or j.include? "helped_in_filing_case_in_court_for_divorce_separation"
+                    divorce_counter += 1
+                    @outcomes_helped_in_case_filed_for_divorce_count_ongoing_client += i['value']
+                  end  
                 elsif helped_in_reteival_of_streedhan == 0 and j.include? "helped_in_reteival_of_streedhan"
                   helped_in_reteival_of_streedhan += 1
                   @outcome_streedhan_retrival_count_ongoing_client += i['value']
@@ -1772,9 +1778,11 @@ class QuarterlyReportsController < ApplicationController
                 elsif court_orders_in_the_best_interest_of_the_woman == 0 and j.include? "court_orders_in_the_best_interest_of_the_woman"
                   court_orders_in_the_best_interest_of_the_woman += 1
                   @outcome_court_order_count_ongoing_client += i['value']
-                elsif others_specify == 0 and j.include? "others_specify"
-                  others_specify += 1
-                  @outcome_any_other_count_ongoing_client += i['value']
+                elsif others_specify == 0
+                  if j.include? "any_other" or j.include? "others_specify"
+                    others_specify += 1
+                    @outcome_any_other_count_ongoing_client += i['value']
+                  end
                 end
               end
             end
@@ -1988,8 +1996,6 @@ class QuarterlyReportsController < ApplicationController
     'outcome_court_order_count_ongoing_client' => @outcome_court_order_count_ongoing_client,
     'outcome_any_other_count_ongoing_client' => @outcome_any_other_count_ongoing_client
 })
-
- 
   end
 end
 

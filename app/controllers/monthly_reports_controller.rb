@@ -544,7 +544,7 @@ class MonthlyReportsController < ApplicationController
             @ngo_count += i['value']
           elsif i['key'][3].include? "lawyers_legal_organisations"
             @lawyers_legal_org_count += i['value']
-          else
+          elsif i['key'][3].include? "any_other" or i['key'][3].include? "others_specify"
             @any_other_count += i['value']
           end
         end
@@ -578,7 +578,7 @@ class MonthlyReportsController < ApplicationController
             if j.include? "shelter_home"
               @shelter_count+= i['value']
             end
-            if j.include? "government_organisation_go" or j.include? "non_governmental_organisation_ngo" or j.include? "community_based_organisations_cbo" or j.include? "any_other"
+            if j.include? "government_organisation_go" or j.include? "non_governmental_organisation_ngo" or j.include? "community_based_organisations_cbo" or j.include? "any_other" or j.include? "others_specify"
               @lok_shiyakat_niwaran_count+= i['value']
             end
           end
