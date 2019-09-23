@@ -1558,7 +1558,7 @@ class QuarterlyReportsController < ApplicationController
     
 
     for i in outcomes_new_clients_ongoing_clients
-      if !i['key'][0].empty? && !i['key'][2].empty?
+      if !i['key'][0].empty? and !i['key'][2].empty?
         if i['key'][3]!=nil
           if i['key'][3].include? "helped_in_filing_for_divorce_separation_talaq_khula" or i['key'][3].include? "helped_in_filing_case_in_court_for_divorce_separation_mediation" or i['key'][3].include? "helped_in_filing_case_in_court_for_divorce_separation"
             @outcomes_helped_in_case_filed_for_divorce_count += i['value']
@@ -1615,8 +1615,8 @@ class QuarterlyReportsController < ApplicationController
     for i in intervention_by_special_cell
       ongoing_present = 0
       if !i['key'][0].empty? && !i['key'][2].empty?
-        if i['key'][4].length >0
-          for j in i['key'][4]
+        if i['key'][3].length >0
+          for j in i['key'][3]
             if j.has_key? "ongoing_followup" and !j["ongoing_followup"].empty?
               date = Date.parse(j["ongoing_followup"])
               if date >= Date.parse(start_date) and date < Date.parse(end_date)
@@ -1631,7 +1631,7 @@ class QuarterlyReportsController < ApplicationController
             negotiating_non_violence = []
             referrals_new_clients_ongoing_clients = []
             outcomes_new_clients_ongoing_clients = []
-            for j in i['key'][4]
+            for j in i['key'][3]
               if j.has_key? "ongoing_followup" and !j["ongoing_followup"].empty?
                 followup_date = Date.parse(j["ongoing_followup"])
                 if followup_date >= Date.parse(start_date) and followup_date < Date.parse(end_date)
@@ -1755,11 +1755,11 @@ class QuarterlyReportsController < ApplicationController
               court_orders_in_the_best_interest_of_the_woman = 0
               others_specify = 0
               for j in outcomes_new_clients_ongoing_clients
-                if divorce_counter == 0
-                  if j.include? "helped_in_filing_for_divorce_separation_talaq_khula" or j.include? "helped_in_filing_case_in_court_for_divorce_separation_mediation" or j.include? "helped_in_filing_case_in_court_for_divorce_separation"
+                if divorce_counter == 0 and (j.include? "helped_in_filing_for_divorce_separation_talaq_khula" or j.include? "helped_in_filing_case_in_court_for_divorce_separation_mediation" or j.include? "helped_in_filing_case_in_court_for_divorce_separation")
+                  
                     divorce_counter += 1
                     @outcomes_helped_in_case_filed_for_divorce_count_ongoing_client += i['value']
-                  end  
+                 
                 elsif helped_in_reteival_of_streedhan == 0 and j.include? "helped_in_reteival_of_streedhan"
                   helped_in_reteival_of_streedhan += 1
                   @outcome_streedhan_retrival_count_ongoing_client += i['value']
@@ -1779,6 +1779,7 @@ class QuarterlyReportsController < ApplicationController
                   court_orders_in_the_best_interest_of_the_woman += 1
                   @outcome_court_order_count_ongoing_client += i['value']
                 elsif others_specify == 0
+                  puts "m here"
                   if j.include? "any_other" or j.include? "others_specify"
                     others_specify += 1
                     @outcome_any_other_count_ongoing_client += i['value']
