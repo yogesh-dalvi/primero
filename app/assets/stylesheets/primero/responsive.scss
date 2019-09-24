@@ -1,8 +1,17 @@
 @media only screen and (min-width: 320px) and (max-width: 406px) {
   #search_form{display: none !important;}
+  #reports_month_quar {
+    visibility: hidden;
+    display: none;
+  }
 }
 
 @media only screen and (min-width: 320px) and (max-width: 480px) {
+  #reports_month_quar {
+    visibility: hidden;
+    display: none;
+  }
+
   .dataTables_wrapper .dataTables_length, .dataTables_wrapper .dataTables_filter {
     float: left;
     text-align: left;
@@ -116,6 +125,12 @@
 }
 
 @media only screen and (min-width: 481px) and (max-width: 768px) { 
+
+  #reports_month_quar {
+    visibility: hidden;
+    display: none;
+  }
+
   #submit_form_for_monthly_report label {
     text-align: left !important;
   }
@@ -219,6 +234,12 @@
 }
 
 @media only screen and (min-width: 769px) and (max-width: 790px) {
+
+  #reports_month_quar {
+    visibility: hidden;
+    display: none;
+  }
+
   #submit_form_for_monthly_report label {
     text-align: left !important;
   }
@@ -237,6 +258,12 @@
 }
 
 @media only screen and (min-width: 769px) and (max-width: 992px) { 
+
+  #reports_month_quar {
+    visibility: hidden;
+    display: none;
+  }
+ 
   .col-sm-2, .col-sm-3 {
     max-width: 100% !important;
    }
@@ -253,6 +280,12 @@
 }
 
 @media only screen and (max-width: 1200px) { 
+
+  #reports_month_quar {
+    visibility: hidden;
+    display: none;
+  }
+
 .col-sm-2, .col-sm-3  {
   max-width: 100% !important;
  }

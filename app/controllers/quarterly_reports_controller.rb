@@ -1498,6 +1498,8 @@ class QuarterlyReportsController < ApplicationController
               @spec_cell_refferal_for_shelter_count += i['value']
             elsif j.include? "developmental_counselling"
               @spec_cell_dev_counsel_count += i['value']
+            elsif j.include? "negotiating_non_violence_with_stakeholder"
+              @spec_cell_neg_nonvio_with_stakeholder_count += i['value']
             end
           end
         end
@@ -1522,14 +1524,19 @@ class QuarterlyReportsController < ApplicationController
               @police_refferal_count += i['value']
             elsif j.include? "medical_service"
               @medical_refferal_count += i['value']
-            elsif j.include? "court_lawyers_legal_organisations"
+            elsif j.include? "court_dlsa"
               @court_dlsa_refferal_count += i['value']
             elsif j.include? "shelter_home"
               @shelter_refferal_count += i['value']
             elsif j.include? "protection_officer"
               @protection_officer_refferal_count += i['value']
+            elsif j.include? "lawyer_70395"
+              @lawer_services_refferal_count += i['value']  
             elsif j.include? "any_other" or j.include? "others_specify"
               @any_other_refferal_count += i['value']
+            elsif j.include? "court_lawyers_legal_organisations"
+              @court_dlsa_refferal_count += i['value']
+              @lawer_services_refferal_count += i['value']
             end
           end
         end
@@ -1547,7 +1554,7 @@ class QuarterlyReportsController < ApplicationController
             @othr_inter_comm_edu_count += i['value']
           elsif i['key'][3].include? "interaction_with_police"
             @othr_inter_inter_with_police_count += i['value']
-          elsif i['key'][3].include? "others_specify"
+          elsif i['key'][3].include? "others_specify" or i['key'][3].include? "any_other"
             @othr_inter_any_other_count += i['value']
           elsif i['key'][3].include? "meetings_with_local_groups_social_organisations"
             @othr_inter_meet_local_count += i['value']
@@ -1670,6 +1677,7 @@ class QuarterlyReportsController < ApplicationController
               building_support_system_counter = 0
               referral_for_shelter_medical_other_services_counter = 0
               developmental_counselling_counter = 0
+              negotiating_non_violence_with_stakeholder_counter = 0
               for j in intervention_by_special_cell_array
                 if providing_emotional_support_and_strengthening_psychological_self_counter == 0 and j.include? "providing_emotional_support_and_strengthening_psychological_self"
                   providing_emotional_support_and_strengthening_psychological_self_counter += 1
@@ -1695,7 +1703,11 @@ class QuarterlyReportsController < ApplicationController
                 elsif developmental_counselling_counter == 0 and j.include? "developmental_counselling"
                   developmental_counselling_counter += 1
                   @spec_cell_dev_counsel_count_ongoing_client += 1
+                elsif negotiating_non_violence_with_stakeholder_counter == 0 and j.include? "negotiating_non_violence_with_stakeholder"
+                  negotiating_non_violence_with_stakeholder_counter += 1
+                  @spec_cell_neg_nonvio_with_stakeholder_count_ongoing_client += 1
                 end
+                
               end
             end
             # negotiating non-violence
@@ -1718,6 +1730,8 @@ class QuarterlyReportsController < ApplicationController
               shelter_home_counter = 0
               protection_officer_counter = 0
               any_other_counter = 0
+              lawer_services_counter = 0
+              court_dlsa_counter=0
 
               for j in referrals_new_clients_ongoing_clients
                 if police_counter == 0 and j.include? "police"
@@ -1726,8 +1740,8 @@ class QuarterlyReportsController < ApplicationController
                 elsif medical_service_counter == 0 and j.include? "medical_service"
                   medical_service_counter += 1
                   @medical_refferal_count_ongoing_client += 1
-                elsif court_lawyers_legal_organisations_counter == 0 and j.include? "court_lawyers_legal_organisations"
-                  court_lawyers_legal_organisations_counter += 1
+                elsif court_dlsa_counter == 0 and j.include? "court_dlsa"
+                  court_dlsa_counter += 1
                   @court_dlsa_refferal_count_ongoing_client += 1
                 elsif shelter_home_counter == 0 and j.include? "shelter_home"
                   shelter_home_counter += 1
@@ -1735,6 +1749,13 @@ class QuarterlyReportsController < ApplicationController
                 elsif protection_officer_counter == 0 and j.include? "protection_officer"
                   protection_officer_counter += 1
                   @protection_officer_refferal_count_ongoing_client += 1
+                elsif lawer_services_counter == 0 and j.include? "lawyer_70395"
+                  lawer_services_counter += 1
+                  @lawer_services_refferal_count_ongoing_client += 1
+                elsif court_lawyers_legal_organisations_counter == 0 and j.include? "court_lawyers_legal_organisations"
+                  court_lawyers_legal_organisations_counter += 1
+                  @lawer_services_refferal_count_ongoing_client += 1
+                  @court_dlsa_refferal_count_ongoing_client += 1
                 elsif any_other_counter == 0 
                   if j.include? "any_other" or j.include? "others_specify"
                     any_other_counter += 1

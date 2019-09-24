@@ -664,7 +664,7 @@ class Child < CouchRest::Model::Base
           if(doc.cp_case_intake_delhi_subform_ongoing_client.length>0)
           {	
             
-              emit([doc.location,1,new Date(doc.registration_date),doc.cp_case_intake_delhi_subform_ongoing_client]);
+              emit([doc.location,doc.district,new Date(doc.registration_date),doc.cp_case_intake_delhi_subform_ongoing_client]);
           
 
           }
@@ -673,7 +673,7 @@ class Child < CouchRest::Model::Base
           if(doc.cp_case_intake_maharashtra_subform_ongoing_client.length>0)
           {
             
-              emit([doc.location,1,new Date(doc.registration_date),doc.cp_case_intake_maharashtra_subform_ongoing_client]);
+              emit([doc.location,doc.district,new Date(doc.registration_date),doc.cp_case_intake_maharashtra_subform_ongoing_client]);
             
           }
         }		
@@ -681,7 +681,7 @@ class Child < CouchRest::Model::Base
           if(doc.cp_case_intake_ncw_subform_ongoing_client.length>0)
           {
             
-              emit([doc.location,1,new Date(doc.registration_date),doc.cp_case_intake_ncw_subform_ongoing_client]);
+              emit([doc.location,doc.district,new Date(doc.registration_date),doc.cp_case_intake_ncw_subform_ongoing_client]);
             
           }
         }		     
