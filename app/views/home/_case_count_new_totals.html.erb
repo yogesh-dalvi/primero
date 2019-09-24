@@ -7,11 +7,3 @@
   filters: ["child_status=#{Record::STATUS_OPEN}", 'record_state=true']
 }) %>
 
-<%= display_stat({
-  name: :records,
-  stat: :new,
-  stats: stats,
-  model: model,
-  text: t('dashboard.new'),
-  filters: ['new_other', "child_status=#{Record::STATUS_OPEN}", 'record_state=true']
-}) %>
