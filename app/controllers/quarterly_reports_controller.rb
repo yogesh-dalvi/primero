@@ -1298,8 +1298,6 @@ class QuarterlyReportsController < ApplicationController
             @community_based_org_count += i['value']
           elsif i['key'][3].include? "any_other" or i['key'][3].include? "others_specify"
             @any_other_clients_refferd_count += i['value']
-          else
-            @any_other_clients_refferd_count += i['value']
           end
         end
       end

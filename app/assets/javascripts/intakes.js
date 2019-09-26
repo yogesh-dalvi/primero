@@ -17,8 +17,13 @@ $(document).ready(function(){
 		if($("#record_case_data_child_ongoing_clients").is(':checked')){
 			$("#record_case_data_child_location").closest('.row').hide().nextAll().hide() ;
 			$("#record_case_data_child_ongoing_clients").closest('.row').show();
-			$('#cp_case_intake_'+ locationVal +'_subform_ongoing_client').closest('.row').show();
-		}else{
+			$('#cp_case_intake_'+ locationVal +'_subform_ongoing_client').closest('.row').show();			
+			$('#cp_case_intake_'+ locationVal +'_subform_ongoing_client .subform_container div.row').each(function(){
+                if(!$(this).hasClass('collapse_expand_subform_header')){
+                    $(this).hide();
+                }
+            })
+		}else{		
 			defaultElements();
 			$('#' + mainElem.attr('id') + ' select').each(function(){
 				displayHideDropDownFields($(this), mainElem);
