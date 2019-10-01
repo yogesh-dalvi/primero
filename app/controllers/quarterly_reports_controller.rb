@@ -1647,7 +1647,7 @@ class QuarterlyReportsController < ApplicationController
                     end
                   end
                   #negotiating no-violence calculation for that case
-                  if j.has_key? "negotiating_nonviolence" and !j["negotiating_nonviolence"].empty?
+                  if j.has_key? "negotiating_nonviolence" and j["negotiating_nonviolence"]!=nil and !j["negotiating_nonviolence"].empty?
                       negotiating_non_violence.push(j["negotiating_nonviolence"])
                   end
                   # refferals new clients ongoing clients
@@ -1657,7 +1657,7 @@ class QuarterlyReportsController < ApplicationController
                     end
                   end
                   # outcomes_new_clients_ongoing_clients
-                  if j.has_key? "outcomes_new_clients_ongoing_clients" and !j["outcomes_new_clients_ongoing_clients"].empty?
+                  if j.has_key? "outcomes_new_clients_ongoing_clients" and j["outcomes_new_clients_ongoing_clients"]!=nil and !j["outcomes_new_clients_ongoing_clients"].empty?
                     outcomes_new_clients_ongoing_clients.push(j["outcomes_new_clients_ongoing_clients"])
                   end
                 end
