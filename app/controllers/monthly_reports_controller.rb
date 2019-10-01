@@ -526,58 +526,64 @@ class MonthlyReportsController < ApplicationController
 
       for i in clients_reffered_by
         if !i['key'][0].empty? && !i['key'][2].empty?
-          if i['key'][3].include? "ex_clients"
-            @exclients_count += i['value']
-          elsif i['key'][3].include? "independent_community_worker_political_worker"
-            @icw_pw_count += i['value']
-          elsif i['key'][3].include? "police"
-            @police_count += i['value']
-          elsif i['key'][3].include? "self"
-            @self_count += i['value']
-          elsif i['key'][3].include? "word_of_mouth"
-            @word_of_mouth_count += i['value']
-          elsif i['key'][3].include? "government_organisation_go"
-            @go_count += i['value']
-          elsif i['key'][3].include? "non_governmental_organisation_ngo"
-            @ngo_count += i['value']
-          elsif i['key'][3].include? "lawyers_legal_organisations"
-            @lawyers_legal_org_count += i['value']
-          elsif i['key'][3].include? "any_other" or i['key'][3].include? "others_specify"
-            @any_other_count += i['value']
+          if i['key'][3]!= nil
+            if i['key'][3].include? "ex_clients"
+              @exclients_count += i['value']
+            elsif i['key'][3].include? "independent_community_worker_political_worker"
+              @icw_pw_count += i['value']
+            elsif i['key'][3].include? "police"
+              @police_count += i['value']
+            elsif i['key'][3].include? "self"
+              @self_count += i['value']
+            elsif i['key'][3].include? "word_of_mouth"
+              @word_of_mouth_count += i['value']
+            elsif i['key'][3].include? "government_organisation_go"
+              @go_count += i['value']
+            elsif i['key'][3].include? "non_governmental_organisation_ngo"
+              @ngo_count += i['value']
+            elsif i['key'][3].include? "lawyers_legal_organisations"
+              @lawyers_legal_org_count += i['value']
+            elsif i['key'][3].include? "any_other" or i['key'][3].include? "others_specify"
+              @any_other_count += i['value']
+            end
           end
         end
       end
       
       for i in nature_of_interaction
         if !i['key'][0].empty? && !i['key'][2].empty?
-          if i['key'][3].include? "group_meetings" or i['key'][3].include? "joint_meetings"
-            @group_meeting_count += i['value']
-          elsif i['key'][3].include? "individual_meetings_sessions"
-            @individual_meeting_count += i['value']
+          if i['key'][3]!= nil
+            if i['key'][3].include? "group_meetings" or i['key'][3].include? "joint_meetings"
+              @group_meeting_count += i['value']
+            elsif i['key'][3].include? "individual_meetings_sessions"
+              @individual_meeting_count += i['value']
+            end
           end
         end
       end
       
       for i in new_refferals_array
         if !i['key'][0].empty? && !i['key'][2].empty?
-          for j in i['key'][3]
-            if j.include? "court_dlsa" or j.include? "lawyer" or j.include? "court_lawyers_legal_organisations"
-              @legal_services_count += i['value']
-            end
-            if j.include? "medical_service"
-              @medical_count+= i['value']
-            end
-            if j.include? "police"
-              @police_reffered_to_count+= i['value']
-            end
-            if j.include? "protection_officer"
-              @protection_officer_count+= i['value']
-            end
-            if j.include? "shelter_home"
-              @shelter_count+= i['value']
-            end
-            if j.include? "government_organisation_go" or j.include? "non_governmental_organisation_ngo" or j.include? "community_based_organisations_cbo" or j.include? "any_other" or j.include? "others_specify"
-              @lok_shiyakat_niwaran_count+= i['value']
+          if i['key'][3].length > 0
+            for j in i['key'][3]
+              if j.include? "court_dlsa" or j.include? "lawyer" or j.include? "court_lawyers_legal_organisations"
+                @legal_services_count += i['value']
+              end
+              if j.include? "medical_service"
+                @medical_count+= i['value']
+              end
+              if j.include? "police"
+                @police_reffered_to_count+= i['value']
+              end
+              if j.include? "protection_officer"
+                @protection_officer_count+= i['value']
+              end
+              if j.include? "shelter_home"
+                @shelter_count+= i['value']
+              end
+              if j.include? "government_organisation_go" or j.include? "non_governmental_organisation_ngo" or j.include? "community_based_organisations_cbo" or j.include? "any_other" or j.include? "others_specify"
+                @lok_shiyakat_niwaran_count+= i['value']
+              end
             end
           end
         end
