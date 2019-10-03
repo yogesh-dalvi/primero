@@ -7,7 +7,7 @@ $(document).ready(function(){
 	});
 	
 	$('body').delegate("select", "change", function (e) {	
-		var mainElem = $(this).closest('fieldset');
+		var mainElem = $(this).closest('fieldset');		
 		displayHideDropDownFields($(this), mainElem);
 	});
 	
@@ -102,7 +102,7 @@ function displayDefault(fromChangeEvent){
 				}else{
 					defaultElements();
 					$('#' + mainElem.attr('id') + ' select').each(function(){
-						displayHideDropDownFields($(this), '#' + mainElem);
+						displayHideDropDownFields($(this), mainElem);
 					});
 					$('#cp_case_intake_'+ locationVal +'_subform_ongoing_client').closest('.row').hide();
 				}
@@ -304,4 +304,3 @@ function displayHideDropDownFields(element,mainElement){
 		}
 	}
 }
-

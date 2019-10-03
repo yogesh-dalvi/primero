@@ -539,7 +539,7 @@ class MonthlyReportsController < ApplicationController
               @word_of_mouth_count += i['value']
             elsif i['key'][3].include? "government_organisation_go"
               @go_count += i['value']
-            elsif i['key'][3].include? "non_governmental_organisation_ngo"
+            elsif i['key'][3].include? "non_governmental_organisation_ngo" or i['key'][3].include? "community_based_organisations"
               @ngo_count += i['value']
             elsif i['key'][3].include? "lawyers_legal_organisations"
               @lawyers_legal_org_count += i['value']
@@ -564,7 +564,7 @@ class MonthlyReportsController < ApplicationController
       
       for i in new_refferals_array
         if !i['key'][0].empty? && !i['key'][2].empty?
-          if i['key'][3].length > 0
+          if i['key'][3]!=nil and i['key'][3].length > 0
             for j in i['key'][3]
               if j.include? "court_dlsa" or j.include? "lawyer" or j.include? "court_lawyers_legal_organisations"
                 @legal_services_count += i['value']
