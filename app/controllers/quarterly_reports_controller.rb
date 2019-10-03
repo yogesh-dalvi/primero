@@ -1354,7 +1354,7 @@ class QuarterlyReportsController < ApplicationController
             @non_literate_count += i['value']
           elsif i['key'][3].include? "functional_literacy"
             @functional_literacy_count += i['value']
-          elsif i['key'][3].include? "primary_level_class_4"
+          elsif i['key'][3].include? "primary_level_class_4" or i['key'][3].include? "primary_level_passed_class_4" 
             @primary_level_class_4_count += i['value']
           elsif i['key'][3].include? "upto_ssc_passed_class_10"
             @upto_ssc_count += i['value']
@@ -1375,7 +1375,7 @@ class QuarterlyReportsController < ApplicationController
     
     for i in reasons_fr_reg_at_spec_cell
       if !i['key'][0].empty? && !i['key'][2].empty?
-        if !i['key'][3].empty?
+        if i['key'][3]!=nil and !i['key'][3].empty?
           for j in i['key'][3]
             if j.include? "harassment_of_natal_family_members_of_the_woman_by_the_husband_family"
               @harr_natal_family_by_hus_count += i['value']
@@ -1455,7 +1455,7 @@ class QuarterlyReportsController < ApplicationController
 
     for i in previous_intervention_before_coming_to_the_cell
       if !i['key'][0].empty? && !i['key'][2].empty?
-        if !i['key'][3].empty?
+        if i['key'][3]!=nil and !i['key'][3].empty?
           for j in i['key'][3]
             if j.include? "natal_family_marital_family"
               @prev_inter_natal_family_marital_family_count += i['value']
@@ -1478,7 +1478,7 @@ class QuarterlyReportsController < ApplicationController
     # for current clients
     for i in intervention_by_special_cell
       if !i['key'][0].empty? && !i['key'][2].empty?
-        if !i['key'][3].empty?
+        if i['key'][3]!=nil and !i['key'][3].empty?
           for j in i['key'][3]
             if j.include? "providing_emotional_support_and_strengthening_psychological_self"
               @spec_cell_prov_emo_support_count += i['value']
@@ -1516,7 +1516,7 @@ class QuarterlyReportsController < ApplicationController
 
     for i in referrals_new_clients_ongoing_clients
       if !i['key'][0].empty? && !i['key'][2].empty?
-        if !i['key'][3].empty?
+        if i['key'][3]!=nil and !i['key'][3].empty?
           for j in i['key'][3]
             if j.include? "police"
               @police_refferal_count += i['value']
