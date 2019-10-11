@@ -1413,25 +1413,27 @@ class QuarterlyReportsController < ApplicationController
 
     for i in vio_by_husband
       if !i['key'][0].empty? && !i['key'][2].empty?
-        if i['key'][3]!=nil
-          if i['key'][3].include? "physical_violence_by_husband"
-            @phy_vio_by_hus_count += i['value']
-          elsif i['key'][3].include? "emotional_mental_violence_by_husband"
-            @emo_men_vio_by_hus_count += i['value']
-          elsif i['key'][3].include? "sexual_violence_by_husband"
-            @sex_vio_by_hus_count += i['value']
-          elsif i['key'][3].include? "financial_violence_by_husband"
-            @fin_vio_by_hus_count += i['value']
-          elsif i['key'][3].include? "out_of_marriage_relationship_second_marriage_by_husband"
-            @sec_marr_by_hus_count += i['value']
-          elsif i['key'][3].include? "refusal_to_give_streedhan"
-            @ref_to_strredhan_by_hus_count += i['value']
-          elsif i['key'][3].include? "alcohol_abuse_substance_abuse_by_husband"
-            @alch_vio_by_hus_count += i['value']
-          elsif i['key'][3].include? "desertion_by_husband"
-            @desertion_by_hus_count += i['value']
-          elsif i['key'][3].include? "child_custody_disputes_disputes_over_visitation_rights"
-            @child_custody_vio_count += i['value']
+        if i['key'][3]!=nil and i['key'][3].length > 0
+          for j in i['key'][3]
+            if j.include? "physical_violence_by_husband"
+              @phy_vio_by_hus_count += i['value']
+            elsif j.include? "emotional_mental_violence_by_husband"
+              @emo_men_vio_by_hus_count += i['value']
+            elsif j.include? "sexual_violence_by_husband"
+              @sex_vio_by_hus_count += i['value']
+            elsif j.include? "financial_violence_by_husband"
+              @fin_vio_by_hus_count += i['value']
+            elsif j.include? "out_of_marriage_relationship_second_marriage_by_husband"
+              @sec_marr_by_hus_count += i['value']
+            elsif j.include? "refusal_to_give_streedhan"
+              @ref_to_strredhan_by_hus_count += i['value']
+            elsif j.include? "alcohol_abuse_substance_abuse_by_husband"
+              @alch_vio_by_hus_count += i['value']
+            elsif j.include? "desertion_by_husband"
+              @desertion_by_hus_count += i['value']
+            elsif j.include? "child_custody_disputes_disputes_over_visitation_rights"
+              @child_custody_vio_count += i['value']
+            end
           end
         end
       end
@@ -1439,15 +1441,17 @@ class QuarterlyReportsController < ApplicationController
     
     for i in vio_by_marital_family
       if !i['key'][0].empty? && !i['key'][2].empty?
-        if i['key'][3]!=nil
-          if i['key'][3].include? "physical_violence_by_marital_family"
-            @phy_vio_by_mart_family_count += i['value']
-          elsif i['key'][3].include? "emotional_mental_violence_by_marital_family"
-            @emo_vio_by_mart_family_count += i['value']
-          elsif i['key'][3].include? "sexual_violence_by_marital_family"
-            @sex_vio_by_mart_family_count += i['value']
-          elsif i['key'][3].include? "financial_violence_by_marital_family"
-            @fin_vio_by_mart_family_count += i['value']
+        if i['key'][3]!=nil and i['key'][3].length > 0
+          for j in i['key'][3]
+            if j.include? "physical_violence_by_marital_family"
+              @phy_vio_by_mart_family_count += i['value']
+            elsif j.include? "emotional_mental_violence_by_marital_family"
+              @emo_vio_by_mart_family_count += i['value']
+            elsif j.include? "sexual_violence_by_marital_family"
+              @sex_vio_by_mart_family_count += i['value']
+            elsif j.include? "financial_violence_by_marital_family"
+              @fin_vio_by_mart_family_count += i['value']
+            end
           end
         end
       end
@@ -1506,9 +1510,11 @@ class QuarterlyReportsController < ApplicationController
 
     for i in negotiating_nonviolence
       if !i['key'][0].empty? && !i['key'][2].empty?
-        if i['key'][3]!=nil
-          if i['key'][3].include? "negotiating_non_violence_with_stakeholder"
-            @spec_cell_neg_nonvio_with_stakeholder_count  += i['value'] 
+        if i['key'][3]!=nil and i['key'][3].length > 0
+          for j in i['key'][3]
+            if j.include? "negotiating_non_violence_with_stakeholder"
+              @spec_cell_neg_nonvio_with_stakeholder_count  += i['value'] 
+            end
           end
         end
       end
@@ -1564,23 +1570,25 @@ class QuarterlyReportsController < ApplicationController
 
     for i in outcomes_new_clients_ongoing_clients
       if !i['key'][0].empty? && !i['key'][2].empty?
-        if i['key'][3]!=nil
-          if i['key'][3].include? "helped_in_filing_for_divorce_separation_talaq_khula" or i['key'][3].include? "helped_in_filing_case_in_court_for_divorce_separation_mediation" or i['key'][3].include? "helped_in_filing_case_in_court_for_divorce_separation"
-            @outcomes_helped_in_case_filed_for_divorce_count += i['value']
-          elsif i['key'][3].include? "helped_in_reteival_of_streedhan"
-            @outcome_streedhan_retrival_count += i['value']
-          elsif i['key'][3].include? "helped_in_filing_application_under_pwdva"
-            @outcome_pwdva_2005_count += i['value']
-          elsif i['key'][3].include? "helped_in_registering_fir_under_section_498a"
-            @outcome_498A_count += i['value']
-          elsif i['key'][3].include? "helped_the_woman_in_accessing_her_financial_entitlements"
-            @outcome_maintenence_count += i['value']
-          elsif i['key'][3].include? "non_violent_reconciliation"
-            @outcome_non_violent_recon_count += i['value']
-          elsif i['key'][3].include? "court_orders_in_the_best_interest_of_the_woman"
-            @outcome_court_order_count += i['value']
-          elsif i['key'][3].include? "any_other" or i['key'][3].include? "others_specify"
-            @outcome_any_other_count += i['value']
+        if i['key'][3]!=nil and i['key'][3].length > 0
+          for j in i['key'][3]
+            if j.include? "helped_in_filing_for_divorce_separation_talaq_khula" or j.include? "helped_in_filing_case_in_court_for_divorce_separation_mediation" or j.include? "helped_in_filing_case_in_court_for_divorce_separation"
+              @outcomes_helped_in_case_filed_for_divorce_count += i['value']
+            elsif j.include? "helped_in_reteival_of_streedhan"
+              @outcome_streedhan_retrival_count += i['value']
+            elsif j.include? "helped_in_filing_application_under_pwdva"
+              @outcome_pwdva_2005_count += i['value']
+            elsif j.include? "helped_in_registering_fir_under_section_498a"
+              @outcome_498A_count += i['value']
+            elsif j.include? "helped_the_woman_in_accessing_her_financial_entitlements"
+              @outcome_maintenence_count += i['value']
+            elsif j.include? "non_violent_reconciliation"
+              @outcome_non_violent_recon_count += i['value']
+            elsif j.include? "court_orders_in_the_best_interest_of_the_woman"
+              @outcome_court_order_count += i['value']
+            elsif j.include? "any_other" or j.include? "others_specify"
+              @outcome_any_other_count += i['value']
+            end
           end
         end
       end
@@ -1647,8 +1655,10 @@ class QuarterlyReportsController < ApplicationController
                     end
                   end
                   #negotiating no-violence calculation for that case
-                  if j.has_key? "negotiating_nonviolence" and j["negotiating_nonviolence"]!=nil and !j["negotiating_nonviolence"].empty?
-                      negotiating_non_violence.push(j["negotiating_nonviolence"])
+                  if j.has_key? "negotiating_nonviolence" and j["negotiating_nonviolence"]!=nil and j["negotiating_nonviolence"].length > 0
+                    for neg_non_violence in j["negotiating_nonviolence"]
+                      negotiating_non_violence.push(neg_non_violence)
+                    end
                   end
                   # refferals new clients ongoing clients
                   if j.has_key? "referrals_new_clients_ongoing_clients" and j["referrals_new_clients_ongoing_clients"].length > 0
@@ -1657,8 +1667,10 @@ class QuarterlyReportsController < ApplicationController
                     end
                   end
                   # outcomes_new_clients_ongoing_clients
-                  if j.has_key? "outcomes_new_clients_ongoing_clients" and j["outcomes_new_clients_ongoing_clients"]!=nil and !j["outcomes_new_clients_ongoing_clients"].empty?
-                    outcomes_new_clients_ongoing_clients.push(j["outcomes_new_clients_ongoing_clients"])
+                  if j.has_key? "outcomes_new_clients_ongoing_clients" and j["outcomes_new_clients_ongoing_clients"]!=nil and j["outcomes_new_clients_ongoing_clients"].length > 0
+                    for outcomes in j["outcomes_new_clients_ongoing_clients"]
+                      outcomes_new_clients_ongoing_clients.push(outcomes)
+                    end
                   end
                 end
               end

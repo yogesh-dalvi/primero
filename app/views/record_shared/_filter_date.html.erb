@@ -9,10 +9,10 @@
     <div class="date_range">
       <div class="row collapse">
         <div class="medium-12 columns selectable">
-          <label class="has_date"><%= t("#{record}.filter_by.date") %></label>
+        <!-- <label class="has_date"><%= t("#{record}.filter_by.date") %></label> -->
           <%= select_tag date_field, options_for_select(date_options),
              'class' => 'chosen-select selectable_date',
-             'filter_type' => 'date_selectable' %>
+             'filter_type' => 'date_selectable', 'hidden' => true %> 
         </div>
       </div>
       <div class="row collapse">

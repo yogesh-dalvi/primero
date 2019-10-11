@@ -1,0 +1,787 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<style>
+.col-sm-3 {
+	width: 16%;
+	margin-right: 25px;
+}
+
+submit_button {
+	margin-top: 2% !important;
+}
+
+.col-sm-2 {
+	width: 13%;
+	margin-right: 25px;
+}
+
+.page_container {
+	max-width: 1170px;
+	margin: 0 auto;
+}
+
+.cssShow {
+	display : block;
+	}
+
+	.cssHide {
+		display : none;
+	}
+
+label {
+	margin-bottom: 0px;
+}
+
+body {font-family: Arial, Helvetica, sans-serif;}
+
+.form-inline {  
+  display: flex;
+  flex-flow: row wrap;
+  align-items: center;
+}
+
+.form-inline label {
+  margin: 5px 10px 5px 0;
+}
+
+.form-inline input {
+  vertical-align: middle;
+  margin: 5px 10px 5px 0;
+  padding: 10px;
+  background-color: #fff;
+  border: 1px solid #ddd;
+}
+
+.form-inline button {
+  padding: 10px 20px;
+  background-color: dodgerblue;
+  border: 1px solid #ddd;
+  color: white;
+  cursor: pointer;
+}
+header .menu.simple li a {
+	color: #212529 !important;
+}
+.form-inline button:hover {
+  background-color: royalblue;
+}
+
+@media (max-width: 800px) {
+  .col-sm-3 {
+    width: 100%;
+    margin-right: 25px;
+  }
+  
+  .col-sm-2 {
+    width: 100%;
+    margin-right: 25px;
+  }
+  
+  .page_container {
+    width: auto;
+  }
+  
+  .form-inline input {
+    margin: 10px 0;
+  }
+  
+    #mpr_report {
+	overflow: scroll;
+}
+  
+  .form-inline {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}
+
+@media screen and (min-width: 801px) and (max-width: 1200px) { 
+  .col-sm-2 {
+	width: 17%;
+	margin-right: 25px;
+}
+
+  .page_container {
+    width: auto;
+   padding-left:15px;
+   padding-right:15px;
+  }
+}
+
+
+.row.align-middle {
+    margin: 0 auto !important; 
+}
+</style>
+
+<script>
+ 
+     
+$(document).ready(function(){
+  $('[data-toggle="tooltip"]').tooltip();   
+});
+
+$(document).ready(function() {
+  // validation
+  document.getElementById("validation_div").innerHTML= "";
+  document.getElementById("submit_tag").addEventListener("click", function(event){
+    
+    document.getElementById("validation_div").innerHTML= "";
+    var validation_content='';
+    var location = document.getElementById("report-location").value;
+    var month = document.getElementById("month-selector").value;  
+    if (location == "" || month == "")
+      {
+        if (location == "")
+          {
+            validation_content += '<label id = "location_validate" style="color: red">please select state</label>';
+          }
+        if (month == "")
+          {
+            validation_content += '<label id = "month_validate" style="color: red">please select a month</label>';
+          }  
+        document.getElementById("validation_div").innerHTML= validation_content;
+        event.preventDefault();
+      }
+    });
+
+    $('#month-selector').on('change',function(){
+      var month = $('#month-selector').val();
+      if(month!= "")
+        {
+          document.getElementById("month_validate").innerHTML = "";
+        }
+        
+    });
+
+    $('#report-cell').on('change',function(){
+      var sub_cell = $('#report-cell').val();
+      if(sub_cell.includes(""))
+        {
+          document.getElementById("report-cell").selectedIndex = 0;
+        }
+        console.log($('#report-location').val());
+        console.log($('#report-district').val());
+        console.log($('#report-cell').val());
+        
+    });
+
+    $('#report-district').on('change',function()
+    {
+      //document.getElementById("submit_button").setAttribute("style","margin-top: 4%")
+      $('#cell-div').removeClass('cssShow').addClass('cssHide');
+      var el = $('#report-cell');
+      el.empty(); // remove old subcell options
+
+      var cell = $('#report-district').val();
+
+      if(cell.includes(""))
+        {
+          document.getElementById("report-district").selectedIndex = 0;
+        }
+      else if(cell.length == 1 && !cell.includes(""))
+        {
+          cell_map_json = <%= @cell_map_array.to_json.html_safe%>;
+          if (cell[0] in cell_map_json)
+            {
+              subcell = cell_map_json[cell[0]];
+              var el = $("#report-cell");
+              el.empty();
+              subcell.forEach(function(value) {
+                if (value[1] == null)
+                  {
+                    el.append($("<option></option>")
+                  .attr("value", "").text(value[0]));
+                  }else{
+                    el.append($("<option></option>")
+                    .attr("value", value[1]).text(value[0]));
+                  }
+              });
+  
+              $('#cell-div').removeClass('cssHide').addClass('cssShow');
+            }
+        }
+        
+    });
+
+    $('#report-location').on('change', function() {
+      
+      //document.getElementById("submit_button").setAttribute("style","margin-top: 4%")
+      $('#district-div').removeClass('cssShow').addClass('cssHide'); //hide subcell and cell on location change
+      $('#cell-div').removeClass('cssShow').addClass('cssHide');
+
+      var el = $('#report-cell');
+      el.empty(); // remove old subcell options
+
+      var el = $('#report-district');
+      el.empty(); // remove old cell options
+
+      var location = document.getElementById("report-location").value;    
+      if (location!="")
+        {
+          //document.getElementById("state_validate").innerHTML = ""; 
+          var element_exist =  document.getElementById('location_validate');
+          if (typeof(element_exist) != 'undefined' && element_exist != null)
+            {
+              document.getElementById("location_validate").innerHTML = ""; 
+            }
+            
+            location_array = <%= @location_map_array.to_json.html_safe%>;
+            district_array = location_array[location];
+            
+            var el = $('#report-district');
+            el.empty(); // remove old cell options
+
+            district_array.forEach(function(value) {
+              if (value[1] == null)
+                {
+                  el.append($("<option></option>")
+                .attr("value", "").text(value[0]));
+                }else{
+                  el.append($("<option></option>")
+                  .attr("value", value[1]).text(value[0]));
+                }
+            });
+
+            $('#district-div').removeClass('cssHide').addClass('cssShow');
+            
+        }
+        
+    });
+
+
+    $('#end_date_field').on('change', function() {
+      var end_date = document.getElementById("end_date_field").value;
+      var start_date = document.getElementById("start_date_field").value;
+      if (end_date!="")
+        {
+      //document.getElementById("end_date_validate").innerHTML = ""; 
+      var element_exist =  document.getElementById('end_date_validate1');
+      if (typeof(element_exist) != 'undefined' && element_exist != null)
+        {
+          document.getElementById("end_date_validate1").innerHTML = ""; 
+        }
+      }
+      if (start_date!= "" && end_date!= "")
+        {
+          if(new Date(start_date)<= new Date(end_date))
+            {
+              //document.getElementById("date_validation").innerHTML = "";
+              var element_exist =  document.getElementById('date_validation1');
+              if (typeof(element_exist) != 'undefined' && element_exist != null)
+                {
+                  document.getElementById("date_validation1").innerHTML = "";
+                }
+            }
+          
+        }
+      
+    });
+    
+    $('#start_date_field').on('change', function() {
+      var start_date = document.getElementById("start_date_field").value;
+      var end_date = document.getElementById("end_date_field").value;
+      if (start_date!="")
+        {
+      //document.getElementById("start_date_validate").innerHTML = "";
+      var element_exist =  document.getElementById('start_date_validate1');
+      if (typeof(element_exist) != 'undefined' && element_exist != null)
+        {
+          document.getElementById("start_date_validate1").innerHTML = "";  
+        }
+        }
+      if (start_date!= "" && end_date!= "")
+        {
+          if(new Date(start_date)<= new Date(end_date))
+            {
+              //document.getElementById("date_validation").innerHTML = "";
+              var element_exist =  document.getElementById('date_validation1');
+              if (typeof(element_exist) != 'undefined' && element_exist != null)
+                {
+                  document.getElementById("date_validation1").innerHTML = "";
+                }
+            }
+          
+        }
+    });
+
+});
+
+</script>
+
+<div class="container">
+    <br>
+    <h2 style="color: #819f56">Monthly Report</h2>
+    <div align="right">
+    <!-- ><%= link_to "",{:controller => "monthly_reports", :action => "generate_pdf", :format=> 'pdf',:data =>  @data}, {:class => "fa fa-file-pdf-o", :style => "font-size:30px;color:red", :"data-toggle" => "tooltip", :title => "Download pdf", :"data-placement" => "bottom", :target => "_blank"} %> <-->
+    <a id="generate" class="fa fa-file-excel-o" style ="font-size:30px;color:green" data-toggle="tooltip" title="Download excel" data-placement="bottom" target = "_blank"></a>
+    </div>
+    <br>
+    <div class="panel panel-default">
+        <div class="panel-body" style="padding: 20px">
+
+                <div id = "validation_div"></div>
+                <% if @date_validation == "true" %>
+                      <label style="color: red">start date cannot be greater than end date</label>
+                        <% end %>
+                <%= form_tag("/monthly_reports/submit_form", method: "post", class: 'form-inline', name:"myForm", id:"submit_form_for_monthly_report") do %>
+
+                <div class="col-sm-3">
+                  <label>Select month<span style="color: red">*</span></label>
+                  <%= select_tag 'month_select', options_for_select(@month_array),{:id => "month-selector"} %>
+                </div>
+                <div class="col-sm-3">
+                  <label>Select year<span style="color: red">*</span></label>
+                  <%= select_year(@start_date_for_display, start_year: 1900, end_year: Date.current.year, name: "year", id: "year-selector") %>
+                </div>
+
+                <div class="col-sm-2" id="locations">
+                    <label>State<span style="color: red">*</span></label>
+                    <%= select_tag 'location', options_for_select(@location_array),{:id => "report-location"} %>
+                    <% if @location_not_selected == "true" %>
+                      <label style="color: red">please select location</label>
+                    <% end %>   
+                </div>
+
+                <div id="district-div" class="col-sm-2">    
+                    <div class="cell">
+                        <label>District</label>
+                        <%= select_tag 'district', options_for_select(@maha_location_array),{:id => "report-district",:multiple => true} %>
+                    </div>
+                </div>
+                <div id="cell-div" class="col-sm-2">    
+                    <div class="cell">
+                        <label>Cell</label>
+                        <%= select_tag 'cell', options_for_select(@maha_location_array),{:id => "report-cell",:multiple => true} %>
+                    </div>
+                </div>
+                <div class="col-sm-2" id="submit_button" style="margin-top: 2%;">
+                    <%= submit_tag "Generate Report", :name => 'save', :id => 'submit_tag' ,:class => "button btn_submit large" %>
+                </div>
+
+            <% end %>
+            </div> 
+        </div>
+        <br>
+    <br>
+    
+    <div id="mpr_report" style="border-style: solid;border-color: #819f5673;">
+    <div>
+    <table class="dataTable in_content_area reports">
+    <thead>
+      <tr>
+        <th style="text-align:center" align="center">Special Cells for Women</th>
+      </tr>
+      <tr>
+        <th style="text-align:center" align="center">Consolidated Monthly Progress Report</th>
+      </tr>
+    </thead>
+    </table>
+
+    <table hidden>
+      <tr>
+        <td style="text-align:left" align="left">State : <%=@state_name %></td>
+      </tr>
+      <% if @district_name != "" %>
+        <tr>
+          <td style="text-align:left" align="left">District : <%=@district_name %></td>
+        </tr>
+      <% end %> 
+      <% if @cell_name != "" %>
+        <tr>
+          <td style="text-align:left" align="left">Cell : <%=@cell_name %></td>
+        </tr>
+      <% end %> 
+      <tr>
+        <td style="text-align:left" align="left">Month: <%=@month %></td>
+      </tr>
+      <tr>
+        <td style="text-align:left" align="left">Year: <%=@year_to_display %></td>
+      </tr>
+    </table>
+
+    <div class="table-responsive" style="overflow: scroll; margin-top:2%" >
+      <table class="dataTable in_content_area reports">
+        <thead>
+        <tr style="border:1px solid #a49999; border-collapse: none;">
+          <th style="border-left:1px solid #a49999; border-top:1px solid #a49999; border-bottom: 2px solid #a49999;"><b>Sr.No.</b></th>
+          <th style="border-top:1px solid #a49999; border-bottom: 2px solid #a49999;"><b>Client Profile & Details</b></th>
+          <% if @selected == "state_selected" %>
+          <th style="border-top:1px solid #a49999; border-bottom: 2px solid #a49999;"><b><%=@state_name %></b></th>
+          <% else %>
+            <% @mpr_data.each do |data| %>
+              <th style="border-top:1px solid #a49999; border-bottom: 2px solid #a49999;"><b><%= data['district'] %></b></th>
+            <%end %>
+          <% end %>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+              <td>1</td>
+              <td>New Registered Applications (total)</td>
+              <% @mpr_data.each do |data| %>
+                <td><%= data["new_reg_app_total"] %></td>
+              <%end %>
+          </tr> 
+          <tr>
+              <td>1.1</td>
+              <td>New registered application that were previously one time intervention</td>
+              <% @mpr_data.each do |data| %>
+                  <td><%= data["new_reg_app_dat_were_prev_one_time_intervention"] %></td>
+              <%end %>
+          </tr> 
+          <tr>
+              <td><b>2</b></td>
+              <td><b>Referred by</b></td>
+              <% @mpr_data.each do |data| %>
+                  <td><b><%= data["police_count"] + data["ex_clients_word_of_mouth_count"] + data["self_count"] + data["medical_healthcare_referred_by_count"] + data["lawyers_legal_org_count"] + data["protection_officer_clients_referred_by"] + data["telephonic_helpline_clients_referred_by"] + data["referred_to_us_as_a_service_under_pwdv_2005"] + data["ngo_count"] + data["any_other_count"] %></b></td>
+              <%end %>
+          </tr> 
+          <tr>
+            <td>2a</td>
+            <td>Police</td>
+            <% @mpr_data.each do |data| %>
+              <td id="police_count"><%= data["police_count"] %></td>
+            <%end %>
+
+          </tr>
+          <tr>
+            <td>2b</td>
+            <td>Ex Client/Word of mouth</td>
+            <% @mpr_data.each do |data| %>
+              <td id="ex_clients_word_of_mouth_count"><%= data["ex_clients_word_of_mouth_count"] %></td>
+            <%end %>
+          </tr>
+          <tr>
+            <td>2c</td>
+            <td>Self</td>
+            <% @mpr_data.each do |data| %>
+                <td id="self_count"><%= data["self_count"] %></td>
+            <%end %>
+         </tr>
+          <tr>
+            <td>2d</td>
+            <td>Medical /health care system/hospital</td>
+            <% @mpr_data.each do |data| %>
+              <td id="medical_healthcare_referred_by_count"><%= data["medical_healthcare_referred_by_count"] %></td>
+            <%end %>
+          </tr>
+         
+          <tr>
+            <td>2e</td>
+            <td>Lawyers / Court / Legal Services/</td>
+            <% @mpr_data.each do |data| %>
+              <td id="lawyers_legal_org_count"><%= data["lawyers_legal_org_count"] %></td>
+            <%end %>
+          </tr>
+          <tr>
+            <td>2f</td>
+            <td>Protection Officer</td>
+            <% @mpr_data.each do |data| %>
+              <td id="protection_officer_clients_referred_by"><%= data["protection_officer_clients_referred_by"] %></td>
+            <%end %>
+          </tr>
+          <tr>
+            <td>2g</td>
+            <td>Telephonic helpline</td>
+            <% @mpr_data.each do |data| %>
+              <td id="telephonic_helpline_clients_referred_by"><%= data["telephonic_helpline_clients_referred_by"] %></td>
+            <%end %>
+          </tr>
+          <tr>
+            <td>2h</td>
+            <td>Referred to us as a service provider under PWDV Act 2005</td>
+            <% @mpr_data.each do |data| %>
+              <td id="referred_to_us_as_a_service_under_pwdv_2005"><%= data["referred_to_us_as_a_service_under_pwdv_2005"] %></td>
+            <%end %>
+          </tr>
+          <tr>
+            <td>2i</td>
+            <td>Non Governmental Organisation/Community based organisation</td>
+            <% @mpr_data.each do |data| %>
+              <td id="ngo_count"><%= data["ngo_count"] %></td>
+            <%end %>
+          </tr>
+          <tr>
+            <td>2j</td>
+            <td>Any other</td>
+            <% @mpr_data.each do |data| %>
+              <td id="any_other_count"><%= data["any_other_count"] %></td>
+            <%end %>
+          </tr>
+          <tr>
+            <td>3</td>
+            <td>Ongoing intervention (from previous months/not registered in this month)</td>
+            <% @mpr_data.each do |data| %>
+              <td id="on_going_intevention_count"><%= data["on_going_intevention_count"] %></td>
+            <%end %>
+          </tr>
+          <tr>
+            <td>4</td>
+            <td>One Time Intervention</td>
+            <% @mpr_data.each do |data| %>
+              <td id="one_time_intervention_count"><%= data["one_time_intervention_count"] %></td>
+            <%end %>
+          </tr>
+          <tr>
+            <td>4.1</td>
+            <td>No. of  POCSO & sexual assault cases in which police took help from the social worker  of Special Cell (recorded statement of survivor in the presence of social worker )</td>
+            <% @mpr_data.each do |data| %>
+              <td id="cases_where_police_took_help_from_social_worker"><%= data["cases_where_police_took_help_from_social_worker"] %></td>
+            <%end %>
+          </tr>
+          <tr>
+            <td>5</td>
+            <td>Home visits/Outreach details</td>
+            <% @mpr_data.each do |data| %>
+              <td><%= data["home_visit_count"] + data["collateral_visits_count"] %></td>
+            <%end %>
+          </tr>
+          <tr>
+            <td>5.1</td>
+            <td>Home visits</td>
+            <% @mpr_data.each do |data| %>
+              <td id="home_visit_count"><%= data["home_visit_count"] %></td>
+            <%end %>
+          </tr>
+          <tr>
+            <td>5.2</td>
+            <td>Collateral visits</td>
+            <% @mpr_data.each do |data| %>
+              <td id="collateral_visits_count"><%= data["collateral_visits_count"] %></td>
+            <%end %>
+          </tr>
+
+          <tr>
+            <td>6</td>
+            <td>Individual meeting/sessions</td>
+            <% @mpr_data.each do |data| %>
+              <td id="individual_meeting_count_total_count"><%= data["individual_meeting_with_survivor_count"] + data["individual_meeting_other_than_survivor_count"] %></td>
+            <%end %>
+          </tr>
+
+          <tr>
+            <td>6.1</td>
+            <td>Individual meeting with survivors</td>
+            <% @mpr_data.each do |data| %>
+              <td id="individual_meeting_with_survivor_count"><%= data["individual_meeting_with_survivor_count"] %></td>
+            <%end %>
+          </tr>
+
+          <tr>
+            <td>6.2</td>
+            <td>Individual meeting with those other than survivors</td>
+            <% @mpr_data.each do |data| %>
+              <td id="individual_meeting_other_than_survivor_count"><%= data["individual_meeting_other_than_survivor_count"] %></td>
+            <%end %>
+          </tr>
+
+          <tr>
+            <td>7</td>
+            <td>Joint / group meeting</td>
+            <% @mpr_data.each do |data| %>
+              <td id="group_meeting_count"><%= data["group_meeting_count"] %></td>
+            <%end %>
+          </tr>
+
+          <tr>
+            <td>8</td>
+            <td>Engaging police help (NC and help in retrieval of her belongings)</td>
+            <% @mpr_data.each do |data| %>
+              <td id="engaing_police_help_count"><%= data["engaing_police_help_count"] %></td>
+            <%end %>
+          </tr>
+
+          <tr>
+            <td>9</td>
+            <td>Social worker’s participation in workshops / conferences / programmes / seminars / meetings which were not organised by the Cell</td>
+            <% @mpr_data.each do |data| %>
+              <td id="participation_count"><%= data["participation_count"] %></td>
+            <%end %>
+          </tr>
+          <tr>
+            <td>10</td>
+            <td>Programmes organised by the Cell</td>
+            <% @mpr_data.each do |data| %>
+              <td id="programs_organised_count"><%= data["programs_organised_count"] %></td>
+            <%end %>
+          </tr>
+          <tr>
+            <td>11</td>
+            <td>Social worker facilitated as a resource person for workshop / training / programme / seminar</td>
+            <% @mpr_data.each do |data| %>
+              <td id="conducted_session_or_prog_count"><%= data["conducted_session_or_prog_count"] %></td>
+            <%end %>
+          </tr>
+          <tr>
+            <td><b>12</b></td>
+            <td><b>Referred to</b></td>
+            <% @mpr_data.each do |data| %>
+              <td><b><%= data["police_reffered_to_count"] + data["medical_count"] + data["shelter_count"] + data["legal_services_count"] + data["protection_officer_count"] + data["ngo_and_cbo_referred_to"] + data["other_gov_org_services_referred_to"] %></b></td>	
+            <%end %>
+          </tr>
+          <tr>
+            <td>12.1</td>
+            <td>Police</td>
+            <% @mpr_data.each do |data| %>
+              <td id="police_reffered_to_count"><%= data["police_reffered_to_count"] %></td>
+            <%end %>
+          </tr>
+          <tr>
+            <td>12.2</td>
+            <td>Medical & mental health services</td>
+            <% @mpr_data.each do |data| %>
+              <td id="medical_count"><%= data["medical_count"] %></td>
+            <%end %>
+          </tr>
+          <tr>
+            <td>12.3</td>
+            <td>Shelter</td>
+            <% @mpr_data.each do |data| %>
+              <td id="shelter_count"><%= data["shelter_count"] %></td>
+            <%end %>
+           </tr>
+          <tr>
+            <td>12.4</td>
+            <td>Legal services</td>
+            <% @mpr_data.each do |data| %>
+              <td id="legal_services_count"><%= data["legal_services_count"] %></td>
+            <%end %>
+          </tr>
+          <tr>
+            <td>12.5</td>
+            <td>Protection officer</td>
+            <% @mpr_data.each do |data| %>
+              <td id="protection_officer_count"><%= data["protection_officer_count"] %></td>
+            <%end %>
+          </tr>
+          <tr>
+            <td>12.6</td>
+            <td>NGO's & CBO's</td>
+            <% @mpr_data.each do |data| %>
+              <td id="ngo_and_cbo_referred_to"><%= data["ngo_and_cbo_referred_to"] %></td>
+            <%end %>
+          </tr>
+          <tr>
+            <td>12.7</td>
+            <td>Other Government organisation & services</td>
+            <% @mpr_data.each do |data| %>
+              <td id="other_gov_org_services_referred_to"><%= data["other_gov_org_services_referred_to"] %></td>
+            <%end %>
+          </tr>
+        </tbody>
+      </table>
+      </div>
+</div>
+</div>
+
+<script>
+var state= "<%=@selected_state %>";
+var district = <%=@district_to_show_in_view.to_json.html_safe %>;
+var cell =  <%=@cell_to_show_in_view.to_json.html_safe %>;
+var month = "<%=@month_to_display%>";
+var year = "<%=@year_to_display%>";
+
+$("#report-location").val(state);
+$("#month-selector").val(month);
+//document.getElementById("year-selector").defaultValue = "<%=@start_date_for_display %>";
+
+//select district and cell
+
+if (district!= null)
+{ 
+  if (district[0]!= "")
+    {
+      
+      district_array = <%=@district_to_show_in_view.to_json.html_safe %>;
+      var el = $('#report-district');
+      el.empty(); // remove old cell options
+
+      district_array.forEach(function(value) {
+        if (value[1] == null)
+          {
+            el.append($("<option></option>")
+          .attr("value", "").text(value[0]));
+          }else{
+            el.append($("<option></option>")
+            .attr("value", value[1]).text(value[0]));
+          }
+      });
+      $('#district-div').removeClass('cssHide').addClass('cssShow');
+    }else
+    {
+      $('#district-div').removeClass('cssShow').addClass('cssHide');
+      var el = $('#report-district');
+      el.empty(); // remove old cell options
+    }
+}
+else
+  {
+    $('#district-div').removeClass('cssShow').addClass('cssHide');
+    var el = $('#report-district');
+    el.empty(); // remove old cell options
+  }  
+
+
+if (cell!= null)
+  { 
+    if (cell[0]!= "")
+      {
+        cell_array = <%=@cell_to_show_in_view.to_json.html_safe %>;
+        var el = $('#report-cell');
+        el.empty(); // remove old cell options
+
+        cell_array.forEach(function(value) {
+          if (value[1] == null)
+            {
+              el.append($("<option></option>")
+            .attr("value", "").text(value[0]));
+            }else{
+              el.append($("<option></option>")
+              .attr("value", value[1]).text(value[0]));
+            }
+        });
+        $('#cell-div').removeClass('cssHide').addClass('cssShow');
+        }
+    else
+      {
+        $('#cell-div').removeClass('cssShow').addClass('cssHide');
+        var el = $('#report-cell');
+        el.empty(); // remove old subcell options
+      }
+  }
+  else
+    {
+      $('#cell-div').removeClass('cssShow').addClass('cssHide');
+      var el = $('#report-cell');
+      el.empty(); // remove old subcell options
+    }  
+      
+  document.getElementById("generate").addEventListener("click", function () {
+    //generateExcel($("#qpr_report"));
+    createDownloadLink("#generate",generateExcel($("#mpr_report")),"mpr_report.xlsx");
+    });
+    
+    function generateExcel(el) {
+      var clon = el.clone();
+      var html = clon.wrap('<div>').parent().html();
+
+      //add more symbols if needed...
+      while (html.indexOf('á') != -1) html = html.replace(/á/g, '&aacute;');
+      while (html.indexOf('é') != -1) html = html.replace(/é/g, '&eacute;');
+      while (html.indexOf('í') != -1) html = html.replace(/í/g, '&iacute;');
+      while (html.indexOf('ó') != -1) html = html.replace(/ó/g, '&oacute;');
+      while (html.indexOf('ú') != -1) html = html.replace(/ú/g, '&uacute;');
+      while (html.indexOf('º') != -1) html = html.replace(/º/g, '&ordm;');
+      html = html.replace(/<td>/g, "<td>");			
+      
+      return html;
+    }
+    
+    function createDownloadLink(anchorSelector, str, fileName){			
+        var url = "data:application/vnd.ms-excel," + encodeURIComponent(str);
+        $(anchorSelector).attr("download", fileName);               
+        $(anchorSelector).attr("href", url);
+        
+   }
+
+</script>

@@ -209,6 +209,24 @@ class Child < CouchRest::Model::Base
       :reduce =>
         "_sum"
 
+    view :by_individual_meeting_session,
+    :map => "function(doc) {
+                  if(doc.location!=null  && doc.district!=null && doc.individual_meetingssessions!=null && doc.registration_date!=null){
+                      emit([doc.location,doc.district,new Date(doc.registration_date+' UTC'),doc.individual_meetingssessions],1)
+                  }
+            }",
+    :reduce =>
+      "_sum"
+    
+    view :by_state_date_individual_meeting_session,
+        :map => "function(doc) {
+                    if(doc.location!=null  && doc.district!=null && doc.individual_meetingssessions!=null && doc.registration_date!=null){
+                        emit([doc.location,1,new Date(doc.registration_date+' UTC'),doc.individual_meetingssessions],1)
+                    }
+              }",
+      :reduce =>
+        "_sum"
+
     view :by_programme_participation,
           :map => "function(doc) {
                        if(doc.location!=null  && doc.district!=null && doc.programme_participationorganisationfacilitation!=null && doc.registration_date!=null){
@@ -250,7 +268,7 @@ class Child < CouchRest::Model::Base
                       if(doc.location!=null  && doc.district!=null && doc.registration_date!=null){
                         if (doc.register_client.match(/one_time_intervention/))
                           {
-                            emit([doc.location,doc.district,new Date(doc.registration_date+' UTC'),doc.register_client],1)
+                            emit([doc.location,doc.district,new Date(doc.registration_date+' UTC'),doc.register_client,doc.onetime_intervention],1)
                           }                       
                        }
                 }",
@@ -262,7 +280,7 @@ class Child < CouchRest::Model::Base
                     if(doc.location!=null  && doc.district!=null && doc.registration_date!=null){
                       if (doc.register_client.match(/one_time_intervention/))
                         {
-                          emit([doc.location,1,new Date(doc.registration_date+' UTC'),doc.register_client],1)
+                          emit([doc.location,1,new Date(doc.registration_date+' UTC'),doc.register_client,doc.onetime_intervention],1)
                         }
                     }
               }",
@@ -654,6 +672,26 @@ class Child < CouchRest::Model::Base
           }",
     :reduce =>
     "_sum"
+
+    view :by_cases_sent_back_to_eo,
+    :map => "function(doc) {
+                if(doc.location!=null  && doc.district!=null && doc.registration_date!=null){
+                    emit([doc.location,doc.district,new Date(doc.registration_date+' UTC'),doc.case_sent_back_to_eo],1)
+                }
+          }",
+    :reduce =>
+    "_sum"
+
+    view :by_state_date_cases_sent_back_to_eo,
+    :map => "function(doc) {
+                if(doc.location!=null  && doc.district!=null && doc.registration_date!=null){
+                    emit([doc.location,1,new Date(doc.registration_date+' UTC'),doc.case_sent_back_to_eo],1)
+                }
+          }",
+    :reduce =>
+    "_sum"
+
+    
 
     # ---------------------------------------------------------------special ongoing part------------------------
 
