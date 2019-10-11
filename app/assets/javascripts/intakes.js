@@ -43,7 +43,7 @@ $(document).ready(function(){
 				}
 			})
 			$("#ongoing_client_child_" + subform.substring(18, subform.length) + "_ongoing_followup").closest('.row').show();
-			$("#ongoing_client_child_" + subform.substring(18, subform.length) + "_nature_of_interaction").closest('.row').show();
+			$("#ongoing_client_child_" + subform.substring(18, subform.length) + "_nature_of_interaction_").closest('.row').show();
 			$("#ongoing_client_child_" + subform.substring(18, subform.length) + "_intervention_by_special_cell_").closest('.row').show();
 			$("#ongoing_client_child_" + subform.substring(18, subform.length) + "_referrals_new_clients_ongoing_clients_").closest('.row').show();
 			$("#ongoing_client_child_" + subform.substring(18, subform.length) + "_other_interventions_taking_place_outside_the_cell").closest('.row').show();
@@ -72,7 +72,7 @@ $(document).ready(function(){
 				}
 			});		
 			
-			$("#ongoing_client_child_" + elemId.substring(18, elemId.length) + "_nature_of_interaction").closest('.row').show();
+			$("#ongoing_client_child_" + elemId.substring(18, elemId.length) + "_nature_of_interaction_").closest('.row').show();
 			$("#ongoing_client_child_" + elemId.substring(18, elemId.length) + "_intervention_by_special_cell_").closest('.row').show();
 			$("#ongoing_client_child_" + elemId.substring(18, elemId.length) + "_referrals_new_clients_ongoing_clients_").closest('.row').show();
 			$("#ongoing_client_child_" + elemId.substring(18, elemId.length) + "_other_interventions_taking_place_outside_the_cell").closest('.row').show();
@@ -121,11 +121,11 @@ function displayDefault(fromChangeEvent){
 			$("#record_case_data_child_education_of_the_client").closest('.row').hide();
 			$("#record_case_data_child_reasons_for_registering_at_special_cell_").closest('.row').hide();
 			$("#record_case_data_child_previous_intervention_before_coming_to_the_cell_").closest('.row').hide();
-			$("#record_case_data_child_nature_of_interaction").closest('.row').hide();
+			$("#record_case_data_child_nature_of_interaction_").closest('.row').hide();
 			$("#record_case_data_child_intervention_by_special_cell_").closest('.row').hide();
 			$("#record_case_data_child_referrals_new_clients_ongoing_clients_").closest('.row').hide();
 			$('#record_case_data_child_other_interventions_taking_place_outside_the_cell').closest('.row').hide();
-			$("#record_case_data_child_outcomes_new_clients_ongoing_clients").closest('.row').hide();
+			$("#record_case_data_child_outcomes_new_clients_ongoing_clients_").closest('.row').hide();
 			$("#record_case_data_child_programme_participationorganisationfacilitation").closest('.row').hide();
 		}
 	}, 500);
@@ -141,11 +141,11 @@ function defaultElements(){
 	$("#record_case_data_child_education_of_the_client").closest('.row').show();
 	$("#record_case_data_child_reasons_for_registering_at_special_cell_").closest('.row').show();
 	$("#record_case_data_child_previous_intervention_before_coming_to_the_cell_").closest('.row').show();
-	$("#record_case_data_child_nature_of_interaction").closest('.row').show();
+	$("#record_case_data_child_nature_of_interaction_").closest('.row').show();
 	$("#record_case_data_child_intervention_by_special_cell_").closest('.row').show();
 	$("#record_case_data_child_referrals_new_clients_ongoing_clients_").closest('.row').show();
 	$('#record_case_data_child_other_interventions_taking_place_outside_the_cell').closest('.row').show();
-	$("#record_case_data_child_outcomes_new_clients_ongoing_clients").closest('.row').show();
+	$("#record_case_data_child_outcomes_new_clients_ongoing_clients_").closest('.row').show();
 	$("#record_case_data_child_programme_participationorganisationfacilitation").closest('.row').show();
 }
 
