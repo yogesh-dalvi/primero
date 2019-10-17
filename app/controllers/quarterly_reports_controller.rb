@@ -182,7 +182,42 @@ class QuarterlyReportsController < ApplicationController
                 'state' => j['state'],
                 'district' => j['district'],
                 'cell' => '',
-            
+
+                'outcomes_sent_back_to_eo_fr_legal_action' => j['outcomes_sent_back_to_eo_fr_legal_action'],
+                'sent_back_to_eo_for_dv_act' => j['sent_back_to_eo_for_dv_act'],
+                'outcomes_sent_back_to_eo_for_mediation' => j['outcomes_sent_back_to_eo_for_mediation'],
+
+                'other_special_cell_clients_reffered_by' =>  j['other_special_cell_clients_reffered_by'],
+                'jamat_samaj_jan_panchayat_clients_referred_by' =>  j['jamat_samaj_jan_panchayat_clients_referred_by'],
+                'religious_education_count' =>  j['religious_education_count'],
+                'diploma_education_count' =>  j['diploma_education_count'],
+                'prev_interv_fcc_zpcc' =>  j['prev_interv_fcc_zpcc'],
+                'prev_interv_government_organisation_go' =>  j['prev_interv_government_organisation_go'],
+                'spcell_negotiating_to_stop_non_violence' =>  j['spcell_negotiating_to_stop_non_violence'],
+                'spcell_negotiating_for_non_violence_reconciliation' =>  j['spcell_negotiating_for_non_violence_reconciliation'],
+                'spcell_negotiating_for_seperation' =>  j['spcell_negotiating_for_seperation'],
+                'spcell_negotiating_for_divorce' =>  j['spcell_negotiating_for_divorce'],
+                'spcell_negotiating_for_child_custody' =>  j['spcell_negotiating_for_child_custody'],
+                'spcell_retrieval_of_streedhan' =>  j['spcell_retrieval_of_streedhan'],
+                'spcell_reestablishing_the_woman_s_relationship_to_her_property' =>  j['spcell_reestablishing_the_woman_s_relationship_to_her_property'],
+                'ngo_referral_count' =>  j['ngo_referral_count'],
+                'cbo_referral_count' =>  j['cbo_referral_count'],
+                'go_referral_count' =>  j['go_referral_count'],
+                'ngo_referral_count_ongoing_client' =>  j['ngo_referral_count_ongoing_client'],
+                'cbo_referral_count_ongoing_client' =>  j['cbo_referral_count_ongoing_client'],
+                'go_referral_count_ongoing_client' =>  j['go_referral_count_ongoing_client'],
+                'othr_inter_representation_on_sexual_harrassment_committee' =>  j['othr_inter_representation_on_sexual_harrassment_committee'],
+                'outcomes_helped_in_filing_case_for_divorce_seperation' =>  j['outcomes_helped_in_filing_case_for_divorce_seperation'],
+                'outcomes_talaq_khula' =>  j['outcomes_talaq_khula'],
+                'outcomes_fir_registered' =>  j['outcomes_fir_registered'],
+                'outcome_nc_registration' =>  j['outcome_nc_registration'],
+                'outcome_child_custody' =>  j['outcome_child_custody'],
+                'outcome_without_court_seperation' =>  j['outcome_without_court_seperation'],
+                'outcomes_helped_in_filing_case_in_court_for_mediation' =>  j['outcomes_helped_in_filing_case_in_court_for_mediation'],
+                'outcomes_other_than_498A' =>  j['outcomes_other_than_498A'],
+                'outcome_other_than_498A_count_ongoing_client' =>  j['outcome_other_than_498A_count_ongoing_client'],
+                'outcomes_helped_in_filing_case_for_divorce_seperation_ongoing_clients' =>  j['outcomes_helped_in_filing_case_for_divorce_seperation_ongoing_clients'],
+
                   # / variable declaration/
                 'total_client_with_whom_interaction' =>  j['total_client_with_whom_interaction'],
                 'ongoing_clients' =>  j['ongoing_clients'],
@@ -368,6 +403,41 @@ class QuarterlyReportsController < ApplicationController
               for k in @new_qpr_data
                 if k['district'] == i
                      # / variable declaration/
+
+                k['outcomes_sent_back_to_eo_fr_legal_action'] += j['outcomes_sent_back_to_eo_fr_legal_action']
+                k['sent_back_to_eo_for_dv_act'] += j['sent_back_to_eo_for_dv_act']
+                k['outcomes_sent_back_to_eo_for_mediation'] += j['outcomes_sent_back_to_eo_for_mediation']
+                k['other_special_cell_clients_reffered_by'] += j['other_special_cell_clients_reffered_by']
+                k['jamat_samaj_jan_panchayat_clients_referred_by'] += j['jamat_samaj_jan_panchayat_clients_referred_by']
+                k['religious_education_count'] += j['religious_education_count']
+                k['diploma_education_count'] += j['diploma_education_count']
+                k['prev_interv_fcc_zpcc'] += j['prev_interv_fcc_zpcc']
+                k['prev_interv_government_organisation_go'] += j['prev_interv_government_organisation_go']
+                k['spcell_negotiating_to_stop_non_violence'] += j['spcell_negotiating_to_stop_non_violence']
+                k['spcell_negotiating_for_non_violence_reconciliation'] += j['spcell_negotiating_for_non_violence_reconciliation']
+                k['spcell_negotiating_for_seperation'] += j['spcell_negotiating_for_seperation']
+                k['spcell_negotiating_for_divorce'] += j['spcell_negotiating_for_divorce']
+                k['spcell_negotiating_for_child_custody'] += j['spcell_negotiating_for_child_custody']
+                k['spcell_retrieval_of_streedhan'] += j['spcell_retrieval_of_streedhan']
+                k['spcell_reestablishing_the_woman_s_relationship_to_her_property'] += j['spcell_reestablishing_the_woman_s_relationship_to_her_property']
+                k['ngo_referral_count'] += j['ngo_referral_count']
+                k['cbo_referral_count'] += j['cbo_referral_count']
+                k['go_referral_count'] += j['go_referral_count']
+                k['ngo_referral_count_ongoing_client'] += j['ngo_referral_count_ongoing_client']
+                k['cbo_referral_count_ongoing_client'] += j['cbo_referral_count_ongoing_client']
+                k['go_referral_count_ongoing_client'] += j['go_referral_count_ongoing_client']
+                k['othr_inter_representation_on_sexual_harrassment_committee'] += j['othr_inter_representation_on_sexual_harrassment_committee']
+                k['outcomes_helped_in_filing_case_for_divorce_seperation'] += j['outcomes_helped_in_filing_case_for_divorce_seperation']
+                k['outcomes_talaq_khula'] += j['outcomes_talaq_khula']
+                k['outcomes_fir_registered'] += j['outcomes_fir_registered']
+                k['outcome_nc_registration'] += j['outcome_nc_registration']
+                k['outcome_child_custody'] += j['outcome_child_custody']
+                k['outcome_without_court_seperation'] += j['outcome_without_court_seperation']
+                k['outcomes_helped_in_filing_case_in_court_for_mediation'] += j['outcomes_helped_in_filing_case_in_court_for_mediation']
+                k['outcomes_other_than_498A'] += j['outcomes_other_than_498A']
+                k['outcome_other_than_498A_count_ongoing_client'] += j['outcome_other_than_498A_count_ongoing_client']
+                k['outcomes_helped_in_filing_case_for_divorce_seperation_ongoing_clients'] += j['outcomes_helped_in_filing_case_for_divorce_seperation_ongoing_clients']
+
                 k['total_client_with_whom_interaction'] +=  j['total_client_with_whom_interaction']
                 k['ongoing_clients'] +=  j['ongoing_clients']
                 k['one_time_intervention_in_this_quarter'] +=  j['one_time_intervention_in_this_quarter']
@@ -561,6 +631,41 @@ class QuarterlyReportsController < ApplicationController
           'state' => @selected_state,
           'district' => 'Total',
           'cell' => '',
+
+          'outcomes_sent_back_to_eo_fr_legal_action' => 0,
+          'sent_back_to_eo_for_dv_act' => 0,
+          'outcomes_sent_back_to_eo_for_mediation' => 0,
+          'other_special_cell_clients_reffered_by' => 0,
+          'jamat_samaj_jan_panchayat_clients_referred_by' => 0,
+          'religious_education_count' => 0,
+          'diploma_education_count' => 0,
+          'prev_interv_fcc_zpcc' => 0,
+          'prev_interv_government_organisation_go' => 0,
+          'spcell_negotiating_to_stop_non_violence' => 0,
+          'spcell_negotiating_for_non_violence_reconciliation' => 0,
+          'spcell_negotiating_for_seperation' => 0,
+          'spcell_negotiating_for_divorce' => 0,
+          'spcell_negotiating_for_child_custody' => 0,
+          'spcell_retrieval_of_streedhan' => 0,
+          'spcell_reestablishing_the_woman_s_relationship_to_her_property' => 0,
+          'ngo_referral_count' => 0,
+          'cbo_referral_count' => 0,
+          'go_referral_count' => 0,
+          'ngo_referral_count_ongoing_client' => 0,
+          'cbo_referral_count_ongoing_client' => 0,
+          'go_referral_count_ongoing_client' => 0,
+          'othr_inter_representation_on_sexual_harrassment_committee' => 0,
+          'outcomes_helped_in_filing_case_for_divorce_seperation' => 0,
+          'outcomes_talaq_khula' => 0,
+          'outcomes_fir_registered' => 0,
+          'outcome_nc_registration' => 0,
+          'outcome_child_custody' => 0,
+          'outcome_without_court_seperation' => 0,
+          'outcomes_helped_in_filing_case_in_court_for_mediation' => 0,
+          'outcomes_other_than_498A' => 0,
+          'outcome_other_than_498A_count_ongoing_client' => 0,
+          'outcomes_helped_in_filing_case_for_divorce_seperation_ongoing_clients' => 0,
+
             # / variable declaration/
           'total_client_with_whom_interaction' => 0,
           'ongoing_clients' => 0,
@@ -754,6 +859,41 @@ class QuarterlyReportsController < ApplicationController
          @qpr_data[report_length-1]['ongoing_clients'] +=  j['ongoing_clients']
          @qpr_data[report_length-1]['one_time_intervention_in_this_quarter'] +=  j['one_time_intervention_in_this_quarter']
          @qpr_data[report_length-1]['no_of_ppl_prvded_supp'] +=  j['no_of_ppl_prvded_supp']
+
+         @qpr_data[report_length-1]['outcomes_sent_back_to_eo_fr_legal_action'] += j['outcomes_sent_back_to_eo_fr_legal_action']
+         @qpr_data[report_length-1]['sent_back_to_eo_for_dv_act'] += j['sent_back_to_eo_for_dv_act']
+         @qpr_data[report_length-1]['outcomes_sent_back_to_eo_for_mediation'] += j['outcomes_sent_back_to_eo_for_mediation']
+         @qpr_data[report_length-1]['other_special_cell_clients_reffered_by'] += j['other_special_cell_clients_reffered_by']
+         @qpr_data[report_length-1]['jamat_samaj_jan_panchayat_clients_referred_by'] += j['jamat_samaj_jan_panchayat_clients_referred_by']
+         @qpr_data[report_length-1]['religious_education_count'] += j['religious_education_count']
+         @qpr_data[report_length-1]['diploma_education_count'] += j['diploma_education_count']
+         @qpr_data[report_length-1]['prev_interv_fcc_zpcc'] += j['prev_interv_fcc_zpcc']
+         @qpr_data[report_length-1]['prev_interv_government_organisation_go'] += j['prev_interv_government_organisation_go']
+         @qpr_data[report_length-1]['spcell_negotiating_to_stop_non_violence'] += j['spcell_negotiating_to_stop_non_violence']
+         @qpr_data[report_length-1]['spcell_negotiating_for_non_violence_reconciliation'] += j['spcell_negotiating_for_non_violence_reconciliation']
+         @qpr_data[report_length-1]['spcell_negotiating_for_seperation'] += j['spcell_negotiating_for_seperation']
+         @qpr_data[report_length-1]['spcell_negotiating_for_divorce'] += j['spcell_negotiating_for_divorce']
+         @qpr_data[report_length-1]['spcell_negotiating_for_child_custody'] += j['spcell_negotiating_for_child_custody']
+         @qpr_data[report_length-1]['spcell_retrieval_of_streedhan'] += j['spcell_retrieval_of_streedhan']
+         @qpr_data[report_length-1]['spcell_reestablishing_the_woman_s_relationship_to_her_property'] += j['spcell_reestablishing_the_woman_s_relationship_to_her_property']
+         @qpr_data[report_length-1]['ngo_referral_count'] += j['ngo_referral_count']
+         @qpr_data[report_length-1]['cbo_referral_count'] += j['cbo_referral_count']
+         @qpr_data[report_length-1]['go_referral_count'] += j['go_referral_count']
+         @qpr_data[report_length-1]['ngo_referral_count_ongoing_client'] += j['ngo_referral_count_ongoing_client']
+         @qpr_data[report_length-1]['cbo_referral_count_ongoing_client'] += j['cbo_referral_count_ongoing_client']
+         @qpr_data[report_length-1]['go_referral_count_ongoing_client'] += j['go_referral_count_ongoing_client']
+         @qpr_data[report_length-1]['othr_inter_representation_on_sexual_harrassment_committee'] += j['othr_inter_representation_on_sexual_harrassment_committee']
+         @qpr_data[report_length-1]['outcomes_helped_in_filing_case_for_divorce_seperation'] += j['outcomes_helped_in_filing_case_for_divorce_seperation']
+         @qpr_data[report_length-1]['outcomes_talaq_khula'] += j['outcomes_talaq_khula']
+         @qpr_data[report_length-1]['outcomes_fir_registered'] += j['outcomes_fir_registered']
+         @qpr_data[report_length-1]['outcome_nc_registration'] += j['outcome_nc_registration']
+         @qpr_data[report_length-1]['outcome_child_custody'] += j['outcome_child_custody']
+         @qpr_data[report_length-1]['outcome_without_court_seperation'] += j['outcome_without_court_seperation']
+         @qpr_data[report_length-1]['outcomes_helped_in_filing_case_in_court_for_mediation'] += j['outcomes_helped_in_filing_case_in_court_for_mediation']
+         @qpr_data[report_length-1]['outcomes_other_than_498A'] += j['outcomes_other_than_498A']
+         @qpr_data[report_length-1]['outcome_other_than_498A_count_ongoing_client'] += j['outcome_other_than_498A_count_ongoing_client']
+         @qpr_data[report_length-1]['outcomes_helped_in_filing_case_for_divorce_seperation_ongoing_clients'] += j['outcomes_helped_in_filing_case_for_divorce_seperation_ongoing_clients']
+
       
           # ------------------
          @qpr_data[report_length-1]['total_clients'] +=  j['total_clients']
@@ -1010,7 +1150,9 @@ class QuarterlyReportsController < ApplicationController
         break
       end  
     end
-   
+
+    s_n = @state_name.downcase
+    render s_n+"_qpr"
     # showing districts and cells 
     # @data.push(@police_count,@exclients_count,@word_of_mouth_count,@self_count,@lawyers_legal_org_count,@ngo_count,@go_count,@icw_pw_count,@any_other_count,@one_time_intervention_count,@home_visit_count,@collateral_visits_count,@individual_meeting_count,@group_meeting_count,@participation_count,@programs_organised_count,@conducted_session_or_prog_count,@police_reffered_to_count,@medical_count,@shelter_count,@legal_services_count,@protection_officer_count,@lok_shiyakat_niwaran_count,@on_going_intevention_count,@engaing_police_help_count,@state_in_pdf,@district_in_pdf,@start_date_in_pdf,@end_date_in_pdf)
   end
@@ -1052,6 +1194,42 @@ class QuarterlyReportsController < ApplicationController
   end
 
   def calculate_qpr(state,district,start_date,end_date,main_district, selected)
+
+    @outcomes_sent_back_to_eo_fr_legal_action = 0
+    @sent_back_to_eo_for_dv_act = 0
+    @outcomes_sent_back_to_eo_for_mediation = 0
+
+    @other_special_cell_clients_reffered_by = 0
+    @jamat_samaj_jan_panchayat_clients_referred_by = 0
+    @religious_education_count = 0
+    @diploma_education_count = 0
+    @prev_interv_fcc_zpcc = 0
+    @prev_interv_government_organisation_go = 0
+    @spcell_negotiating_to_stop_non_violence = 0
+    @spcell_negotiating_for_non_violence_reconciliation = 0
+    @spcell_negotiating_for_seperation = 0
+    @spcell_negotiating_for_divorce = 0
+    @spcell_negotiating_for_child_custody = 0
+    @spcell_retrieval_of_streedhan = 0
+    @spcell_reestablishing_the_woman_s_relationship_to_her_property = 0
+    @ngo_referral_count = 0
+    @cbo_referral_count = 0
+    @go_referral_count = 0
+    @ngo_referral_count_ongoing_client = 0
+    @cbo_referral_count_ongoing_client = 0
+    @go_referral_count_ongoing_client = 0
+    @othr_inter_representation_on_sexual_harrassment_committee = 0
+    @outcomes_helped_in_filing_case_for_divorce_seperation = 0
+    @outcomes_talaq_khula = 0
+    @outcomes_fir_registered = 0
+    @outcome_nc_registration = 0
+    @outcome_child_custody = 0
+    @outcome_without_court_seperation = 0
+    @outcomes_helped_in_filing_case_in_court_for_mediation = 0
+    @outcomes_other_than_498A = 0
+    @outcome_other_than_498A_count_ongoing_client = 0
+    @outcomes_helped_in_filing_case_for_divorce_seperation_ongoing_clients = 0
+
 
       # / variable declaration/
     @total_client_with_whom_interaction=0
@@ -1225,6 +1403,7 @@ class QuarterlyReportsController < ApplicationController
     # /checking state and on that basis getting the first district and last district for view query/
     if district.empty?
       total_clients_in_this_quarter = Child.by_state_date_clients_registered_in_this_quarter.startkey([state,1,start_date]).endkey([state,1,end_date,{}])['rows']
+      new_registered_application_that_was_previously_one_time_intervention = Child.by_state_date_new_registered_application_that_was_previously_one_time_intervention.startkey([state,1,start_date]).endkey([state,1,end_date,{}])['rows']
       # total_clients_with_whom_interaction = Child.by_state_date_clients_registered_in_this_quarter.startkey([state]).endkey([state,{}])['rows']
       one_time_intervention_array= Child.by_state_date_onetime_intervention.startkey([state,1,start_date]).endkey([state,1,end_date,{}])['rows']
       clients_reffered_by = Child.by_state_date_clients_reffered_by.startkey([state,1,start_date]).endkey([state,1,end_date,{}]).reduce.group['rows']
@@ -1240,9 +1419,14 @@ class QuarterlyReportsController < ApplicationController
       referrals_new_clients_ongoing_clients = Child.by_state_date_referrals_new_clients_ongoing_clients.startkey([state,1,start_date]).endkey([state,1,end_date,{}]).reduce.group['rows']
       other_interventions_taking_place_outside_the_cell = Child.by_state_date_other_interventions_taking_place_outside_the_cell.startkey([state,1,start_date]).endkey([state,1,end_date,{}]).reduce.group['rows']
       outcomes_new_clients_ongoing_clients = Child.by_state_date_outcomes_new_clients_ongoing_clients.startkey([state,1,start_date]).endkey([state,1,end_date,{}]).reduce.group['rows']
+      other_negotiations = Child.by_state_date_other_negotiations.startkey([state,1,start_date]).endkey([state,1,end_date,{}]).reduce.group['rows']
+      helped_in_filing_for_divorceseparationtalaqkhula = Child.by_state_date_helped_in_filing_for_divorceseparationtalaqkhula.startkey([state,1,start_date]).endkey([state,1,end_date,{}]).reduce.group['rows']
+      helped_in_filing_case_in_court_for_divorceseparationmediation = Child.by_state_date_helped_in_filing_case_in_court_for_divorceseparationmediation.startkey([state,1,start_date]).endkey([state,1,end_date,{}]).reduce.group['rows']
+      cases_sent_back_to_eo = Child.by_state_date_cases_sent_back_to_eo.startkey([state,1,start_date]).endkey([state,1,end_date,{}]).reduce.group['rows']
 
     else
       total_clients_in_this_quarter = Child.by_clients_registered_in_this_quarter.startkey([state,district,start_date]).endkey([state,district,end_date,{}])['rows']
+      new_registered_application_that_was_previously_one_time_intervention = Child.by_new_registered_application_that_was_previously_one_time_intervention.startkey([state,district,start_date]).endkey([state,district,end_date,{}]).reduce.group['rows']
       # total_clients_with_whom_interaction = Child.by_clients_registered_in_this_quarter.startkey([state,district]).endkey([state,district,{}])['rows']
       one_time_intervention_array= Child.by_onetime_intervention.startkey([state,district,start_date]).endkey([state,district,end_date,{}])['rows']
       clients_reffered_by = Child.by_clients_reffered_by.startkey([state,district,start_date]).endkey([state,district,end_date,{}]).reduce.group['rows']
@@ -1258,6 +1442,10 @@ class QuarterlyReportsController < ApplicationController
       referrals_new_clients_ongoing_clients = Child.by_referrals_new_clients_ongoing_clients.startkey([state,district,start_date]).endkey([state,district,end_date,{}]).reduce.group['rows']
       other_interventions_taking_place_outside_the_cell = Child.by_other_interventions_taking_place_outside_the_cell.startkey([state,district,start_date]).endkey([state,district,end_date,{}]).reduce.group['rows']
       outcomes_new_clients_ongoing_clients = Child.by_outcomes_new_clients_ongoing_clients.startkey([state,district,start_date]).endkey([state,district,end_date,{}]).reduce.group['rows']
+      other_negotiations = Child.by_other_negotiations.startkey([state,district,start_date]).endkey([state,district,end_date,{}]).reduce.group['rows']
+      helped_in_filing_for_divorceseparationtalaqkhula = Child.by_helped_in_filing_for_divorceseparationtalaqkhula.startkey([state,district,start_date]).endkey([state,district,end_date,{}]).reduce.group['rows']
+      helped_in_filing_case_in_court_for_divorceseparationmediation = Child.by_helped_in_filing_case_in_court_for_divorceseparationmediation.startkey([state,district,start_date]).endkey([state,district,end_date,{}]).reduce.group['rows']
+      cases_sent_back_to_eo = Child.by_cases_sent_back_to_eo.startkey([state,district,start_date]).endkey([state,district,end_date,{}]).reduce.group['rows']
 
     end
     # /end----------------------------------------------/
@@ -1296,6 +1484,8 @@ class QuarterlyReportsController < ApplicationController
             @lawyers_legal_org_count += i['value']
           elsif i['key'][3].include? "community_based_organisations"
             @community_based_org_count += i['value']
+          elsif i['key'][3].include? "jamat_samaj_jat_panchayat"
+            @jamat_samaj_jan_panchayat_clients_referred_by += i['value']
           elsif i['key'][3].include? "any_other" or i['key'][3].include? "others_specify"
             @any_other_clients_refferd_count += i['value']
           end
@@ -1364,6 +1554,10 @@ class QuarterlyReportsController < ApplicationController
             @upto_grad_count += i['value']
           elsif i['key'][3].include? "post_graduation_master_s_degree"
             @post_grad_count += i['value']
+          elsif i['key'][3].include? "religious_education"
+            @religious_education_count += i['value']
+          elsif i['key'][3].include? "diploma"
+            @diploma_education_count += i['value']
           elsif i['key'][3].include? "any_other" or i['key'][3].include? "others_specify"
             @any_other_edu_count += i['value']  
           elsif i['key'][3].include? "information_not_available"
@@ -1471,6 +1665,10 @@ class QuarterlyReportsController < ApplicationController
               @prev_interv_ngo_count += i['value']
             elsif j.include? "panchayat_member_jati_panchayat" or j.include? "jamat_samaj_jat_panchayat"
               @prev_interv_panch_mem_count += i['value']
+            elsif j.include? "fcc_zp_counselling_centre"
+              @prev_interv_fcc_zpcc += i['value']
+            elsif j.include? "government_organisation_go"
+              @prev_interv_government_organisation_go += i['value']
             elsif j.include? "any_other" or j.include? "others_specify"
               @prev_interv_any_other_count += i['value']
             end
@@ -1500,6 +1698,10 @@ class QuarterlyReportsController < ApplicationController
               @spec_cell_refferal_for_shelter_count += i['value']
             elsif j.include? "developmental_counselling"
               @spec_cell_dev_counsel_count += i['value']
+            elsif j.include? "retrieval_of_streedhan"
+              @spcell_retrieval_of_streedhan += i['value']
+            elsif j.include? "reestablishing_the_woman_s_relationship_to_her_property"
+              @spcell_reestablishing_the_woman_s_relationship_to_her_property += i['value']
             elsif j.include? "negotiating_non_violence_with_stakeholder"
               @spec_cell_neg_nonvio_with_stakeholder_count += i['value']
             end
@@ -1514,6 +1716,26 @@ class QuarterlyReportsController < ApplicationController
           for j in i['key'][3]
             if j.include? "negotiating_non_violence_with_stakeholder"
               @spec_cell_neg_nonvio_with_stakeholder_count  += i['value'] 
+            elsif j.include? "negotiation_for_non_violence_woman_outside_matrimonial_home"
+              @spcell_negotiating_for_non_violence_reconciliation  += i['value']
+            elsif j.include? "negotiation_to_stop_the_violence_woman_within_matrimonial_home"
+              @spcell_negotiating_to_stop_non_violence  += i['value']
+            end
+          end
+        end
+      end
+    end
+
+    for i in other_negotiations
+      if !i['key'][0].empty? && !i['key'][2].empty?
+        if i['key'][3]!=nil and i['key'][3].length > 0
+          for j in i['key'][3]
+            if j.include? "negotiation_for_separation"
+              @spcell_negotiating_for_seperation  += i['value'] 
+            elsif j.include? "negotiation_for_divorce"
+              @spcell_negotiating_for_divorce  += i['value']
+            elsif j.include? "negotiation_for_child_custody"
+              @spcell_negotiating_for_child_custody  += i['value']
             end
           end
         end
@@ -1534,6 +1756,12 @@ class QuarterlyReportsController < ApplicationController
               @shelter_refferal_count += i['value']
             elsif j.include? "protection_officer"
               @protection_officer_refferal_count += i['value']
+            elsif j.include? "non_governmental_organisation_ngo "
+              @ngo_referral_count += i['value']  
+            elsif j.include? "community_based_organisations_cbo"
+              @cbo_referral_count += i['value']
+            elsif j.include? "government_organisation_go"
+              @go_referral_count += i['value']
             elsif j.include? "lawyer_70395"
               @lawer_services_refferal_count += i['value']  
             elsif j.include? "any_other" or j.include? "others_specify"
@@ -1558,6 +1786,8 @@ class QuarterlyReportsController < ApplicationController
             @othr_inter_comm_edu_count += i['value']
           elsif i['key'][3].include? "interaction_with_police"
             @othr_inter_inter_with_police_count += i['value']
+          elsif i['key'][3].include? "representation_on_sexual_harrassment_committee"
+            @othr_inter_representation_on_sexual_harrassment_committee += i['value']
           elsif i['key'][3].include? "others_specify" or i['key'][3].include? "any_other"
             @othr_inter_any_other_count += i['value']
           elsif i['key'][3].include? "meetings_with_local_groups_social_organisations"
@@ -1571,6 +1801,7 @@ class QuarterlyReportsController < ApplicationController
     for i in outcomes_new_clients_ongoing_clients
       if !i['key'][0].empty? && !i['key'][2].empty?
         if i['key'][3]!=nil and i['key'][3].length > 0
+          fir_registered_counter = 0
           for j in i['key'][3]
             if j.include? "helped_in_filing_for_divorce_separation_talaq_khula" or j.include? "helped_in_filing_case_in_court_for_divorce_separation_mediation" or j.include? "helped_in_filing_case_in_court_for_divorce_separation"
               @outcomes_helped_in_case_filed_for_divorce_count += i['value']
@@ -1578,16 +1809,71 @@ class QuarterlyReportsController < ApplicationController
               @outcome_streedhan_retrival_count += i['value']
             elsif j.include? "helped_in_filing_application_under_pwdva"
               @outcome_pwdva_2005_count += i['value']
-            elsif j.include? "helped_in_registering_fir_under_section_498a"
-              @outcome_498A_count += i['value']
+            elsif j.include? "helped_in_registering_fir_under_section_498a" or j.include? "helped_in_registering_fir_other_than_under_section_498a"
+              if j.include? "helped_in_registering_fir_under_section_498a"
+                @outcome_498A_count += i['value']
+              else
+                @outcomes_other_than_498A += i['value']
+              end
+              if fir_registered_counter == 0 and (j.include? "helped_in_registering_fir_under_section_498a" or j.include? "helped_in_registering_fir_other_than_under_section_498a")
+                fir_registered_counter += 1
+                @outcomes_fir_registered += i['value']
+              end  
             elsif j.include? "helped_the_woman_in_accessing_her_financial_entitlements"
               @outcome_maintenence_count += i['value']
             elsif j.include? "non_violent_reconciliation"
               @outcome_non_violent_recon_count += i['value']
             elsif j.include? "court_orders_in_the_best_interest_of_the_woman"
               @outcome_court_order_count += i['value']
+            elsif j.include? "nc_registration"
+              @outcome_nc_registration += i['value']
+            elsif j.include? "non_violent_amicable_separation_on_woman_s_terms"
+              @outcome_without_court_seperation += i['value']
+            elsif j.include? "child_custody"
+              @outcome_child_custody += i[  'value']
             elsif j.include? "any_other" or j.include? "others_specify"
               @outcome_any_other_count += i['value']
+            end
+          end
+        end
+      end
+    end
+
+    for i in helped_in_filing_for_divorceseparationtalaqkhula
+      if !i['key'][0].empty? && !i['key'][2].empty?
+        if i['key'][3]!=nil and i['key'][3].length > 0
+          for j in i['key'][3]
+            if j.include? "helped_in_filing_case_in_court_for_divorce" or j.include? "helped_in_filing_case_in_court_for_separation"
+              @outcomes_helped_in_filing_case_for_divorce_seperation  += i['value'] 
+            elsif j.include? "talaq_khula"
+              @outcomes_talaq_khula  += i['value']
+            end
+          end
+        end
+      end
+    end
+
+    for i in helped_in_filing_case_in_court_for_divorceseparationmediation
+      if !i['key'][0].empty? && !i['key'][2].empty?
+        if i['key'][3]!=nil and i['key'][3].length > 0
+          for j in i['key'][3]
+            if j.include? "helped_in_filing_case_in_court_for_divorce" or j.include? "helped_in_filing_case_in_court_for_separation"
+              @outcomes_helped_in_filing_case_for_divorce_seperation  += i['value'] 
+            end
+          end
+        end
+      end
+    end
+
+    for i in cases_sent_back_to_eo
+      if !i['key'][0].empty? && !i['key'][2].empty?
+        if i['key'][3]!= nil and i['key'][3].length > 0
+          for j in i['key'][3]
+            if j.include? "sent_back_to_eo_for_mediation"
+              @outcomes_sent_back_to_eo_for_mediation += i['value']
+            end
+            if j.include? "sent_back_to_eo_for_legal_action"
+              @outcomes_sent_back_to_eo_fr_legal_action += i['value']
             end
           end
         end
@@ -1644,6 +1930,7 @@ class QuarterlyReportsController < ApplicationController
             negotiating_non_violence = []
             referrals_new_clients_ongoing_clients = []
             outcomes_new_clients_ongoing_clients = []
+            helped_in_filing_for_divorceseparationtalaqkhula = []
             for j in i['key'][3]
               if j.has_key? "ongoing_followup" and !j["ongoing_followup"].empty?
                 followup_date = Date.parse(j["ongoing_followup"])
@@ -1672,6 +1959,13 @@ class QuarterlyReportsController < ApplicationController
                       outcomes_new_clients_ongoing_clients.push(outcomes)
                     end
                   end
+                  #helped_in_filing_case_in_court_for_divorceseparationmediation
+                  if j.has_key? "helped_in_filing_for_divorceseparationtalaqkhula" and j["helped_in_filing_for_divorceseparationtalaqkhula"]!=nil and j["helped_in_filing_for_divorceseparationtalaqkhula"].length > 0
+                    for outcomes in j["helped_in_filing_for_divorceseparationtalaqkhula"]
+                      helped_in_filing_for_divorceseparationtalaqkhula.push(outcomes)
+                    end
+                  end
+
                 end
               end
             end
@@ -1742,6 +2036,9 @@ class QuarterlyReportsController < ApplicationController
               any_other_counter = 0
               lawer_services_counter = 0
               court_dlsa_counter=0
+              non_governmental_organisation_ngo_counter = 0
+              community_based_organisations_cbo_counter = 0
+              government_organisation_go_counter = 0
 
               for j in referrals_new_clients_ongoing_clients
                 if police_counter == 0 and j.include? "police"
@@ -1762,6 +2059,15 @@ class QuarterlyReportsController < ApplicationController
                 elsif lawer_services_counter == 0 and j.include? "lawyer_70395"
                   lawer_services_counter += 1
                   @lawer_services_refferal_count_ongoing_client += 1
+                elsif non_governmental_organisation_ngo_counter == 0 and j.include? "non_governmental_organisation_ngo"
+                  non_governmental_organisation_ngo_counter += 1
+                  @ngo_referral_count_ongoing_client += 1
+                elsif community_based_organisations_cbo_counter == 0 and j.include? "community_based_organisations_cbo"
+                  community_based_organisations_cbo_counter += 1
+                  @cbo_referral_count_ongoing_client += 1
+                elsif government_organisation_go_counter == 0 and j.include? "government_organisation_go"
+                  government_organisation_go_counter += 1
+                  @go_referral_count_ongoing_client += 1
                 elsif court_lawyers_legal_organisations_counter == 0 and j.include? "court_lawyers_legal_organisations"
                   court_lawyers_legal_organisations_counter += 1
                   @lawer_services_refferal_count_ongoing_client += 1
@@ -1781,6 +2087,7 @@ class QuarterlyReportsController < ApplicationController
               helped_in_reteival_of_streedhan = 0
               helped_in_filing_application_under_pwdva_2005 = 0
               helped_in_registering_fir_under_section_498a = 0
+              helped_in_registering_fir_other_than_under_section_498a = 0
               helped_the_woman_in_accessing_her_financial_entitlements = 0
               non_violent_reconciliation = 0
               court_orders_in_the_best_interest_of_the_woman = 0
@@ -1798,6 +2105,9 @@ class QuarterlyReportsController < ApplicationController
                 elsif helped_in_registering_fir_under_section_498a == 0 and j.include? "helped_in_registering_fir_under_section_498a"
                   helped_in_registering_fir_under_section_498a += 1
                   @outcome_498A_count_ongoing_client += i['value']
+                elsif helped_in_registering_fir_other_than_under_section_498a == 0 and j.include? "helped_in_registering_fir_other_than_under_section_498a"
+                  helped_in_registering_fir_other_than_under_section_498a += 1
+                  @outcome_other_than_498A_count_ongoing_client += i['value']
                 elsif helped_the_woman_in_accessing_her_financial_entitlements == 0 and j.include? "helped_the_woman_in_accessing_her_financial_entitlements"
                   helped_the_woman_in_accessing_her_financial_entitlements += 1
                   @outcome_maintenence_count_ongoing_client += i['value']
@@ -1815,6 +2125,22 @@ class QuarterlyReportsController < ApplicationController
                 end
               end
             end
+
+            if helped_in_filing_for_divorceseparationtalaqkhula.length > 0
+              helped_in_filing_for_divorceseparationtalaqkhula = helped_in_filing_for_divorceseparationtalaqkhula.uniq
+              helped_in_filing_case_in_court_for_divorce = 0
+              helped_in_filing_case_in_court_for_separation = 0
+              for j in helped_in_filing_for_divorceseparationtalaqkhula
+                if helped_in_filing_case_in_court_for_divorce == 0 and j.include? "helped_in_filing_case_in_court_for_divorce"
+                  helped_in_filing_case_in_court_for_divorce += 1
+                  @outcomes_helped_in_filing_case_for_divorce_seperation_ongoing_clients += i['value']
+                elsif helped_in_filing_case_in_court_for_separation == 0 and j.include? "helped_in_filing_case_in_court_for_separation"
+                  helped_in_filing_case_in_court_for_separation += 1
+                  @outcomes_helped_in_filing_case_for_divorce_seperation_ongoing_clients += i['value']
+                end
+              end
+            end
+            
           end
         end
       end
@@ -1844,6 +2170,43 @@ class QuarterlyReportsController < ApplicationController
     'state' => state,
     'district' => main_district,
     'cell' => district,
+
+    #new variables
+
+    'outcomes_sent_back_to_eo_fr_legal_action' => @outcomes_sent_back_to_eo_fr_legal_action,
+    'sent_back_to_eo_for_dv_act' => @sent_back_to_eo_for_dv_act,
+    'outcomes_sent_back_to_eo_for_mediation' => @outcomes_sent_back_to_eo_for_mediation,
+
+    'other_special_cell_clients_reffered_by' => @other_special_cell_clients_reffered_by,
+    'jamat_samaj_jan_panchayat_clients_referred_by' => @jamat_samaj_jan_panchayat_clients_referred_by,
+    'religious_education_count' => @religious_education_count,
+    'diploma_education_count' => @diploma_education_count,
+    'prev_interv_fcc_zpcc' => @prev_interv_fcc_zpcc,
+    'prev_interv_government_organisation_go' => @prev_interv_government_organisation_go,
+    'spcell_negotiating_to_stop_non_violence' => @spcell_negotiating_to_stop_non_violence,
+    'spcell_negotiating_for_non_violence_reconciliation' => @spcell_negotiating_for_non_violence_reconciliation,
+    'spcell_negotiating_for_seperation' => @spcell_negotiating_for_seperation,
+    'spcell_negotiating_for_divorce' => @spcell_negotiating_for_divorce,
+    'spcell_negotiating_for_child_custody' => @spcell_negotiating_for_child_custody,
+    'spcell_retrieval_of_streedhan' => @spcell_retrieval_of_streedhan,
+    'spcell_reestablishing_the_woman_s_relationship_to_her_property' => @spcell_reestablishing_the_woman_s_relationship_to_her_property,
+    'ngo_referral_count' => @ngo_referral_count,
+    'cbo_referral_count' => @cbo_referral_count,
+    'go_referral_count' => @go_referral_count,
+    'ngo_referral_count_ongoing_client' => @ngo_referral_count_ongoing_client,
+    'cbo_referral_count_ongoing_client' => @cbo_referral_count_ongoing_client,
+    'go_referral_count_ongoing_client' => @go_referral_count_ongoing_client,
+    'othr_inter_representation_on_sexual_harrassment_committee' => @othr_inter_representation_on_sexual_harrassment_committee,
+    'outcomes_helped_in_filing_case_for_divorce_seperation' => @outcomes_helped_in_filing_case_for_divorce_seperation,
+    'outcomes_talaq_khula' => @outcomes_talaq_khula,
+    'outcomes_fir_registered' => @outcomes_fir_registered,
+    'outcome_nc_registration' => @outcome_nc_registration,
+    'outcome_child_custody' => @outcome_child_custody,
+    'outcome_without_court_seperation' => @outcome_without_court_seperation,
+    'outcomes_helped_in_filing_case_in_court_for_mediation' => @outcomes_helped_in_filing_case_in_court_for_mediation,
+    'outcomes_other_than_498A' => @outcomes_other_than_498A,
+    'outcome_other_than_498A_count_ongoing_client' => @outcome_other_than_498A_count_ongoing_client,
+    'outcomes_helped_in_filing_case_for_divorce_seperation_ongoing_clients' => @outcomes_helped_in_filing_case_for_divorce_seperation_ongoing_clients,
 
       # / variable declaration/
     'total_client_with_whom_interaction' => @total_clients + @ongoing_clients + @one_time_intervention_in_this_quarter,

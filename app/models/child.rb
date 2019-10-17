@@ -211,19 +211,33 @@ class Child < CouchRest::Model::Base
 
     view :by_individual_meeting_session,
     :map => "function(doc) {
-                  if(doc.location!=null  && doc.district!=null && doc.individual_meetingssessions!=null && doc.registration_date!=null){
-                      emit([doc.location,doc.district,new Date(doc.registration_date+' UTC'),doc.individual_meetingssessions],1)
+                if(doc.location!=null  && doc.district!=null && doc.individual_meetingssessions!=null && doc.registration_date!=null){
+                  if (doc.hasOwnProperty('nature_of_interaction')){
+                    var x = doc.nature_of_interaction
+                    if (x.indexOf('individual_meetings_sessions_63305') > -1)
+                    {
+                      emit([doc.location,doc.district,new Date(doc.registration_date+' UTC'),doc.individual_meetingssessions],1);
+                    }
                   }
-            }",
+
+              }
+          }",
     :reduce =>
       "_sum"
     
     view :by_state_date_individual_meeting_session,
         :map => "function(doc) {
-                    if(doc.location!=null  && doc.district!=null && doc.individual_meetingssessions!=null && doc.registration_date!=null){
-                        emit([doc.location,1,new Date(doc.registration_date+' UTC'),doc.individual_meetingssessions],1)
-                    }
-              }",
+              if(doc.location!=null  && doc.district!=null && doc.individual_meetingssessions!=null && doc.registration_date!=null){
+                if (doc.hasOwnProperty('nature_of_interaction')){
+                  var x = doc.nature_of_interaction
+                  if (x.indexOf('individual_meetings_sessions_63305') > -1)
+                  {
+                    emit([doc.location,1,new Date(doc.registration_date+' UTC'),doc.individual_meetingssessions],1)
+                  }
+                }
+
+            }
+        }",
       :reduce =>
         "_sum"
 
@@ -512,38 +526,62 @@ class Child < CouchRest::Model::Base
 
     view :by_vio_by_husband,
     :map => "function(doc) {
-                if(doc.location!=null  && doc.district!=null && doc.registration_date!=null){
-                    emit([doc.location,doc.district,new Date(doc.registration_date+' UTC'),doc.violence_by_husband],1)
-                }
-          }",
+      if(doc.location!=null  && doc.district!=null && doc.registration_date!=null){
+        if (doc.hasOwnProperty('reasons_for_registering_at_special_cell')){
+          var x = doc.reasons_for_registering_at_special_cell
+          if (x.indexOf('violence_by_husband_68373') > -1)
+            {
+            emit([doc.location,doc.district,new Date(doc.registration_date+' UTC'),doc.violence_by_husband],1)
+            }
+          }
+       }
+      }",
     :reduce =>
     "_sum"
 
     view :by_state_date_vio_by_husband,
     :map => "function(doc) {
-                if(doc.location!=null  && doc.district!=null && doc.registration_date!=null){
-                    emit([doc.location,1,new Date(doc.registration_date+' UTC'),doc.violence_by_husband],1)
-                }
-          }",
+      if(doc.location!=null  && doc.district!=null && doc.registration_date!=null){
+        if (doc.hasOwnProperty('reasons_for_registering_at_special_cell')){
+          var x = doc.reasons_for_registering_at_special_cell
+          if (x.indexOf('violence_by_husband_68373') > -1)
+            {
+              emit([doc.location,1,new Date(doc.registration_date+' UTC'),doc.violence_by_husband],1)
+            }
+          }
+       }
+      }",
     :reduce =>
     "_sum"
 
     view :by_vio_by_marital_family,
     :map => "function(doc) {
-                if(doc.location!=null  && doc.district!=null && doc.registration_date!=null){
-                    emit([doc.location,doc.district,new Date(doc.registration_date+' UTC'),doc.violence_by_marital_family_members_other_than_husband],1)
-                }
-          }",
+      if(doc.location!=null  && doc.district!=null && doc.registration_date!=null){
+        if (doc.hasOwnProperty('reasons_for_registering_at_special_cell')){
+          var x = doc.reasons_for_registering_at_special_cell
+          if (x.indexOf('violence_by_marital_family_members_other_than_husband_81913') > -1)
+            {
+              emit([doc.location,doc.district,new Date(doc.registration_date+' UTC'),doc.violence_by_marital_family_members_other_than_husband],1)
+            }
+          }
+       }
+      }",
     :reduce =>
     "_sum"
 
 
     view :by_state_date_vio_by_martial_family,
     :map => "function(doc) {
-                if(doc.location!=null  && doc.district!=null && doc.registration_date!=null){
-                    emit([doc.location,1,new Date(doc.registration_date+' UTC'),doc.violence_by_marital_family_members_other_than_husband],1)
-                }
-          }",
+      if(doc.location!=null  && doc.district!=null && doc.registration_date!=null){
+        if (doc.hasOwnProperty('reasons_for_registering_at_special_cell')){
+          var x = doc.reasons_for_registering_at_special_cell
+          if (x.indexOf('violence_by_marital_family_members_other_than_husband_81913') > -1)
+            {
+              emit([doc.location,1,new Date(doc.registration_date+' UTC'),doc.violence_by_marital_family_members_other_than_husband],1)
+            }
+          }
+       }
+      }",
     :reduce =>
     "_sum"
 
@@ -586,18 +624,64 @@ class Child < CouchRest::Model::Base
     view :by_negotiating_nonviolence,
     :map => "function(doc) {
                 if(doc.location!=null  && doc.district!=null && doc.registration_date!=null){
-                    emit([doc.location,doc.district,new Date(doc.registration_date+' UTC'),doc.negotiating_nonviolence],1)
-                }
-          }",
+                  if (doc.hasOwnProperty('intervention_by_special_cell')){
+                    var x = doc.intervention_by_special_cell
+                    if (x.indexOf('negotiating_non_violence_47149') > -1)
+                    {
+                    emit([doc.location,doc.district,new Date(doc.registration_date+' UTC'),doc.negotiating_nonviolence],1);
+                  }
+              }
+            }
+        }
+        ",
     :reduce =>
     "_sum"
 
     view :by_state_date_negotiating_nonviolence,
-    :map => "function(doc) {
-                if(doc.location!=null  && doc.district!=null && doc.registration_date!=null){
+      :map => "function(doc) {
+              if(doc.location!=null  && doc.district!=null && doc.registration_date!=null){
+                if (doc.hasOwnProperty('intervention_by_special_cell')){
+                  var x = doc.intervention_by_special_cell
+                  if (x.indexOf('negotiating_non_violence_47149') > -1)
+                  {
                     emit([doc.location,1,new Date(doc.registration_date+' UTC'),doc.negotiating_nonviolence],1)
                 }
-          }",
+            }
+          }
+        }
+        ",
+    :reduce =>
+    "_sum"
+
+    view :by_other_negotiations,
+    :map => "function(doc) {
+            if(doc.location!=null  && doc.district!=null && doc.registration_date!=null){
+              if (doc.hasOwnProperty('intervention_by_special_cell')){
+                    var x = doc.intervention_by_special_cell
+                    if (x.indexOf('other_negotiations_79490') > -1)
+                      {
+                      emit([doc.location,doc.district,new Date(doc.registration_date+' UTC'),doc.other_negotiations_special],1);
+                      }
+                    }
+                  }
+              }
+      ",
+    :reduce =>
+    "_sum"
+
+    view :by_state_date_other_negotiations,
+    :map => "function(doc) {
+            if(doc.location!=null  && doc.district!=null && doc.registration_date!=null){
+              if (doc.hasOwnProperty('intervention_by_special_cell')){
+                    var x = doc.intervention_by_special_cell
+                    if (x.indexOf('other_negotiations_79490') > -1)
+                      {
+                        emit([doc.location,1,new Date(doc.registration_date+' UTC'),doc.other_negotiations_special],1)
+                      }
+                    }
+                  }
+              }
+      ",
     :reduce =>
     "_sum"
 
@@ -675,24 +759,131 @@ class Child < CouchRest::Model::Base
 
     view :by_cases_sent_back_to_eo,
     :map => "function(doc) {
-                if(doc.location!=null  && doc.district!=null && doc.registration_date!=null){
-                    emit([doc.location,doc.district,new Date(doc.registration_date+' UTC'),doc.case_sent_back_to_eo],1)
-                }
-          }",
+      if(doc.location!=null  && doc.district!=null && doc.registration_date!=null){
+        if (doc.hasOwnProperty('outcomes_new_clients_ongoing_clients')){
+          var x = doc.outcomes_new_clients_ongoing_clients
+
+          if (x.indexOf('case_sent_back_to_eo_23809') > -1)
+            {
+            emit([doc.location,doc.district,new Date(doc.registration_date+' UTC'),doc.case_sent_back_to_eo],1);
+            }
+          }
+
+          }
+        }
+        ",
     :reduce =>
     "_sum"
 
     view :by_state_date_cases_sent_back_to_eo,
     :map => "function(doc) {
-                if(doc.location!=null  && doc.district!=null && doc.registration_date!=null){
-                    emit([doc.location,1,new Date(doc.registration_date+' UTC'),doc.case_sent_back_to_eo],1)
+      if(doc.location!=null  && doc.district!=null && doc.registration_date!=null){
+        if (doc.hasOwnProperty('outcomes_new_clients_ongoing_clients')){
+          var x = doc.outcomes_new_clients_ongoing_clients
+
+          if (x.indexOf('case_sent_back_to_eo_23809') > -1)
+            {
+            emit([doc.location,1,new Date(doc.registration_date+' UTC'),doc.case_sent_back_to_eo],1);
+            }
+          }
+
+          }
+        }
+        ",
+    :reduce =>
+    "_sum"
+
+    view :by_helped_in_filing_for_divorceseparationtalaqkhula,
+    :map => "function(doc) {
+        if(doc.location!=null  && doc.district!=null && doc.registration_date!=null){
+            if (doc.hasOwnProperty('outcomes_new_clients_ongoing_clients')){
+              var x = doc.outcomes_new_clients_ongoing_clients
+              if ((x.indexOf('helped_in_filing_for_divorce_separation_talaq_khula_66992') > -1) || (x.indexOf('helped_in_filing_case_in_court_for_divorce_separation_76258') > -1))
+                {
+                emit([doc.location,doc.district,new Date(doc.registration_date+' UTC'),doc.helped_in_filing_for_divorceseparationtalaqkhula],1)
                 }
+              }
+            }
           }",
     :reduce =>
     "_sum"
 
-    
+    view :by_state_date_helped_in_filing_for_divorceseparationtalaqkhula,
+    :map => "function(doc) {
+        if(doc.location!=null  && doc.district!=null && doc.registration_date!=null){
+            if (doc.hasOwnProperty('outcomes_new_clients_ongoing_clients')){
+              var x = doc.outcomes_new_clients_ongoing_clients
+              if ((x.indexOf('helped_in_filing_for_divorce_separation_talaq_khula_66992') > -1) || (x.indexOf('helped_in_filing_case_in_court_for_divorce_separation_76258') > -1))
+                {
+                  emit([doc.location,1,new Date(doc.registration_date+' UTC'),doc.helped_in_filing_for_divorceseparationtalaqkhula],1)
+                }
+              }
+            }
+          }",
+    :reduce =>
+    "_sum"
 
+    view :by_helped_in_filing_case_in_court_for_divorceseparationmediation,
+    :map => "function(doc) {
+      if(doc.location!=null  && doc.district!=null && doc.registration_date!=null){
+            if (doc.hasOwnProperty('outcomes_new_clients_ongoing_clients')){
+              var x = doc.outcomes_new_clients_ongoing_clients
+              if (x.indexOf('helped_in_filing_case_in_court_for_divorce_separation_mediation_31063') > -1)
+                {
+                emit([doc.location,doc.district,new Date(doc.registration_date+' UTC'),doc.helped_in_filing_case_in_court_for_divorceseparationmediation],1)
+                }
+            }
+          }
+        }",
+    :reduce =>
+    "_sum"
+
+    view :by_state_date_helped_in_filing_case_in_court_for_divorceseparationmediation,
+    :map => "function(doc) {
+      if(doc.location!=null  && doc.district!=null && doc.registration_date!=null){
+            if (doc.hasOwnProperty('outcomes_new_clients_ongoing_clients')){
+              var x = doc.outcomes_new_clients_ongoing_clients
+              if (x.indexOf('helped_in_filing_case_in_court_for_divorce_separation_mediation_31063') > -1)
+                {
+                  emit([doc.location,1,new Date(doc.registration_date+' UTC'),doc.helped_in_filing_case_in_court_for_divorceseparationmediation],1)
+                }
+            }
+          }
+        }",
+    :reduce =>
+    "_sum"
+
+    view :by_new_registered_application_that_was_previously_one_time_intervention,
+    :map => "function(doc) {
+          if(doc.location!=null  && doc.district!=null && doc.registration_date!=null){
+              if (doc.hasOwnProperty('register_client'))
+                    {
+                      var x = doc.register_client
+                      if(x.indexOf('new_registration')!== -1)
+                      {
+                      emit([doc.location,doc.district,new Date(doc.registration_date+' UTC'),doc.new_registered_application_that_was_previously_one_time_intervention],1)
+                      }  
+                  }
+                    }
+              }",
+    :reduce =>
+    "_sum"
+
+    view :by_state_date_new_registered_application_that_was_previously_one_time_intervention,
+    :map => "function(doc) {
+          if(doc.location!=null  && doc.district!=null && doc.registration_date!=null){
+              if (doc.hasOwnProperty('register_client'))
+                    {
+                      var x = doc.register_client
+                      if(x.indexOf('new_registration')!== -1)
+                      {
+                        emit([doc.location,1,new Date(doc.registration_date+' UTC'),doc.new_registered_application_that_was_previously_one_time_intervention],1)
+                      }  
+                  }
+                    }
+              }",
+    :reduce =>
+    "_sum"
     # ---------------------------------------------------------------special ongoing part------------------------
 
     view :by_ongoing_clients_not_registered_in_this_quarter,

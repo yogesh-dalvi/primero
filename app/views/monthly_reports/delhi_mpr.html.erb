@@ -1,4 +1,5 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
 <style>
 .col-sm-3 {
 	width: 16%;
@@ -400,7 +401,7 @@ $(document).ready(function() {
     </table>
 
     <div class="table-responsive" style="overflow: scroll; margin-top:2%" >
-      <table class="dataTable in_content_area reports">
+      <table class="dataTable in_content_area reports" id = "demo">
         <thead>
         <tr style="border:1px solid #a49999; border-collapse: none;">
           <th style="border-left:1px solid #a49999; border-top:1px solid #a49999; border-bottom: 2px solid #a49999;"><b>Sr.No.</b></th>
@@ -418,14 +419,6 @@ $(document).ready(function() {
 
         <tr>
             <td>1</td>
-            <td>On-going cases from previous months</td>
-            <% @mpr_data.each do |data| %>
-            <td id="on_going_cases_from_prev_month_count"><%= data["on_going_cases_from_prev_month_count"] %></td>
-            <%end %>
-        </tr>
-
-        <tr>
-            <td>2</td>
             <td>New registered cases during the month</td>
             <% @mpr_data.each do |data| %>
             <td><%= data["new_reg_app_total"] %></td>
@@ -433,23 +426,23 @@ $(document).ready(function() {
         </tr> 
 
         <tr>
-            <td>2.1</td>
+            <td>1.1</td>
             <td>New registered application that were previously one time intervention</td>
             <% @mpr_data.each do |data| %>
-            <td><%= data["new_reg_app_dat_were_prev_one_time_intervention"] %></td>
+            <td><%= data["new_registered_application_that_was_previously_one_time_intervention"] %></td>
             <%end %>
         </tr> 
 
         <tr>
-            <td>3</td>
-            <td>On-going clients  (at the last date of month)</td>
+            <td>2</td>
+            <td>Ongoing client (from previous months / not registered in this month)</td>
             <% @mpr_data.each do |data| %>
             <td id="on_going_intevention_count"><%= data["on_going_intevention_count"] %></td>
             <%end %>
         </tr>
 
         <tr>
-            <td>4</td>
+            <td>3</td>
             <td>Cases sent back to E.O.</td>
             <% @mpr_data.each do |data| %>
             <td id="cases_sent_back_to_eo"><%= data["cases_sent_back_to_eo"] %></td>
@@ -457,7 +450,7 @@ $(document).ready(function() {
         </tr>
 
         <tr>
-            <td>5</td>
+            <td>4</td>
             <td>One Time Intervention</td>
             <% @mpr_data.each do |data| %>
                 <td id="one_time_intervention_count"><%= data["one_time_intervention_count"] %></td>
@@ -465,7 +458,7 @@ $(document).ready(function() {
         </tr>
 
         <tr>
-            <td rowspan = 2>6</td>
+            <td rowspan = 2>5</td>
             <td>Home visits</td>
             <% @mpr_data.each do |data| %>
                 <td><%= data["home_visit_count"] %></td>
@@ -480,7 +473,7 @@ $(document).ready(function() {
         </tr>
 
         <tr>
-            <td>7</td>
+            <td>6</td>
             <td>Individual meeting</td>
             <% @mpr_data.each do |data| %>
                 <td id="individual_meeting_count_total_count"><%= data["individual_meeting_with_survivor_count"] + data["individual_meeting_other_than_survivor_count"] %></td>
@@ -488,7 +481,7 @@ $(document).ready(function() {
         </tr>
 
         <tr>
-            <td>7.1</td>
+            <td>6.1</td>
             <td>Individual meeting with survivors</td>
             <% @mpr_data.each do |data| %>
                 <td id="individual_meeting_with_survivor_count"><%= data["individual_meeting_with_survivor_count"] %></td>
@@ -496,7 +489,7 @@ $(document).ready(function() {
         </tr>
 
         <tr>
-            <td>7.2</td>
+            <td>6.2</td>
             <td>Individual meeting with those other than survivors</td>
             <% @mpr_data.each do |data| %>
                 <td id="individual_meeting_other_than_survivor_count"><%= data["individual_meeting_other_than_survivor_count"] %></td>
@@ -504,7 +497,7 @@ $(document).ready(function() {
         </tr>
 
         <tr>
-            <td>8</td>
+            <td>7</td>
             <td>Joint / group meetings</td>
             <% @mpr_data.each do |data| %>
                 <td id="group_meeting_count"><%= data["group_meeting_count"] %></td>
@@ -512,7 +505,7 @@ $(document).ready(function() {
         </tr>
 
         <tr>
-            <td>9</td>
+            <td>8</td>
             <td>Engaging police help</td>
             <% @mpr_data.each do |data| %>
               <td id="engaing_police_help_count"><%= data["engaing_police_help_count"] %></td>
@@ -520,7 +513,7 @@ $(document).ready(function() {
         </tr>
 
         <tr>
-            <td>10</td>
+            <td>9</td>
             <td>Participation in workshops /  conferences / seminars / meetings on violence against women especially as a resource person</td>
             <% @mpr_data.each do |data| %>
               <td id="participation_count"><%= data["participation_count"] %></td>
@@ -528,7 +521,7 @@ $(document).ready(function() {
         </tr>
 
         <tr>
-            <td>11</td>
+            <td>10</td>
             <td>Workshops / programme / meetings organised</td>
             <% @mpr_data.each do |data| %>
               <td id="programs_organised_count"><%= data["programs_organised_count"] %></td>
@@ -536,7 +529,7 @@ $(document).ready(function() {
         </tr>
 
         <tr>
-            <td><b>12</b></td>
+            <td><b>11</b></td>
             <td><b>Intervention outcomes</b></td>
             <% @mpr_data.each do |data| %>
             <td id="intervention_outcomes"><b><%= data["non_violent_reconcilation"] + data["sent_back_to_eo_fr_legal_action"] + data["sent_back_to_eo_for_dv_act"] + data["sent_back_to_eo_for_mediation"] + data["any_other_intervention_outcomes"] %></b></td>
@@ -544,7 +537,7 @@ $(document).ready(function() {
         </tr>
 
         <tr>
-            <td>12.1</td>
+            <td>11.1</td>
             <td>Non-violent reconciliation (Facilitated within Cell / SSU vide joint meetings)</td>
             <% @mpr_data.each do |data| %>
               <td id="non_violent_reconcilation"><%= data["non_violent_reconcilation"] %></td>
@@ -552,7 +545,7 @@ $(document).ready(function() {
         </tr>
 
         <tr>
-            <td>12.2</td>
+            <td>11.2</td>
             <td>Sent back to E.O for legal action,with recommendations / preparation of woman survivor with knowledge of legal options</td>
             <% @mpr_data.each do |data| %>
               <td id="sent_back_to_eo_fr_legal_action"><%= data["sent_back_to_eo_fr_legal_action"] %></td>
@@ -560,7 +553,7 @@ $(document).ready(function() {
         </tr>
 
         <tr>
-            <td>12.3</td>
+            <td>11.3</td>
             <td>Sent back to E.O. for DV Act, with recommendations for referral / preparation of woman survivor with knowledge of reliefs available under PWDVA 2005</td>
             <% @mpr_data.each do |data| %>
               <td id="sent_back_to_eo_for_dv_act"><%= data["sent_back_to_eo_for_dv_act"] %></td>
@@ -568,7 +561,7 @@ $(document).ready(function() {
         </tr>
 
         <tr>
-            <td>12.4</td>
+            <td>11.4</td>
             <td>Sent back to E.O. for mediation, with recommendations for terms of potential agreements / settlements and with preparation of woman survivor on points of her best interests for violence free future life</td>
             <% @mpr_data.each do |data| %>
               <td id="sent_back_to_eo_for_mediation"><%= data["sent_back_to_eo_for_mediation"] %></td>
@@ -576,7 +569,7 @@ $(document).ready(function() {
         </tr>
 
         <tr>
-            <td>12.5</td>
+            <td>11.5</td>
             <td>Any Other</td>
             <% @mpr_data.each do |data| %>
               <td id="any_other_intervention_outcomes"><%= data["any_other_intervention_outcomes"] %></td>
@@ -671,32 +664,17 @@ if (cell!= null)
       el.empty(); // remove old subcell options
     }  
       
-  document.getElementById("generate").addEventListener("click", function () {
-    //generateExcel($("#qpr_report"));
-    createDownloadLink("#generate",generateExcel($("#mpr_report")),"mpr_report.xlsx");
-    });
-    
-    function generateExcel(el) {
-      var clon = el.clone();
-      var html = clon.wrap('<div>').parent().html();
+   function generateExcel(el) {
+    var clon = el.clone();
+    var html = clon.wrap('<div>').parent().html();
 
-      //add more symbols if needed...
-      while (html.indexOf('á') != -1) html = html.replace(/á/g, '&aacute;');
-      while (html.indexOf('é') != -1) html = html.replace(/é/g, '&eacute;');
-      while (html.indexOf('í') != -1) html = html.replace(/í/g, '&iacute;');
-      while (html.indexOf('ó') != -1) html = html.replace(/ó/g, '&oacute;');
-      while (html.indexOf('ú') != -1) html = html.replace(/ú/g, '&uacute;');
-      while (html.indexOf('º') != -1) html = html.replace(/º/g, '&ordm;');
-      html = html.replace(/<td>/g, "<td>");			
-      
-      return html;
-    }
+    //add more symbols if needed...
     
-    function createDownloadLink(anchorSelector, str, fileName){			
-        var url = "data:application/vnd.ms-excel," + encodeURIComponent(str);
-        $(anchorSelector).attr("download", fileName);               
-        $(anchorSelector).attr("href", url);
-        
-   }
+
+    window.open('data:application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,' + encodeURIComponent(html));
+}
+$("#generate").click(function (event) {
+    generateExcel($("#mpr_report"));
+});
 
 </script>
