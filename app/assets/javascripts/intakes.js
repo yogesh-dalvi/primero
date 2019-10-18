@@ -164,9 +164,13 @@ function displayHideDropDownFields(element,mainElement){
 	
 
 	var urarr = [];
-	
+	var newRegistrationLabelText = "New registered application that was previously one time intervention";
 	$("#" +elemId+">option:gt(0)").each(function () {
-		urarr.push($(this).text())
+		var selectOption = $(this).text();
+		if(selectOption == "New registration"){
+			selectOption = newRegistrationLabelText;
+		}
+		urarr.push(selectOption);
 	});
 	
 	
@@ -196,7 +200,9 @@ function displayHideDropDownFields(element,mainElement){
 			$(divRowArr).find('label').each(function () {
 				var labelText = $(this).text();
 				var otherElemLabelText = $(this).closest('.row').next().find('label').text();
-				if (selectText == labelText) {
+				if(selectText == 'New registration' && labelText == newRegistrationLabelText){
+					$(this).closest('.row').show();
+				}else if (selectText == labelText) {
 					$(this).closest('.row').show();
 				} else if (selectText != labelText && jQuery.inArray(labelText, urarr) != -1) {
 					

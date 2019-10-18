@@ -179,6 +179,7 @@ class MonthlyReportsController < ApplicationController
                 'state' => j['state'],
                 'district' => j['district'],
                 'cell' => '',
+                'new_registered_application_that_was_previously_one_time_intervention' => j['new_registered_application_that_was_previously_one_time_intervention'],
                 'engaing_police_help_count' => j['engaing_police_help_count'],
                 'new_reg_app_total' => j['new_reg_app_total'],
                 'new_reg_app_dat_were_prev_one_time_intervention' => j['new_reg_app_dat_were_prev_one_time_intervention'],
@@ -235,6 +236,7 @@ class MonthlyReportsController < ApplicationController
             else
               for k in @new_mpr_data
                 if k['district'] == i
+                  k['new_registered_application_that_was_previously_one_time_intervention'] += j['new_registered_application_that_was_previously_one_time_intervention']
                   k['engaing_police_help_count'] += j['engaing_police_help_count']
                   k['new_reg_app_total'] += j['new_reg_app_total']
                   k['new_reg_app_dat_were_prev_one_time_intervention'] += j['new_reg_app_dat_were_prev_one_time_intervention']
@@ -301,6 +303,7 @@ class MonthlyReportsController < ApplicationController
           'state' => j['state'],
           'district' => 'Total',
           'cell' => '',
+          'new_registered_application_that_was_previously_one_time_intervention' => 0,
           'new_reg_app_total' => 0,
           'new_reg_app_dat_were_prev_one_time_intervention' => 0,
           'engaing_police_help_count' => 0,
@@ -359,6 +362,7 @@ class MonthlyReportsController < ApplicationController
       for j in @mpr_data
         index_count += 1
         if index_count != report_length
+          @mpr_data[report_length-1]['new_registered_application_that_was_previously_one_time_intervention'] += j['new_registered_application_that_was_previously_one_time_intervention']
           @mpr_data[report_length-1]['engaing_police_help_count'] += j['engaing_police_help_count']
           @mpr_data[report_length-1]['new_reg_app_total'] += j['new_reg_app_total']
           @mpr_data[report_length-1]['new_reg_app_dat_were_prev_one_time_intervention'] += j['new_reg_app_dat_were_prev_one_time_intervention']
@@ -490,7 +494,6 @@ class MonthlyReportsController < ApplicationController
     end
 
     s_n = @state_name.downcase
-    puts s_n
     render s_n+"_mpr"
     
     # @data.push(@police_count,@exclients_count,@word_of_mouth_count,@self_count,@lawyers_legal_org_count,@ngo_count,@go_count,@icw_pw_count,@any_other_count,@one_time_intervention_count,@home_visit_count,@collateral_visits_count,@individual_meeting_count,@group_meeting_count,@participation_count,@programs_organised_count,@conducted_session_or_prog_count,@police_reffered_to_count,@medical_count,@shelter_count,@legal_services_count,@protection_officer_count,@lok_shiyakat_niwaran_count,@on_going_intevention_count,@engaing_police_help_count,@state_in_pdf,@district_in_pdf,@start_date_in_pdf,@end_date_in_pdf)
@@ -533,6 +536,8 @@ class MonthlyReportsController < ApplicationController
   end
 
   def calculate_mpr(state,district,start_date,end_date,main_district, selected)
+
+      @new_registered_application_that_was_previously_one_time_intervention = 0
 
       #new variables
       @new_reg_app_total = 0
@@ -602,6 +607,8 @@ class MonthlyReportsController < ApplicationController
       start_date_for_ongoing_clients = "1000-01-01"
 
       if district.empty?
+        intervention_by_special_cell = Child.by_state_date_intervention_by_special_cell.startkey([state,1,start_date]).endkey([state,1,end_date,{}]).reduce.group['rows']
+        new_registered_application_that_was_previously_one_time_intervention = Child.by_state_date_new_registered_application_that_was_previously_one_time_intervention.startkey([state,1,start_date]).endkey([state,1,end_date,{}])['rows']
         total_clients_in_this_quarter = Child.by_state_date_clients_registered_in_this_quarter.startkey([state,1,start_date]).endkey([state,1,end_date,{}])['rows']
         ongoing_clients_in_this_quarter = Child.by_state_date_ongoing_clients_not_registered_in_this_quarter.startkey([state,1,start_date_for_ongoing_clients]).endkey([state,1,end_date_for_ongoing_clients,{}])['rows']
         clients_reffered_by = Child.by_state_date_clients_reffered_by.startkey([state,1,start_date]).endkey([state,1,end_date,{}]).reduce.group['rows']
@@ -615,6 +622,8 @@ class MonthlyReportsController < ApplicationController
         outcomes_new_clients_ongoing_clients = Child.by_state_date_outcomes_new_clients_ongoing_clients.startkey([state,1,start_date]).endkey([state,1,end_date,{}]).reduce.group['rows']
         cases_sent_back_to_eo = Child.by_state_date_cases_sent_back_to_eo.startkey([state,1,start_date]).endkey([state,1,end_date,{}]).reduce.group['rows']
       else
+        intervention_by_special_cell = Child.by_intervention_by_special_cell.startkey([state,district,start_date]).endkey([state,district,end_date,{}]).reduce.group['rows']
+        new_registered_application_that_was_previously_one_time_intervention = Child.by_new_registered_application_that_was_previously_one_time_intervention.startkey([state,district,start_date]).endkey([state,district,end_date,{}]).reduce.group['rows']
         total_clients_in_this_quarter = Child.by_clients_registered_in_this_quarter.startkey([state,district,start_date]).endkey([state,district,end_date,{}])['rows']
         ongoing_clients_in_this_quarter = Child.by_ongoing_clients_not_registered_in_this_quarter.startkey([state,district,start_date_for_ongoing_clients]).endkey([state,district,end_date_for_ongoing_clients,{}])['rows']
         clients_reffered_by = Child.by_clients_reffered_by.startkey([state,district,start_date]).endkey([state,district,end_date,{}]).reduce.group['rows']
@@ -627,6 +636,29 @@ class MonthlyReportsController < ApplicationController
         individual_meeting_session = Child.by_individual_meeting_session.startkey([state,district,start_date]).endkey([state,district,end_date,{}]).reduce.group['rows']
         outcomes_new_clients_ongoing_clients = Child.by_outcomes_new_clients_ongoing_clients.startkey([state,district,start_date]).endkey([state,district,end_date,{}]).reduce.group['rows']
         cases_sent_back_to_eo = Child.by_cases_sent_back_to_eo.startkey([state,district,start_date]).endkey([state,district,end_date,{}]).reduce.group['rows']
+      end
+
+
+      for i in new_registered_application_that_was_previously_one_time_intervention
+        if !i['key'][0].empty? && !i['key'][2].empty? 
+          if i['key'][3]!=nil
+            if i['key'][3] == true
+              @new_registered_application_that_was_previously_one_time_intervention += i['value']
+            end
+          end
+        end
+      end
+
+      for i in intervention_by_special_cell
+        if !i['key'][0].empty? && !i['key'][2].empty?
+          if i['key'][3]!=nil and !i['key'][3].empty?
+            for j in i['key'][3]
+              if j.include? "enlisting_police_help_or_intervention"
+                @engaing_police_help_count += i['value']
+              end
+            end
+          end
+        end
       end
 
       for i in ongoing_clients_in_this_quarter
@@ -670,7 +702,7 @@ class MonthlyReportsController < ApplicationController
             if i['key'][3].include? "telephonic_helpline"
               @telephonic_helpline_clients_referred_by += i['value']
             end
-            if i['key'][3].include? "referred_to_us_as_a_service_under_pwdv_2005"
+            if i['key'][3].include? "referred_to_us_as_a_service_provider_under_pwdv_act_2005"
               @referred_to_us_as_a_service_under_pwdv_2005 += i['value']
             end
             if i['key'][3].include? "independent_community_worker_political_worker"
@@ -855,6 +887,7 @@ class MonthlyReportsController < ApplicationController
       'state' => state,
       'district' => main_district,
       'cell' => district,
+      'new_registered_application_that_was_previously_one_time_intervention' => @new_registered_application_that_was_previously_one_time_intervention,
       'new_reg_app_total' => @new_reg_app_total,
       'new_reg_app_dat_were_prev_one_time_intervention' => @new_reg_app_dat_were_prev_one_time_intervention,
       'engaing_police_help_count' => @engaing_police_help_count,
