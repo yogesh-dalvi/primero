@@ -1423,6 +1423,7 @@ class QuarterlyReportsController < ApplicationController
       helped_in_filing_for_divorceseparationtalaqkhula = Child.by_state_date_helped_in_filing_for_divorceseparationtalaqkhula.startkey([state,1,start_date]).endkey([state,1,end_date,{}]).reduce.group['rows']
       helped_in_filing_case_in_court_for_divorceseparationmediation = Child.by_state_date_helped_in_filing_case_in_court_for_divorceseparationmediation.startkey([state,1,start_date]).endkey([state,1,end_date,{}]).reduce.group['rows']
       cases_sent_back_to_eo = Child.by_state_date_cases_sent_back_to_eo.startkey([state,1,start_date]).endkey([state,1,end_date,{}]).reduce.group['rows']
+      helped_the_woman_in_accessing_her_financial_entitlements = Child.by_state_date_helped_the_woman_in_accessing_her_financial_entitlements.startkey([state,1,start_date]).endkey([state,1,end_date,{}]).reduce.group['rows']
 
     else
       total_clients_in_this_quarter = Child.by_clients_registered_in_this_quarter.startkey([state,district,start_date]).endkey([state,district,end_date,{}])['rows']
@@ -1446,6 +1447,7 @@ class QuarterlyReportsController < ApplicationController
       helped_in_filing_for_divorceseparationtalaqkhula = Child.by_helped_in_filing_for_divorceseparationtalaqkhula.startkey([state,district,start_date]).endkey([state,district,end_date,{}]).reduce.group['rows']
       helped_in_filing_case_in_court_for_divorceseparationmediation = Child.by_helped_in_filing_case_in_court_for_divorceseparationmediation.startkey([state,district,start_date]).endkey([state,district,end_date,{}]).reduce.group['rows']
       cases_sent_back_to_eo = Child.by_cases_sent_back_to_eo.startkey([state,district,start_date]).endkey([state,district,end_date,{}]).reduce.group['rows']
+      helped_the_woman_in_accessing_her_financial_entitlements = Child.helped_the_woman_in_accessing_her_financial_entitlements.startkey([state,district,start_date]).endkey([state,district,end_date,{}]).reduce.group['rows']
 
     end
     # /end----------------------------------------------/
@@ -1470,6 +1472,8 @@ class QuarterlyReportsController < ApplicationController
             @exclients_count += i['value']
           elsif i['key'][3].include? "independent_community_worker_political_worker"
             @icw_pw_count += i['value']
+          elsif i['key'][3].include? "other_special_cell_90276"
+            @other_special_cell_clients_reffered_by += i['value']
           elsif i['key'][3].include? "police"
             @police_count += i['value']
           elsif i['key'][3].include? "self"
@@ -1756,7 +1760,7 @@ class QuarterlyReportsController < ApplicationController
               @shelter_refferal_count += i['value']
             elsif j.include? "protection_officer"
               @protection_officer_refferal_count += i['value']
-            elsif j.include? "non_governmental_organisation_ngo "
+            elsif j.include? "non_governmental_organisation_ngo"
               @ngo_referral_count += i['value']  
             elsif j.include? "community_based_organisations_cbo"
               @cbo_referral_count += i['value']
@@ -1812,15 +1816,11 @@ class QuarterlyReportsController < ApplicationController
             elsif j.include? "helped_in_registering_fir_under_section_498a" or j.include? "helped_in_registering_fir_other_than_under_section_498a"
               if j.include? "helped_in_registering_fir_under_section_498a"
                 @outcome_498A_count += i['value']
+                @outcomes_fir_registered += i['value']
               else
                 @outcomes_other_than_498A += i['value']
-              end
-              if fir_registered_counter == 0 and (j.include? "helped_in_registering_fir_under_section_498a" or j.include? "helped_in_registering_fir_other_than_under_section_498a")
-                fir_registered_counter += 1
                 @outcomes_fir_registered += i['value']
-              end  
-            elsif j.include? "helped_the_woman_in_accessing_her_financial_entitlements"
-              @outcome_maintenence_count += i['value']
+              end
             elsif j.include? "non_violent_reconciliation"
               @outcome_non_violent_recon_count += i['value']
             elsif j.include? "court_orders_in_the_best_interest_of_the_woman"
@@ -1839,15 +1839,25 @@ class QuarterlyReportsController < ApplicationController
       end
     end
 
+    for i in helped_the_woman_in_accessing_her_financial_entitlements
+      if !i['key'][0].empty? && !i['key'][2].empty?
+        if i['key'][3]!=nil && i['key'][3].length >0
+          for j in i['key'][3]
+            if j.include? "helped_in_retreiving_economic_assets_financial_entitlements_personal_belongings_articles_of_the_woman" or j.include? "helped_in_accessing_one_time_amount_lumpsum"
+              @outcome_maintenence_count  += i['value']
+            end
+          end
+        end
+      end
+    end
+
     for i in helped_in_filing_for_divorceseparationtalaqkhula
       if !i['key'][0].empty? && !i['key'][2].empty?
-        if i['key'][3]!=nil and i['key'][3].length > 0
-          for j in i['key'][3]
-            if j.include? "helped_in_filing_case_in_court_for_divorce" or j.include? "helped_in_filing_case_in_court_for_separation"
-              @outcomes_helped_in_filing_case_for_divorce_seperation  += i['value'] 
-            elsif j.include? "talaq_khula"
-              @outcomes_talaq_khula  += i['value']
-            end
+        if i['key'][3]!=nil
+          if i['key'][3].include? "helped_in_filing_case_in_court_for_divorce" or i['key'][3].include? "helped_in_filing_case_in_court_for_separation"
+            @outcomes_helped_in_filing_case_for_divorce_seperation  += i['value'] 
+          elsif i['key'][3].include? "talaq_khula"
+            @outcomes_talaq_khula  += i['value']
           end
         end
       end
@@ -1855,11 +1865,9 @@ class QuarterlyReportsController < ApplicationController
 
     for i in helped_in_filing_case_in_court_for_divorceseparationmediation
       if !i['key'][0].empty? && !i['key'][2].empty?
-        if i['key'][3]!=nil and i['key'][3].length > 0
-          for j in i['key'][3]
-            if j.include? "helped_in_filing_case_in_court_for_divorce" or j.include? "helped_in_filing_case_in_court_for_separation"
-              @outcomes_helped_in_filing_case_for_divorce_seperation  += i['value'] 
-            end
+        if i['key'][3]!=nil
+          if i['key'][3].include? "helped_in_filing_case_in_court_for_divorce" or i['key'][3].include? "helped_in_filing_case_in_court_for_separation"
+            @outcomes_helped_in_filing_case_for_divorce_seperation  += i['value'] 
           end
         end
       end
@@ -1931,6 +1939,7 @@ class QuarterlyReportsController < ApplicationController
             referrals_new_clients_ongoing_clients = []
             outcomes_new_clients_ongoing_clients = []
             helped_in_filing_for_divorceseparationtalaqkhula = []
+            helped_the_woman_in_accessing_her_financial_entitlements =[]
             for j in i['key'][3]
               if j.has_key? "ongoing_followup" and !j["ongoing_followup"].empty?
                 followup_date = Date.parse(j["ongoing_followup"])
@@ -1948,7 +1957,7 @@ class QuarterlyReportsController < ApplicationController
                     end
                   end
                   # refferals new clients ongoing clients
-                  if j.has_key? "referrals_new_clients_ongoing_clients" and j["referrals_new_clients_ongoing_clients"].length > 0
+                  if j.has_key? "referrals_new_clients_ongoing_clients" and j["referrals_new_clients_ongoing_clients"]!=nil and j["referrals_new_clients_ongoing_clients"].length > 0
                     for refferals in j["referrals_new_clients_ongoing_clients"]
                       referrals_new_clients_ongoing_clients.push(refferals)
                     end
@@ -1959,13 +1968,16 @@ class QuarterlyReportsController < ApplicationController
                       outcomes_new_clients_ongoing_clients.push(outcomes)
                     end
                   end
-                  #helped_in_filing_case_in_court_for_divorceseparationmediation
-                  if j.has_key? "helped_in_filing_for_divorceseparationtalaqkhula" and j["helped_in_filing_for_divorceseparationtalaqkhula"]!=nil and j["helped_in_filing_for_divorceseparationtalaqkhula"].length > 0
-                    for outcomes in j["helped_in_filing_for_divorceseparationtalaqkhula"]
-                      helped_in_filing_for_divorceseparationtalaqkhula.push(outcomes)
+
+                  if j.has_key? "helped_the_woman_in_accessing_her_financial_entitlements" and j["helped_the_woman_in_accessing_her_financial_entitlements"]!=nil and j["helped_the_woman_in_accessing_her_financial_entitlements"].length > 0
+                    for fin_entitelmnts in j["helped_the_woman_in_accessing_her_financial_entitlements"]
+                      helped_the_woman_in_accessing_her_financial_entitlements.push(fin_entitelmnts)
                     end
                   end
-
+                  #helped_in_filing_case_in_court_for_divorceseparationmediation
+                  if j.has_key? "helped_in_filing_for_divorceseparationtalaqkhula" and j["helped_in_filing_for_divorceseparationtalaqkhula"]!=nil
+                      helped_in_filing_for_divorceseparationtalaqkhula.push(j["helped_in_filing_for_divorceseparationtalaqkhula"])
+                  end
                 end
               end
             end
@@ -2025,6 +2037,23 @@ class QuarterlyReportsController < ApplicationController
                 end
               end
             end
+
+            if helped_the_woman_in_accessing_her_financial_entitlements.length > 0
+              helped_the_woman_in_accessing_her_financial_entitlements = helped_the_woman_in_accessing_her_financial_entitlements.uniq
+              helped_in_retreiving_economic_assets_financial_entitlements_personal_belongings_articles_of_the_woman_counter = 0
+              helped_in_accessing_one_time_amount_lumpsum_counter = 0
+              for j in helped_the_woman_in_accessing_her_financial_entitlements
+                if helped_in_retreiving_economic_assets_financial_entitlements_personal_belongings_articles_of_the_woman_counter == 0 and j.include? "helped_in_retreiving_economic_assets_financial_entitlements_personal_belongings_articles_of_the_woman"
+                  helped_in_retreiving_economic_assets_financial_entitlements_personal_belongings_articles_of_the_woman_counter += 1
+                  @outcome_maintenence_count_ongoing_client  += 1
+                elsif helped_in_accessing_one_time_amount_lumpsum_counter == 0 and j.include? "helped_in_accessing_one_time_amount_lumpsum"
+                  helped_in_accessing_one_time_amount_lumpsum_counter += 1
+                  @outcome_maintenence_count_ongoing_client  += 1
+                end
+              end
+            end
+
+
             # refferals new clients ongoing clients
             if referrals_new_clients_ongoing_clients.length > 0
               referrals_new_clients_ongoing_clients = referrals_new_clients_ongoing_clients.uniq
@@ -2108,9 +2137,6 @@ class QuarterlyReportsController < ApplicationController
                 elsif helped_in_registering_fir_other_than_under_section_498a == 0 and j.include? "helped_in_registering_fir_other_than_under_section_498a"
                   helped_in_registering_fir_other_than_under_section_498a += 1
                   @outcome_other_than_498A_count_ongoing_client += i['value']
-                elsif helped_the_woman_in_accessing_her_financial_entitlements == 0 and j.include? "helped_the_woman_in_accessing_her_financial_entitlements"
-                  helped_the_woman_in_accessing_her_financial_entitlements += 1
-                  @outcome_maintenence_count_ongoing_client += i['value']
                 elsif non_violent_reconciliation == 0 and j.include? "non_violent_reconciliation"
                   non_violent_reconciliation += 1
                   @outcome_non_violent_recon_count_ongoing_client += i['value']

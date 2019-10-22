@@ -853,6 +853,36 @@ class Child < CouchRest::Model::Base
     :reduce =>
     "_sum"
 
+    view :helped_the_woman_in_accessing_her_financial_entitlements,
+    :map => "function(doc) {
+      if(doc.location!=null  && doc.district!=null && doc.registration_date!=null){
+            if (doc.hasOwnProperty('outcomes_new_clients_ongoing_clients')){
+              var x = doc.outcomes_new_clients_ongoing_clients
+              if ((x.indexOf('helped_the_woman_in_accessing_her_financial_entitlements_02771') > -1) || (x.indexOf('helped_the_woman_in_accessing_her_financial_entitlements_61649') > -1) || (x.indexOf('helped_the_woman_in_accessing_her_financial_entitlements_16163') > -1))
+                {
+                emit([doc.location,doc.district,new Date(doc.registration_date+' UTC'),doc.helped_the_woman_in_accessing_her_financial_entitlements],1)
+                }
+            }
+          }
+        }",
+    :reduce =>
+    "_sum"
+
+    view :by_state_date_helped_the_woman_in_accessing_her_financial_entitlements,
+    :map => "function(doc) {
+      if(doc.location!=null  && doc.district!=null && doc.registration_date!=null){
+            if (doc.hasOwnProperty('outcomes_new_clients_ongoing_clients')){
+              var x = doc.outcomes_new_clients_ongoing_clients
+              if ((x.indexOf('helped_the_woman_in_accessing_her_financial_entitlements_02771') > -1) || (x.indexOf('helped_the_woman_in_accessing_her_financial_entitlements_61649') > -1) || (x.indexOf('helped_the_woman_in_accessing_her_financial_entitlements_16163') > -1))
+                {
+                  emit([doc.location,1,new Date(doc.registration_date+' UTC'),doc.helped_the_woman_in_accessing_her_financial_entitlements],1)
+                }
+            }
+          }
+        }",
+    :reduce =>
+    "_sum"
+
     view :by_new_registered_application_that_was_previously_one_time_intervention,
     :map => "function(doc) {
           if(doc.location!=null  && doc.district!=null && doc.registration_date!=null){
