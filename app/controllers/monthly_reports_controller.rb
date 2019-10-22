@@ -642,7 +642,7 @@ class MonthlyReportsController < ApplicationController
       for i in new_registered_application_that_was_previously_one_time_intervention
         if !i['key'][0].empty? && !i['key'][2].empty? 
           if i['key'][3]!=nil
-            if i['key'][3] == true
+            if i['key'][3].include? "yes"
               @new_registered_application_that_was_previously_one_time_intervention += i['value']
             end
           end
@@ -662,7 +662,8 @@ class MonthlyReportsController < ApplicationController
       end
 
       for i in ongoing_clients_in_this_quarter
-        if i['key'][3]!= nil  
+        is_ongoing_client = i['key'][4]
+        if i['key'][3]!= nil && is_ongoing_client
           if i['key'][3].length!= 0
             for j in i['key'][3]
               if j.has_key? "ongoing_followup" and !j["ongoing_followup"].empty?
@@ -794,7 +795,7 @@ class MonthlyReportsController < ApplicationController
         if !i['key'][0].empty? && !i['key'][2].empty?
           @one_time_intervention_count += i['value']
           if i['key'][4]!=nil
-            if !i['key'][3].include? "direct_intervention_with_client"
+            if i['key'][4].include? "case_of_pocso_where_police_sought_support_of_social_worker_recorded_statement_in_the_presence_of_sw"
               @cases_where_police_took_help_from_social_worker += i['value']
             end
           end

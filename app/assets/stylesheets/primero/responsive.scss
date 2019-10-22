@@ -235,6 +235,11 @@
 
 @media only screen and (min-width: 769px) and (max-width: 790px) {
 
+  #reports_month_quar {
+    visibility: hidden;
+    display: none;
+  }
+
   #submit_form_for_monthly_report label {
     text-align: left !important;
   }
@@ -254,6 +259,11 @@
 
 @media only screen and (min-width: 769px) and (max-width: 992px) { 
 
+  #reports_month_quar {
+    visibility: hidden;
+    display: none;
+  }
+ 
   .col-sm-2, .col-sm-3 {
     max-width: 100% !important;
    }
@@ -270,6 +280,11 @@
 }
 
 @media only screen and (max-width: 1200px) { 
+
+  #reports_month_quar {
+    visibility: hidden;
+    display: none;
+  }
 
 .col-sm-2, .col-sm-3  {
   max-width: 100% !important;
