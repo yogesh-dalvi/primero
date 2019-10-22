@@ -369,10 +369,10 @@ $(document).ready(function() {
     <table class="dataTable in_content_area reports">
     <thead>
       <tr>
-        <th style="text-align:center" align="center">Special Cells for Women</th>
+        <th style="text-align:center" align="center">Special Cell for Women and Children, Maharashtra</th>
       </tr>
       <tr>
-        <th style="text-align:center" align="center">Consolidated Monthly Progress Report</th>
+        <th style="text-align:center" align="center">Monthly Progress Report</th>
       </tr>
     </thead>
     </table>
@@ -404,7 +404,7 @@ $(document).ready(function() {
         <thead>
         <tr style="border:1px solid #a49999; border-collapse: none;">
           <th style="border-left:1px solid #a49999; border-top:1px solid #a49999; border-bottom: 2px solid #a49999;"><b>Sr.No.</b></th>
-          <th style="border-top:1px solid #a49999; border-bottom: 2px solid #a49999;"><b>Client Profile & Details</b></th>
+          <th style="border-top:1px solid #a49999; border-bottom: 2px solid #a49999;"><b>Details</b></th>
           <% if @selected == "state_selected" %>
           <th style="border-top:1px solid #a49999; border-bottom: 2px solid #a49999;"><b><%=@state_name %></b></th>
           <% else %>
@@ -756,32 +756,37 @@ if (cell!= null)
       el.empty(); // remove old subcell options
     }  
       
-  document.getElementById("generate").addEventListener("click", function () {
-    //generateExcel($("#qpr_report"));
-    createDownloadLink("#generate",generateExcel($("#mpr_report")),"mpr_report.xlsx");
+    document.getElementById("generate").addEventListener("click", function () {
+      createDownloadLink("#generate",generateExcel($("#mpr_report")),"mpr_report.xls");
     });
     
     function generateExcel(el) {
       var clon = el.clone();
-      var html = clon.wrap('<div>').parent().html();
-
-      //add more symbols if needed...
-      while (html.indexOf('á') != -1) html = html.replace(/á/g, '&aacute;');
-      while (html.indexOf('é') != -1) html = html.replace(/é/g, '&eacute;');
-      while (html.indexOf('í') != -1) html = html.replace(/í/g, '&iacute;');
-      while (html.indexOf('ó') != -1) html = html.replace(/ó/g, '&oacute;');
-      while (html.indexOf('ú') != -1) html = html.replace(/ú/g, '&uacute;');
-      while (html.indexOf('º') != -1) html = html.replace(/º/g, '&ordm;');
-      html = html.replace(/<td>/g, "<td>");			
-      
+      console.log("clon ",clon);
+      var html = clon.html();
+      console.log("html ",html);	
       return html;
     }
     
-    function createDownloadLink(anchorSelector, str, fileName){			
-        var url = "data:application/vnd.ms-excel," + encodeURIComponent(str);
-        $(anchorSelector).attr("download", fileName);               
-        $(anchorSelector).attr("href", url);
-        
-   }
+    function createDownloadLink(anchorSelector, str, fileName){			   
+        var tab_text = '\uFEFF';
+        tab_text = tab_text + '<html xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40">';
+        tab_text = tab_text + '<head>';
+        tab_text = tab_text + '<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />';
+        tab_text = tab_text + '<meta name="ProgId" content="Excel.Sheet" />';
+        tab_text = tab_text + '<meta name="Generator" content="Microsoft Excel" />';
+        tab_text = tab_text + '<title>MPR REPORT</title>';
+        tab_text = tab_text +'<!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet>';
+        tab_text = tab_text + '<x:Name></x:Name>';
+        tab_text = tab_text + '<x:WorksheetOptions><x:Panes></x:Panes></x:WorksheetOptions></x:ExcelWorksheet>';
+        tab_text = tab_text + '</x:ExcelWorksheets></x:ExcelWorkbook>';
+        tab_text = tab_text + '</xml><![endif]--></head><body>';
+        tab_text = tab_text + '<table border="1px">';
+        tab_text = tab_text + str;
+        tab_text = tab_text + '</table></body></html>';
+  
+        var blob = new Blob([tab_text], { type: "application/vnd.ms-excel" })
+        window.saveAs(blob, fileName);
+      }
 
 </script>

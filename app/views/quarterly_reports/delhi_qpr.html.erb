@@ -368,7 +368,7 @@ $(document).ready(function() {
     
     <div id="qpr_report" style="border-style: solid;border-color: #819f5673;">
 
-    <table class="dataTable in_content_area reports">
+    <table class="dataTable in_content_area reports"  >
     <thead>
       <tr>
         <th style="text-align:center; border-right: 2px solid #dee2e6;" align="center">CAW Cells & SPUWAC, Delhi</th>
@@ -402,7 +402,7 @@ $(document).ready(function() {
     </table>    
 
     <div class="table-responsive" style="overflow: scroll; margin-top:2%" >
-			<table class="dataTable in_content_area reports">
+			<table class="dataTable in_content_area reports" >
         <thead>
           <tr style="border:1px solid #a49999; border-collapse: none;">
             <th style="border-left:1px solid #a49999; border-top:1px solid #a49999; border-bottom: 2px solid #a49999;" align="center"><b>Sr.No.</b></th>
@@ -450,11 +450,11 @@ $(document).ready(function() {
             <% end %>
           </tr>
           <tr>
-            <td align="center" style="border-left:1px solid #a49999;" rowspan = 10>2</td>
-            <td align="center" rowspan = 10>Clients referred by</td>
-            <td align="center">Ex-Clients</td>
+            <td align="center" style="border-left:1px solid #a49999; border-top:1px solid #aec687;" rowspan = 10>2</td>
+            <td align="center" rowspan = 10 style="border-top:1px solid #aec687;">Clients referred by</td>
+            <td align="center" style="border-top:1px solid #aec687;">Ex-Clients</td>
             <% @qpr_data.each do |data| %>
-              <td align="center"><%=data['exclients_count'] %></td>
+              <td align="center" style="border-top:1px solid #aec687;"><%=data['exclients_count'] %></td>
             <% end %>
           </tr>
           <tr>
@@ -512,11 +512,11 @@ $(document).ready(function() {
             <% end %>
           </tr>
           <tr>
-            <td align = "center" style="border-left:1px solid #a49999;" rowspan = 5>3</td>
-            <td align = "center" rowspan = 5>Gender of the complainants / clients</td>
-            <td align = "center">Adults (female)</td>
+            <td align = "center" style="border-left:1px solid #a49999; border-top:1px solid #aec687;" rowspan = 5>3</td>
+            <td align = "center" rowspan = 5 style="border-top:1px solid #aec687;">Gender of the complainants / clients</td>
+            <td align = "center" style="border-top:1px solid #aec687;">Adults (female)</td>
             <% @qpr_data.each do |data| %>
-              <td align = "center"><%=data['adult_female_count'] %></td>
+              <td align = "center" style="border-top:1px solid #aec687;"><%=data['adult_female_count'] %></td>
             <% end %>
           </tr>
           <tr>
@@ -544,11 +544,11 @@ $(document).ready(function() {
             <% end %>
           </tr>
           <tr>
-            <td align = "center" style="border-left:1px solid #a49999;" rowspan = 7>4</td>
-            <td align = "center" rowspan = 7>Age of the client</td>
-            <td align = "center">Less than 14 years</td>
+            <td align = "center" style="border-left:1px solid #a49999; border-top:1px solid #aec687;" rowspan = 7>4</td>
+            <td align = "center" rowspan = 7 style="border-top:1px solid #aec687;">Age of the client</td>
+            <td align = "center" style="border-top:1px solid #aec687;">Less than 14 years</td>
             <% @qpr_data.each do |data| %>
-              <td align = "center"><%=data['less_than_14_count'] %></td>
+              <td align = "center" style="border-top:1px solid #aec687;"><%=data['less_than_14_count'] %></td>
             <% end %>
           </tr>
           <tr>
@@ -589,11 +589,11 @@ $(document).ready(function() {
           </tr>
 
           <tr>
-            <td align = "center" style="border-left:1px solid #a49999;" rowspan = 8>5</td>
-            <td align = "center" rowspan = 8>Education of the clients</td>
-            <td align = "center">Non­ Literate</td>
+            <td align = "center" style="border-left:1px solid #a49999; border-top:1px solid #aec687;" rowspan = 8>5</td>
+            <td align = "center" rowspan = 8 style="border-top:1px solid #aec687;">Education of the clients</td>
+            <td align = "center" style="border-top:1px solid #aec687;">Non­ Literate</td>
             <% @qpr_data.each do |data| %>
-              <td align = "center"><%=data['non_literate_count'] %></td>
+              <td align = "center" style="border-top:1px solid #aec687;"><%=data['non_literate_count'] %></td>
             <% end %>
           </tr>
           <tr>
@@ -640,11 +640,11 @@ $(document).ready(function() {
           </tr>
 
           <tr>
-            <td align = "center" style="border-left:1px solid #a49999;" rowspan = 27>6</td>
-            <td align = "center" rowspan = 27>Reasons for registering at the Special Cell (multiple response)</td>
-            <td align = "center">Physical violence by husband</td>
+            <td align = "center" style="border-left:1px solid #a49999; border-top:1px solid #aec687;" rowspan = 27>6</td>
+            <td align = "center" rowspan = 27 style="border-top:1px solid #aec687;">Reasons for registering at the Special Cell (multiple response)</td>
+            <td align = "center" style="border-top:1px solid #aec687;">Physical violence by husband</td>
             <% @qpr_data.each do |data| %>
-              <td align = "center"><%=data['phy_vio_by_hus_count'] %></td>
+              <td align = "center" style="border-top:1px solid #aec687;"><%=data['phy_vio_by_hus_count'] %></td>
             <% end %>
           </tr>
           <tr>
@@ -805,11 +805,11 @@ $(document).ready(function() {
           </tr>
 
           <tr>
-            <td align = "center" style="border-left:1px solid #a49999;" rowspan = 5><b>7</b></td>
-            <td align = "center" rowspan = 5><b>Previous intervention before coming to the Cell (multiple response)</b></td>
-            <td align = "center">Natal family / marital family</td>
+            <td align = "center" style="border-left:1px solid #a49999; border-top:1px solid #aec687;" rowspan = 5><b>7</b></td>
+            <td align = "center" rowspan = 5 style="border-top:1px solid #aec687;"><b>Previous intervention before coming to the Cell (multiple response)</b></td>
+            <td align = "center" style="border-top:1px solid #aec687;">Natal family / marital family</td>
             <% @qpr_data.each do |data| %>
-              <td align = "center"><%=data['prev_inter_natal_family_marital_family_count'] %></td>
+              <td align = "center" style="border-top:1px solid #aec687;"><%=data['prev_inter_natal_family_marital_family_count'] %></td>
             <% end %>
           </tr>
           <tr>
@@ -838,124 +838,124 @@ $(document).ready(function() {
           </tr>
 
           <tr>
-            <td align = "center" style="border-left:1px solid #a49999;" rowspan = 9>8</td>
-            <td align = "center" rowspan = 9>Intervention by the Special Cell (multiple response)
+            <td align = "center" style="border-left:1px solid #a49999; border-top:1px solid #aec687;" rowspan = 9>8</td>
+            <td align = "center" rowspan = 9 style="border-top:1px solid #aec687;">Intervention by the Special Cell (multiple response)
             New clients + ongoing clients</td>
-            <td align = "center">Providing emotional support and strengthening psychological self</td>
+            <td align = "center" style="border-top:1px solid #aec687;">Providing emotional support and strengthening psychological self</td>
             <% @qpr_data.each do |data| %>
-              <td align = "center" style = "border-right: 1px solid #dee2e6;"><%=data['spec_cell_prov_emo_support_count'] %></td>
+              <td align = "center" style="border-top:1px solid #aec687;"><%=data['spec_cell_prov_emo_support_count'] %></td>
             <% end %>
           </tr>
           <tr>
             <td align = "center">Negotiating non­violence with stakeholder</td>
             <% @qpr_data.each do |data| %>
-              <td align = "center" style = "border-right: 1px solid #dee2e6;"><%=data['spec_cell_neg_nonvio_with_stakeholder_count'] %></td>
+              <td align = "center"><%=data['spec_cell_neg_nonvio_with_stakeholder_count'] %></td>
             <% end %>
           </tr>
           <tr>
             <td align = "center">Building support system</td>
             <% @qpr_data.each do |data| %>
-              <td align = "center" style = "border-right: 1px solid #dee2e6;"><%=data['spec_cell_build_support_system_count'] %></td>
+              <td align = "center"><%=data['spec_cell_build_support_system_count'] %></td>
             <% end %>
           </tr>
           <tr>
             <td align = "center">Enlisting police help or intervention</td>
             <% @qpr_data.each do |data| %>
-              <td align = "center" style = "border-right: 1px solid #dee2e6;"><%=data['spec_cell_enlist_police_help_count'] %></td>
+              <td align = "center"><%=data['spec_cell_enlist_police_help_count'] %></td>
               
             <% end %>
           </tr>
           <tr>
             <td align = "center">Legal aid/ legal referral/ pre­litigation counselling</td>
             <% @qpr_data.each do |data| %>
-              <td align = "center" style = "border-right: 1px solid #dee2e6;"><%=data['spec_cell_pre­litigation_counsel_count'] %></td>
+              <td align = "center"><%=data['spec_cell_pre­litigation_counsel_count'] %></td>
               
             <% end %>
           </tr>
           <tr>
             <td align = "center">Working with men in the interest of violated woman</td>
             <% @qpr_data.each do |data| %>
-              <td align = "center" style = "border-right: 1px solid #dee2e6;"><%=data['spec_cell_work_with_men_count'] %></td>
+              <td align = "center"><%=data['spec_cell_work_with_men_count'] %></td>
               
             <% end %>
           </tr>
           <tr>
             <td align = "center">Advocacy for financial entitlements</td>
             <% @qpr_data.each do |data| %>
-              <td align = "center" style = "border-right: 1px solid #dee2e6;"><%=data['spec_cell_adv_fin_ent_count'] %></td>
+              <td align = "center"><%=data['spec_cell_adv_fin_ent_count'] %></td>
               
             <% end %>
           </tr>
           <tr>
             <td align = "center">Referral for shelter/ other services</td>
             <% @qpr_data.each do |data| %>
-              <td align = "center" style = "border-right: 1px solid #dee2e6;"><%=data['spec_cell_refferal_for_shelter_count'] %></td>
+              <td align = "center"><%=data['spec_cell_refferal_for_shelter_count'] %></td>
               
             <% end %>
           </tr>
           <tr>
             <td align = "center">Developmental counselling</td>
             <% @qpr_data.each do |data| %>
-              <td align = "center" style = "border-right: 1px solid #dee2e6;"><%=data['spec_cell_dev_counsel_count'] %></td>
+              <td align = "center"><%=data['spec_cell_dev_counsel_count'] %></td>
             <% end %>
           </tr>
           
           <tr>
-            <td align = "center" rowspan = 7 style="border-left:1px solid #a49999;"><b>9</b></td>
-            <td align = "center" rowspan = 7 ><b>Further referrals to (multiple response) New clients + ongoing clients</b></td>
-            <td align = "center">Police</td>
+            <td align = "center" rowspan = 7 style="border-left:1px solid #a49999; border-top:1px solid #aec687;"><b>9</b></td>
+            <td align = "center" rowspan = 7 style="border-top:1px solid #aec687;"><b>Further referrals to (multiple response) New clients + ongoing clients</b></td>
+            <td align = "center" style="border-top:1px solid #aec687;">Police</td>
             <% @qpr_data.each do |data| %>
-              <td align = "center" style = "border-right: 1px solid #dee2e6;"><%=data['police_refferal_count'] %></td>
+              <td align = "center" style="border-top:1px solid #aec687;"><%=data['police_refferal_count'] %></td>
             <% end %> 
           </tr>
           <tr>
             <td align = "center">Court / DLSA</td>
             <% @qpr_data.each do |data| %>
-              <td align = "center" style = "border-right: 1px solid #dee2e6;"><%=data['court_dlsa_refferal_count'] %></td>
+              <td align = "center"><%=data['court_dlsa_refferal_count'] %></td>
             <% end %>
           </tr>
 
           <tr>
             <td align = "center">Shelter home</td>
             <% @qpr_data.each do |data| %>
-              <td align = "center" style = "border-right: 1px solid #dee2e6;"><%=data['shelter_refferal_count'] %></td>
+              <td align = "center"><%=data['shelter_refferal_count'] %></td>
             <% end %>
           </tr>
 
           <tr>
             <td align = "center">Medical</td>
             <% @qpr_data.each do |data| %>
-              <td align = "center" style = "border-right: 1px solid #dee2e6;"><%=data['medical_refferal_count'] %></td>
+              <td align = "center"><%=data['medical_refferal_count'] %></td>
             <% end %>
           </tr>
 
           <tr>
             <td align = "center">Lawyer</td>
             <% @qpr_data.each do |data| %>
-              <td align = "center" style = "border-right: 1px solid #dee2e6;"><%=data['lawer_services_refferal_count'] %></td>
+              <td align = "center"><%=data['lawer_services_refferal_count'] %></td>
             <% end %>
           </tr>
 
           <tr>
             <td align = "center">Protection Officer</td>
             <% @qpr_data.each do |data| %>
-              <td align = "center" style = "border-right: 1px solid #dee2e6;"><%=data['protection_officer_refferal_count'] %></td>
+              <td align = "center"><%=data['protection_officer_refferal_count'] %></td>
             <% end %>
           </tr>
 
           <tr>
             <td align = "center">Any other</td>
             <% @qpr_data.each do |data| %>
-              <td align = "center" style = "border-right: 1px solid #dee2e6;"><%=data['any_other_refferal_count'] %></td>
+              <td align = "center"><%=data['any_other_refferal_count'] %></td>
             <% end %>
           </tr>
 
           <tr>
-            <td align = "center" style="border-left:1px solid #a49999;" rowspan = 6>10</td>
-            <td align = "center" rowspan = 6>Other interventions in the community</td>
-            <td align = "center">Home visits</td>
+            <td align = "center" style="border-left:1px solid #a49999; border-top:1px solid #aec687;" rowspan = 6>10</td>
+            <td align = "center" rowspan = 6 style="border-top:1px solid #aec687;">Other interventions in the community</td>
+            <td align = "center" style="border-top:1px solid #aec687;">Home visits</td>
             <% @qpr_data.each do |data| %>
-              <td align = "center"><%=data['othr_inter_home_visit_count'] %></td>
+              <td align = "center" style="border-top:1px solid #aec687;"><%=data['othr_inter_home_visit_count'] %></td>
             <% end %>
           </tr>
 
@@ -995,60 +995,60 @@ $(document).ready(function() {
           </tr>
 
           <tr>
-            <td align = "center" rowspan = 8 style="border-left:1px solid #a49999;"><b>11</b></td>
-            <td align = "center" rowspan = 8 ><b>Outcomes</b></td>
-            <td align = "center">Case filed in court for divorce / judicial separation</td>
+            <td align = "center" rowspan = 8 style="border-left:1px solid #a49999; border-top:1px solid #aec687;"><b>11</b></td>
+            <td align = "center" rowspan = 8 style="border-top:1px solid #aec687;"><b>Outcomes</b></td>
+            <td align = "center" style="border-top:1px solid #aec687;">Case filed in court for divorce / judicial separation</td>
             <% @qpr_data.each do |data| %>
-              <td align = "center" style = "border-right: 1px solid #dee2e6;"><%=data['outcomes_helped_in_filing_case_for_divorce_seperation'] %></td>
+              <td align = "center" style = "border-top:1px solid #aec687;"><%=data['outcomes_helped_in_filing_case_for_divorce_seperation'] %></td>
             <% end %>
           </tr>
 
           <tr>
             <td align = "center">Streedhan retrieval</td>
             <% @qpr_data.each do |data| %>
-              <td align = "center" style = "border-right: 1px solid #dee2e6;"><%=data['outcome_streedhan_retrival_count'] %></td>
+              <td align = "center"><%=data['outcome_streedhan_retrival_count'] %></td>
             <% end %>
           </tr>
             
           <tr>
             <td align = "center">Case filed under PWDVA 2005</td>
             <% @qpr_data.each do |data| %>
-              <td align = "center" style = "border-right: 1px solid #dee2e6;"><%=data['outcome_pwdva_2005_count'] %></td>
+              <td align = "center"><%=data['outcome_pwdva_2005_count'] %></td>
             <% end %>
           </tr>
             
           <tr>
             <td align = "center">One – time maintenance/ other financial entitlements</td>
             <% @qpr_data.each do |data| %>
-              <td align = "center" style = "border-right: 1px solid #dee2e6;"><%=data['outcome_maintenence_count'] %></td>
+              <td align = "center"><%=data['outcome_maintenence_count'] %></td>
             <% end %>
           </tr>
             
           <tr>
             <td align = "center">Non­violent reconciliation</td>
             <% @qpr_data.each do |data| %>
-              <td align = "center" style = "border-right: 1px solid #dee2e6;"><%=data['outcome_non_violent_recon_count'] %></td>
+              <td align = "center"><%=data['outcome_non_violent_recon_count'] %></td>
             <% end %>
           </tr>
             
           <tr>
             <td align = "center">Mediation</td>
             <% @qpr_data.each do |data| %>
-              <td align = "center" style = "border-right: 1px solid #dee2e6;"><%=data['outcomes_sent_back_to_eo_for_mediation'] %></td>
+              <td align = "center"><%=data['outcomes_sent_back_to_eo_for_mediation'] %></td>
             <% end %>
           </tr>
 
           <tr>
             <td align = "center">Legal action</td>
             <% @qpr_data.each do |data| %>
-              <td align = "center" style = "border-right: 1px solid #dee2e6;"><%=data['outcomes_sent_back_to_eo_fr_legal_action'] %></td>
+              <td align = "center"><%=data['outcomes_sent_back_to_eo_fr_legal_action'] %></td>
             <% end %>
           </tr>
             
           <tr>
             <td align = "center" style="border-bottom:1px solid #a49999;">Any other</td>
             <% @qpr_data.each do |data| %>
-              <td align = "center" style = "border-right: 1px solid #dee2e6; border-bottom:1px solid #a49999;"><%=data['outcome_any_other_count'] %></td>
+              <td align = "center" style = "border-bottom:1px solid #a49999;"><%=data['outcome_any_other_count'] %></td>
             <% end %>
           </tr>
                 
@@ -1143,31 +1143,36 @@ $(document).ready(function() {
       }  
       
   document.getElementById("generate").addEventListener("click", function () {
-	//generateExcel($("#qpr_report"));
-	createDownloadLink("#generate",generateExcel($("#qpr_report")),"qpr_report.xlsx");
+    createDownloadLink("#generate",generateExcel($("#qpr_report")),"qpr_report.xls");
   });
   
   function generateExcel(el) {
-		var clon = el.clone();
-		var html = clon.wrap('<div>').parent().html();
-
-		//add more symbols if needed...
-		while (html.indexOf('á') != -1) html = html.replace(/á/g, '&aacute;');
-		while (html.indexOf('é') != -1) html = html.replace(/é/g, '&eacute;');
-		while (html.indexOf('í') != -1) html = html.replace(/í/g, '&iacute;');
-		while (html.indexOf('ó') != -1) html = html.replace(/ó/g, '&oacute;');
-		while (html.indexOf('ú') != -1) html = html.replace(/ú/g, '&uacute;');
-		while (html.indexOf('º') != -1) html = html.replace(/º/g, '&ordm;');
-		html = html.replace(/<td>/g, "<td>");			
-		
+    var clon = el.clone();
+    console.log("clon ",clon);
+		var html = clon.html();
+    console.log("html ",html);	
 		return html;
 	}
 	
-	function createDownloadLink(anchorSelector, str, fileName){			
-			var url = "data:application/vnd.ms-excel," + encodeURIComponent(str);
-			$(anchorSelector).attr("download", fileName);               
-			$(anchorSelector).attr("href", url);
-			
+	function createDownloadLink(anchorSelector, str, fileName){			   
+      var tab_text = '\uFEFF';
+      tab_text = tab_text + '<html xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40">';
+      tab_text = tab_text + '<head>';
+      tab_text = tab_text + '<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />';
+      tab_text = tab_text + '<meta name="ProgId" content="Excel.Sheet" />';
+      tab_text = tab_text + '<meta name="Generator" content="Microsoft Excel" />';
+      tab_text = tab_text + '<title>QPR REPORT</title>';
+      tab_text = tab_text +'<!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet>';
+      tab_text = tab_text + '<x:Name></x:Name>';
+      tab_text = tab_text + '<x:WorksheetOptions><x:Panes></x:Panes></x:WorksheetOptions></x:ExcelWorksheet>';
+      tab_text = tab_text + '</x:ExcelWorksheets></x:ExcelWorkbook>';
+      tab_text = tab_text + '</xml><![endif]--></head><body>';
+      tab_text = tab_text + '<table border="1px">';
+      tab_text = tab_text + str;
+      tab_text = tab_text + '</table></body></html>';
+
+      var blob = new Blob([tab_text], { type: "application/vnd.ms-excel" })
+      window.saveAs(blob, fileName);
 		}
 
 </script>

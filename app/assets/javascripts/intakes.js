@@ -47,7 +47,7 @@ $(document).ready(function(){
 			$("#ongoing_client_child_" + subform.substring(18, subform.length) + "_intervention_by_special_cell_").closest('.row').show();
 			$("#ongoing_client_child_" + subform.substring(18, subform.length) + "_referrals_new_clients_ongoing_clients_").closest('.row').show();
 			$("#ongoing_client_child_" + subform.substring(18, subform.length) + "_other_interventions_taking_place_outside_the_cell").closest('.row').show();
-			$("#ongoing_client_child_" + subform.substring(18, subform.length) + "_outcomes_new_clients_ongoing_clients").closest('.row').show();
+			$("#ongoing_client_child_" + subform.substring(18, subform.length) + "_outcomes_new_clients_ongoing_clients_").closest('.row').show();
 			
 			$('#' + subform + ' select').each(function(){
 				displayHideDropDownFields($(this), subformElem);
@@ -76,7 +76,7 @@ $(document).ready(function(){
 			$("#ongoing_client_child_" + elemId.substring(18, elemId.length) + "_intervention_by_special_cell_").closest('.row').show();
 			$("#ongoing_client_child_" + elemId.substring(18, elemId.length) + "_referrals_new_clients_ongoing_clients_").closest('.row').show();
 			$("#ongoing_client_child_" + elemId.substring(18, elemId.length) + "_other_interventions_taking_place_outside_the_cell").closest('.row').show();
-			$("#ongoing_client_child_" + elemId.substring(18, elemId.length) + "_outcomes_new_clients_ongoing_clients").closest('.row').show();
+			$("#ongoing_client_child_" + elemId.substring(18, elemId.length) + "_outcomes_new_clients_ongoing_clients_").closest('.row').show();
 		}, 100);
 		
 	});
@@ -117,7 +117,6 @@ function displayDefault(fromChangeEvent){
 			$("#record_case_data_child_clients_referred_by").closest('.row').hide();
 			$("#record_case_data_child_sex").closest('.row').hide();
 			$("#record_case_data_child_age").closest('.row').hide();
-			
 			$("#record_case_data_child_education_of_the_client").closest('.row').hide();
 			$("#record_case_data_child_reasons_for_registering_at_special_cell_").closest('.row').hide();
 			$("#record_case_data_child_previous_intervention_before_coming_to_the_cell_").closest('.row').hide();

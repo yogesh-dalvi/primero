@@ -448,11 +448,11 @@ $(document).ready(function() {
             <% end %>
           </tr>
           <tr>
-            <td align="center" style="border-left:1px solid #a49999;" rowspan = 10><b>2</b></td>
-            <td align="center" rowspan = 10><b>Clients referred by</b></td>
-            <td align="center">Ex-Clients</td>
+            <td align="center" style="border-left:1px solid #a49999; border-top:1px solid #aec687;" rowspan = 10><b>2</b></td>
+            <td align="center" rowspan = 10 style="border-top:1px solid #aec687;"><b>Clients referred by</b></td>
+            <td align="center" style="border-top:1px solid #aec687;">Ex-Clients</td>
             <% @qpr_data.each do |data| %>
-              <td align="center" colspan="2"><%=data['exclients_count'] %></td>
+              <td align="center" colspan="2" style="border-top:1px solid #aec687;"><%=data['exclients_count'] %></td>
             <% end %>
           </tr>
           <tr>
@@ -510,11 +510,11 @@ $(document).ready(function() {
             <% end %>
           </tr>
           <tr>
-            <td align = "center" style="border-left:1px solid #a49999;" rowspan = 5><b>3</b></td>
-            <td align = "center" rowspan = 5><b>Gender of the complainants / clients</b></td>
-            <td align = "center">Adults (female)</td>
+            <td align = "center" style="border-left:1px solid #a49999; border-top:1px solid #aec687;" rowspan = 5><b>3</b></td>
+            <td align = "center" rowspan = 5 style="border-top:1px solid #aec687;"><b>Gender of the complainants / clients</b></td>
+            <td align = "center" style="border-top:1px solid #aec687;">Adults (female)</td>
             <% @qpr_data.each do |data| %>
-              <td align = "center" colspan="2"><%=data['adult_female_count'] %></td>
+              <td align = "center" colspan="2" style="border-top:1px solid #aec687;"><%=data['adult_female_count'] %></td>
             <% end %>
           </tr>
           <tr>
@@ -542,11 +542,11 @@ $(document).ready(function() {
             <% end %>
           </tr>
           <tr>
-            <td align = "center" style="border-left:1px solid #a49999;" rowspan = 8><b>4</b></td>
-            <td align = "center" rowspan = 8><b>Age of the client</b></td>
-            <td align = "center">Less than 14 years</td>
+            <td align = "center" style="border-left:1px solid #a49999; border-top:1px solid #aec687;" rowspan = 8><b>4</b></td>
+            <td align = "center" rowspan = 8 style="border-top:1px solid #aec687;"><b>Age of the client</b></td>
+            <td align = "center" style="border-top:1px solid #aec687;">Less than 14 years</td>
             <% @qpr_data.each do |data| %>
-              <td align = "center"  colspan="2"><%=data['less_than_14_count'] %></td>
+              <td align = "center"  colspan="2" style="border-top:1px solid #aec687;"><%=data['less_than_14_count'] %></td>
             <% end %>
           </tr>
           <tr>
@@ -593,11 +593,11 @@ $(document).ready(function() {
           </tr>
           
           <tr>
-            <td align = "center" style="border-left:1px solid #a49999;" rowspan = 9><b>5</b></td>
-            <td align = "center" rowspan = 9><b>Education of the clients</b></td>
-            <td align = "center">Non­ Literate</td>
+            <td align = "center" style="border-left:1px solid #a49999; border-top:1px solid #aec687;" rowspan = 9><b>5</b></td>
+            <td align = "center" rowspan = 9 style="border-top:1px solid #aec687;"><b>Education of the clients</b></td>
+            <td align = "center" style="border-top:1px solid #aec687;">Non­ Literate</td>
             <% @qpr_data.each do |data| %>
-              <td align = "center"  colspan="2"><%=data['non_literate_count'] %></td>
+              <td align = "center"  colspan="2" style="border-top:1px solid #aec687;"><%=data['non_literate_count'] %></td>
             <% end %>
           </tr>
           <tr>
@@ -650,11 +650,11 @@ $(document).ready(function() {
           </tr>
 
           <tr>
-            <td align = "center" style="border-left:1px solid #a49999;" rowspan = 27><b>6</b></td>
-            <td align = "center" rowspan = 27><b>Reasons for registering at the Special Cell (multiple response)</b></td>
-            <td align = "center">Physical violence by husband</td>
+            <td align = "center" style="border-left:1px solid #a49999; border-top:1px solid #aec687;" rowspan = 27><b>6</b></td>
+            <td align = "center" rowspan = 27 style="border-top:1px solid #aec687;"><b>Reasons for registering at the Special Cell (multiple response)</b></td>
+            <td align = "center" style="border-top:1px solid #aec687;">Physical violence by husband</td>
             <% @qpr_data.each do |data| %>
-              <td align = "center"  colspan="2"><%=data['phy_vio_by_hus_count'] %></td>
+              <td align = "center"  colspan="2" style="border-top:1px solid #aec687;"><%=data['phy_vio_by_hus_count'] %></td>
             <% end %>
           </tr>
           <tr>
@@ -815,11 +815,11 @@ $(document).ready(function() {
           </tr>
 
           <tr>
-            <td align = "center" style="border-left:1px solid #a49999;" rowspan = 7><b>7</b></td>
-            <td align = "center" rowspan = 7><b>Previous intervention before coming to the Cell (multiple response)</b></td>
-            <td align = "center">Natal family / marital family</td>
+            <td align = "center" style="border-left:1px solid #a49999; border-top:1px solid #aec687;" rowspan = 7><b>7</b></td>
+            <td align = "center" rowspan = 7 style="border-top:1px solid #aec687;"><b>Previous intervention before coming to the Cell (multiple response)</b></td>
+            <td align = "center" style="border-top:1px solid #aec687;">Natal family / marital family</td>
             <% @qpr_data.each do |data| %>
-              <td align = "center"  colspan="2"><%=data['prev_inter_natal_family_marital_family_count'] %></td>
+              <td align = "center"  colspan="2" style="border-top:1px solid #aec687;"><%=data['prev_inter_natal_family_marital_family_count'] %></td>
             <% end %>
           </tr>
           <tr>
@@ -860,12 +860,12 @@ $(document).ready(function() {
           </tr>
           
           <tr>
-            <td align = "center" rowspan = 10 style="border-left:1px solid #a49999;"><b>8</b></td>
-            <td align = "center" rowspan = 10><b>Intervention by the Special Cell (multiple response) New Clients +  ongoing clients</b></td>
-            <td align = "center"></td>
+            <td align = "center" rowspan = 10 style="border-left:1px solid #a49999; border-top:1px solid #aec687;"><b>8</b></td>
+            <td align = "center" rowspan = 10 style="border-top:1px solid #aec687;"><b>Intervention by the Special Cell (multiple response) New Clients +  ongoing clients</b></td>
+            <td align = "center" style="border-top:1px solid #aec687;"></td>
             <% @qpr_data.each do |data| %>
-              <td align = "center" style = "border-right: 1px solid #dee2e6;"><b>New Clients (applications registered in this quarter)</b></td>
-              <td align = "center"><b>Ongoing Clients (applications registered before this quarter)</b></td>
+              <td align = "center" style = "border-right: 1px solid #dee2e6; border-top:1px solid #aec687;"><b>New Clients (applications registered in this quarter)</b></td>
+              <td align = "center" style="border-top:1px solid #aec687;"><b>Ongoing Clients (applications registered before this quarter)</b></td>
             <% end %>
           </tr>
           <tr>
@@ -939,12 +939,12 @@ $(document).ready(function() {
           </tr>
 
           <tr>
-            <td align = "center" rowspan = 10 style="border-left:1px solid #a49999;"><b>9</b></td>
-            <td align = "center" rowspan = 10 ><b>Referrals (multiple response) New clients + ongoing clients</b></td>
-            <td align = "center"></td>
+            <td align = "center" rowspan = 10 style="border-left:1px solid #a49999; border-top:1px solid #aec687;"><b>9</b></td>
+            <td align = "center" rowspan = 10 style="border-top:1px solid #aec687;"><b>Referrals (multiple response) New clients + ongoing clients</b></td>
+            <td align = "center" style="border-top:1px solid #aec687;"></td>
             <% @qpr_data.each do |data| %>
-              <td align = "center" style = "border-right: 1px solid #dee2e6;"><b>New Clients (applications registered in this quarter)</b></td>
-              <td align = "center"><b>Ongoing Clients (applications registered before this quarter)</b></td>
+              <td align = "center" style = "border-right: 1px solid #dee2e6; border-top:1px solid #aec687;"><b>New Clients (applications registered in this quarter)</b></td>
+              <td align = "center" style="border-top:1px solid #aec687;"><b>Ongoing Clients (applications registered before this quarter)</b></td>
             <% end %>
           </tr>
 
@@ -1021,11 +1021,11 @@ $(document).ready(function() {
           </tr>
 
           <tr>
-            <td align = "center" align = "center" style="border-left:1px solid #a49999;" rowspan = 6><b>10</b></td>
-            <td align = "center" align = "center" rowspan = 6><b>Other interventions in the community</b></td>
-            <td align = "center" align = "center">Home visits</td>
+            <td align = "center" align = "center" style="border-left:1px solid #a49999; border-top:1px solid #aec687;" rowspan = 6><b>10</b></td>
+            <td align = "center" align = "center" rowspan = 6 style="border-top:1px solid #aec687;"><b>Other interventions in the community</b></td>
+            <td align = "center" align = "center" style="border-top:1px solid #aec687;">Home visits</td>
             <% @qpr_data.each do |data| %>
-              <td align = "center" colspan = 2><%=data['othr_inter_home_visit_count'] %></td>
+              <td align = "center" colspan = 2 style="border-top:1px solid #aec687;"><%=data['othr_inter_home_visit_count'] %></td>
             <% end %>
           </tr>
 
@@ -1065,12 +1065,12 @@ $(document).ready(function() {
           </tr>
 
           <tr>
-            <td align = "center" rowspan = 10 style="border-left:1px solid #a49999;"><b>11</b></td>
-            <td align = "center" rowspan = 10 ><b>Outcomes(multiple response)</b></td>
-            <td align = "center"></td>
+            <td align = "center" rowspan = 10 style="border-left:1px solid #a49999; border-top:1px solid #aec687;"><b>11</b></td>
+            <td align = "center" rowspan = 10 style="border-top:1px solid #aec687;"><b>Outcomes(multiple response)</b></td>
+            <td align = "center" style="border-top:1px solid #aec687;"></td>
             <% @qpr_data.each do |data| %>
-              <td align = "center" style = "border-right: 1px solid #dee2e6;"><b>New Clients (applications registered in this quarter)</b></td>
-              <td align = "center"><b>Ongoing Clients (applications registered before this quarter)</b></td>
+              <td align = "center" style = "border-right: 1px solid #dee2e6; border-top:1px solid #aec687;"><b>New Clients (applications registered in this quarter)</b></td>
+              <td align = "center" style="border-top:1px solid #aec687;"><b>Ongoing Clients (applications registered before this quarter)</b></td>
             <% end %>
           </tr>
 
@@ -1237,34 +1237,38 @@ $(document).ready(function() {
         el.empty(); // remove old subcell options
       }  
       
-  document.getElementById("generate").addEventListener("click", function () {
-	//generateExcel($("#qpr_report"));
-	createDownloadLink("#generate",generateExcel($("#qpr_report")),"qpr_report.xlsx");
-  });
-  
-  function generateExcel(el) {
-		var clon = el.clone();
-		var html = clon.wrap('<div>').parent().html();
-
-		//add more symbols if needed...
-		while (html.indexOf('á') != -1) html = html.replace(/á/g, '&aacute;');
-		while (html.indexOf('é') != -1) html = html.replace(/é/g, '&eacute;');
-		while (html.indexOf('í') != -1) html = html.replace(/í/g, '&iacute;');
-		while (html.indexOf('ó') != -1) html = html.replace(/ó/g, '&oacute;');
-		while (html.indexOf('ú') != -1) html = html.replace(/ú/g, '&uacute;');
-		while (html.indexOf('º') != -1) html = html.replace(/º/g, '&ordm;');
-		html = html.replace(/<td>/g, "<td>");			
-		
-		return html;
-	}
-	
-	function createDownloadLink(anchorSelector, str, fileName){			
-			var url = "data:application/vnd.ms-excel," + encodeURIComponent(str);
-			$(anchorSelector).attr("download", fileName);               
-			$(anchorSelector).attr("href", url);
-			
-		}
-
+      document.getElementById("generate").addEventListener("click", function () {
+        createDownloadLink("#generate",generateExcel($("#qpr_report")),"qpr_report.xls");
+      });
+      
+      function generateExcel(el) {
+        var clon = el.clone();
+        console.log("clon ",clon);
+        var html = clon.html();
+        console.log("html ",html);	
+        return html;
+      }
+      
+      function createDownloadLink(anchorSelector, str, fileName){			   
+          var tab_text = '\uFEFF';
+          tab_text = tab_text + '<html xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40">';
+          tab_text = tab_text + '<head>';
+          tab_text = tab_text + '<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />';
+          tab_text = tab_text + '<meta name="ProgId" content="Excel.Sheet" />';
+          tab_text = tab_text + '<meta name="Generator" content="Microsoft Excel" />';
+          tab_text = tab_text + '<title>QPR REPORT</title>';
+          tab_text = tab_text +'<!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet>';
+          tab_text = tab_text + '<x:Name></x:Name>';
+          tab_text = tab_text + '<x:WorksheetOptions><x:Panes></x:Panes></x:WorksheetOptions></x:ExcelWorksheet>';
+          tab_text = tab_text + '</x:ExcelWorksheets></x:ExcelWorkbook>';
+          tab_text = tab_text + '</xml><![endif]--></head><body>';
+          tab_text = tab_text + '<table border="1px">';
+          tab_text = tab_text + str;
+          tab_text = tab_text + '</table></body></html>';
+    
+          var blob = new Blob([tab_text], { type: "application/vnd.ms-excel" })
+          window.saveAs(blob, fileName);
+        }
 </script>
 
 
