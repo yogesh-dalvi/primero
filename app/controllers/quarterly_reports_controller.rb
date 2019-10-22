@@ -1770,7 +1770,7 @@ class QuarterlyReportsController < ApplicationController
               @lawer_services_refferal_count += i['value']  
             elsif j.include? "any_other" or j.include? "others_specify"
               @any_other_refferal_count += i['value']
-            elsif j.include? "court_lawyers_legal_organisations"
+            elsif j.include? "court_lawyers_legal_organisations" or j.include? "lawyers_legal_organisations"
               @court_dlsa_refferal_count += i['value']
               @lawer_services_refferal_count += i['value']
             end
@@ -1904,7 +1904,8 @@ class QuarterlyReportsController < ApplicationController
 
     follow_up_array=[]
     for i in ongoing_clients_in_this_quarter
-      if i['key'][3]!= nil  
+      is_ongoing_client = i['key'][4]
+      if i['key'][3]!= nil && is_ongoing_client
         if i['key'][3].length > 0
           for j in i['key'][3]
             if j.has_key? "ongoing_followup" and !j["ongoing_followup"].empty?
@@ -1920,8 +1921,9 @@ class QuarterlyReportsController < ApplicationController
     end  
 
     for i in intervention_by_special_cell
+      is_ongoing_client = i['key'][4]
       ongoing_present = 0
-      if !i['key'][0].empty? && !i['key'][2].empty?
+      if !i['key'][0].empty? && !i['key'][2].empty? && is_ongoing_client
         if i['key'][3].length >0
           for j in i['key'][3]
             if j.has_key? "ongoing_followup" and !j["ongoing_followup"].empty?
@@ -2097,7 +2099,7 @@ class QuarterlyReportsController < ApplicationController
                 elsif government_organisation_go_counter == 0 and j.include? "government_organisation_go"
                   government_organisation_go_counter += 1
                   @go_referral_count_ongoing_client += 1
-                elsif court_lawyers_legal_organisations_counter == 0 and j.include? "court_lawyers_legal_organisations"
+                elsif court_lawyers_legal_organisations_counter == 0 and (j.include? "court_lawyers_legal_organisations" or j.include? "lawyers_legal_organisations")
                   court_lawyers_legal_organisations_counter += 1
                   @lawer_services_refferal_count_ongoing_client += 1
                   @court_dlsa_refferal_count_ongoing_client += 1

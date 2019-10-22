@@ -150,7 +150,8 @@ function defaultElements(){
 
 function displayHideDropDownFields(element,mainElement){	
 
-	var divRowArr = [];
+	var divRowArr = [];	
+	
 	if(mainElement.attr('id').includes('subform')){
 		divRowArr = $('#' + mainElement.attr('id') + ' div.row');
 	}else{
@@ -203,7 +204,7 @@ function displayHideDropDownFields(element,mainElement){
 					$(this).closest('.row').show();
 				}else if (selectText == labelText) {
 					$(this).closest('.row').show();
-				} else if (selectText != labelText && jQuery.inArray(labelText, urarr) != -1) {
+				} else if (selectText != labelText && jQuery.inArray(labelText, urarr) != -1 && jQuery.inArray(selectText, urarr) != -1) {
 					
 					if (otherElemLabelText == 'If Other, Specify') {
 						$(this).closest('.row').next().hide();
@@ -229,10 +230,12 @@ function displayHideDropDownFields(element,mainElement){
 				if (chosenElems == '') {
 					$(divRowArr).find('label').each(function () {
 						var labelText = $(this).text();
-						if (jQuery.inArray(labelText, urarr) != -1 || jQuery.inArray(labelText, chosenElem) != -1) {
+						if (jQuery.inArray(labelText, urarr) != -1 || jQuery.inArray(labelText, chosenElem) != -1 ) {
 							$(this).closest('.row').hide();
 						} else if (labelText == 'If Other, Specify') {
-							$(otherSpecifyElem).hide();
+							if($(otherSpecifyElem).find('label').text() == 'If Other, Specify'){
+								$(otherSpecifyElem).hide();
+							}
 						}
 					});
 
@@ -240,9 +243,13 @@ function displayHideDropDownFields(element,mainElement){
 					$(chosenElem).each(function (i, val) {					
 						if (val == 'Others specify') {
 							if (jQuery.inArray(val, chosenElems) != -1) {
-								$(otherSpecifyElem).show();
+								if($(otherSpecifyElem).find('label').text() == 'If Other, Specify'){
+									$(otherSpecifyElem).show();
+								}
 							} else {
-								$(otherSpecifyElem).hide();
+								if($(otherSpecifyElem).find('label').text() == 'If Other, Specify'){
+									$(otherSpecifyElem).hide();
+								}
 							}
 						} else {
 							$(divRowArr).find('label').each(function () {
