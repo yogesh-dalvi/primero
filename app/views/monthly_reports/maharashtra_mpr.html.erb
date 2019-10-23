@@ -762,29 +762,12 @@ if (cell!= null)
     
     function generateExcel(el) {
       var clon = el.clone();
-      console.log("clon ",clon);
       var html = clon.html();
-      console.log("html ",html);	
       return html;
     }
     
     function createDownloadLink(anchorSelector, str, fileName){			   
-        var tab_text = '\uFEFF';
-        tab_text = tab_text + '<html xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40">';
-        tab_text = tab_text + '<head>';
-        tab_text = tab_text + '<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />';
-        tab_text = tab_text + '<meta name="ProgId" content="Excel.Sheet" />';
-        tab_text = tab_text + '<meta name="Generator" content="Microsoft Excel" />';
-        tab_text = tab_text + '<title>MPR REPORT</title>';
-        tab_text = tab_text +'<!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet>';
-        tab_text = tab_text + '<x:Name></x:Name>';
-        tab_text = tab_text + '<x:WorksheetOptions><x:Panes></x:Panes></x:WorksheetOptions></x:ExcelWorksheet>';
-        tab_text = tab_text + '</x:ExcelWorksheets></x:ExcelWorkbook>';
-        tab_text = tab_text + '</xml><![endif]--></head><body>';
-        tab_text = tab_text + '<table border="1px">';
-        tab_text = tab_text + str;
-        tab_text = tab_text + '</table></body></html>';
-  
+        var tab_text = str;
         var blob = new Blob([tab_text], { type: "application/vnd.ms-excel" })
         window.saveAs(blob, fileName);
       }
