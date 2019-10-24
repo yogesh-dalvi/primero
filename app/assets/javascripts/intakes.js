@@ -26,7 +26,9 @@ $(document).ready(function(){
 		}else{		
 			defaultElements();
 			$('#' + mainElem.attr('id') + ' select').each(function(){
-				displayHideDropDownFields($(this), mainElem);
+                if($(this).attr('id').indexOf("ongoing_client_child_") == -1){
+                    displayHideDropDownFields($(this), mainElem);
+                }
 			});
 			$('#cp_case_intake_'+ locationVal +'_subform_ongoing_client').closest('.row').hide();
 		}
@@ -102,7 +104,9 @@ function displayDefault(fromChangeEvent){
 				}else{
 					defaultElements();
 					$('#' + mainElem.attr('id') + ' select').each(function(){
-						displayHideDropDownFields($(this), mainElem);
+                        if($(this).attr('id').indexOf("ongoing_client_child_") == -1){
+                            displayHideDropDownFields($(this), mainElem);
+                        }
 					});
 					$('#cp_case_intake_'+ locationVal +'_subform_ongoing_client').closest('.row').hide();
 				}
@@ -204,7 +208,7 @@ function displayHideDropDownFields(element,mainElement){
 					$(this).closest('.row').show();
 				}else if (selectText == labelText) {
 					$(this).closest('.row').show();
-				} else if (selectText != labelText && jQuery.inArray(labelText, urarr) != -1 && jQuery.inArray(selectText, urarr) != -1) {
+				} else if (selectText != labelText && jQuery.inArray(labelText, urarr) != -1){
 					
 					if (otherElemLabelText == 'If Other, Specify') {
 						$(this).closest('.row').next().hide();
@@ -269,6 +273,11 @@ function displayHideDropDownFields(element,mainElement){
 				};
 			}, 500);
 		}else{
+            urarr =[];
+			$("#" +elemId+" option").each(function () {
+				var selectOption = $(this).text();
+				urarr.push(selectOption);
+			});
 			var chosenElem = $(chosenElemId + " :selected").map(function(i, el) {
                 return $(el).text();
             }).get();
@@ -286,13 +295,11 @@ function displayHideDropDownFields(element,mainElement){
 						if(val == labelText){
 							var elemRow = $(this).closest('.row');
 							if ($(elemRow).css('display') == 'flex') {	
-
 								$(this).closest('.row').hide();
 							}
 						}
 					});
 				}
-
 			});
 			$(chosenElem).each(function (i, val) {					
 				if (val == 'Others specify') {

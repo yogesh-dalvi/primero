@@ -1237,22 +1237,19 @@ $(document).ready(function() {
         el.empty(); // remove old subcell options
       }  
       
-    document.getElementById("generate").addEventListener("click", function () {
-      createDownloadLink("#generate",generateExcel($("#qpr_report")),"qpr_report.xls");
-    });
-    
-    function generateExcel(el) {
-      var clon = el.clone();
-      var html = clon.html();
-      return html;
-    }
-    
-    function createDownloadLink(anchorSelector, str, fileName){			   
-        var tab_text = str;
-        var blob = new Blob([tab_text], { type: "application/vnd.ms-excel" })
-        window.saveAs(blob, fileName);
+      document.getElementById("generate").addEventListener("click", function () {
+        createDownloadLink("#generate",generateExcel($("#qpr_report")),"qpr_report.xls");
+      });
+      
+      function generateExcel(el) {
+        var clon = el.clone();
+        var html = clon.html();
+        return html;
       }
-</script>
-
-
-
+      
+      function createDownloadLink(anchorSelector, str, fileName){			   
+          var tab_text = str;
+          var blob = new Blob([tab_text], { type: "application/vnd.ms-excel" })
+          window.saveAs(blob, fileName);
+        }
+  </script>
