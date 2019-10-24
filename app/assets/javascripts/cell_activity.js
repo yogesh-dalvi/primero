@@ -18,7 +18,12 @@ $(document).ready(function(){
 		if (location > 0) {
 	    		$("#cell_activity_child_district").closest('.row').show();
 	    		$("#cell_activity_child_collateral_visits").closest('.row').show();
-	    		$("#cell_activity_child_programme_participationorganisationfacilitation").closest('.row').show();
+				$("#cell_activity_child_programme_participationorganisationfacilitation").closest('.row').show();
+				$('#' + mainElem.attr('id') + ' select').each(function(){
+					if($(this).attr('id').indexOf("ongoing_client_child_") == -1){
+						displayHideDropDownFields($(this), mainElem);
+					}
+				});
 		} else {
 			$("#cell_activity_child_district").closest('.row').hide();
 			$("#cell_activity_child_collateral_visits").closest('.row').hide();
@@ -48,7 +53,12 @@ $(document).ready(function(){
 		if (location > 0) {
 	    		$("#cell_activity__child_district").closest('.row').show();
 	    		$("#cell_activity__child_collateral_visits").closest('.row').show();
-	    		$("#cell_activity__child_programme_participationorganisationfacilitation").closest('.row').show();
+				$("#cell_activity__child_programme_participationorganisationfacilitation").closest('.row').show();
+				$('#' + mainElem.attr('id') + ' select').each(function(){
+					if($(this).attr('id').indexOf("ongoing_client_child_") == -1){
+						displayHideDropDownFields($(this), mainElem);
+					}
+				});
 		} else {
 			$("#cell_activity__child_district").closest('.row').hide();
 			$("#cell_activity__child_collateral_visits").closest('.row').hide();
