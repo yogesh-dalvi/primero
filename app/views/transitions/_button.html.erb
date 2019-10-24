@@ -4,12 +4,15 @@ jQuery(document).ready(function($) {
       $(this).click();
     });
 
+  $(".referral_show_action").on("touchstart", function(event) {
+    $(this).click();
+  });
+
 $(".dropdown_link").on("touchstart", function(event) {
        window.location.href = $(event.target).attr('href');
     });
  });
 </script>
-
 <%
     model_class_name = controller.model_class.name.underscore.downcase
     model_name = I18n.t("forms.record_types.#{model_class_name}")
