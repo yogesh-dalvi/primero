@@ -7,7 +7,11 @@ $(document).ready(function(){
 	});
 	
 	$('body').delegate("select", "change", function (e) {	
+        var mainElem = $(this).closest('fieldset');	
 		var mainElem = $(this).closest('fieldset');		
+        var mainElem = $(this).closest('fieldset');	
+		var mainElem = $(this).closest('fieldset');		
+        var mainElem = $(this).closest('fieldset');	
 		displayHideDropDownFields($(this), mainElem);
 	});
 	
@@ -26,7 +30,9 @@ $(document).ready(function(){
 		}else{		
 			defaultElements();
 			$('#' + mainElem.attr('id') + ' select').each(function(){
-				displayHideDropDownFields($(this), mainElem);
+				if($(this).attr('id').indexOf("ongoing_client_child_") == -1){
+                    displayHideDropDownFields($(this), mainElem);
+                }
 			});
 			$('#cp_case_intake_'+ locationVal +'_subform_ongoing_client').closest('.row').hide();
 		}
@@ -102,7 +108,9 @@ function displayDefault(fromChangeEvent){
 				}else{
 					defaultElements();
 					$('#' + mainElem.attr('id') + ' select').each(function(){
-						displayHideDropDownFields($(this), mainElem);
+                        if($(this).attr('id').indexOf("ongoing_client_child_") == -1){
+                            displayHideDropDownFields($(this), mainElem);
+                        }
 					});
 					$('#cp_case_intake_'+ locationVal +'_subform_ongoing_client').closest('.row').hide();
 				}
@@ -150,18 +158,19 @@ function defaultElements(){
 
 function displayHideDropDownFields(element,mainElement){	
 
+    
 	var divRowArr = [];	
 	
 	if(mainElement.attr('id').includes('subform')){
 		divRowArr = $('#' + mainElement.attr('id') + ' div.row');
 	}else{
-		divRowArr = $('#' + mainElement.attr('id') + ' > div.row:not(:has("fieldset"))');
+        divRowArr = $('#' + mainElement.attr('id') + ' > div.row:not(:has("fieldset"))');
+        
 	}
 	
-	var elemId = $(element).attr('id');
+    var elemId = $(element).attr('id'); //gives current selected element id
 	var selectText = $('#' + elemId).find(":selected").text();
-	var otherSpecifyElem = $(element).closest('.row').next();
-	
+	var otherSpecifyElem = $(element).closest('.row').next(); 
 
 	var urarr = [];
 	var newRegistrationLabelText = "New registered application that was previously one time intervention";
@@ -171,11 +180,9 @@ function displayHideDropDownFields(element,mainElement){
 			selectOption = newRegistrationLabelText;
 		}
 		urarr.push(selectOption);
-	});
-	
-	
+    });
 
-	if (!$(element).prop('multiple')) {		
+	if (!$(element).prop('multiple')) {	
 		if (selectText == 'Others specify') {			
 			$(otherSpecifyElem).show();
 			
@@ -185,33 +192,30 @@ function displayHideDropDownFields(element,mainElement){
 				if (jQuery.inArray(labelText, urarr) != -1) {
 					if (otherElemLabelText == 'If Other, Specify') {
 						$(this).closest('.row').next().hide();
-					}
+                    }
 					$(this).closest('.row').hide();
 				}
 			});
 		} else {			
-			var elemLabelText = $(otherSpecifyElem).find('label').text();
+            var elemLabelText = $(otherSpecifyElem).find('label').text(); //basically gets text of the next element
 			if (elemLabelText == 'If Other, Specify') {
 				if ($(otherSpecifyElem).css('display') == 'flex') {
 					$(otherSpecifyElem).hide();
 				}
-			}
-
+            }
 			$(divRowArr).find('label').each(function () {
-				var labelText = $(this).text();
-				var otherElemLabelText = $(this).closest('.row').next().find('label').text();
+                var labelText = $(this).text();
+                var otherElemLabelText = $(this).closest('.row').next().find('label').text();
 				if(selectText == 'New registration' && labelText == newRegistrationLabelText){
 					$(this).closest('.row').show();
-				}else if (selectText == labelText) {
-					$(this).closest('.row').show();
-				} else if (selectText != labelText && jQuery.inArray(labelText, urarr) != -1 && jQuery.inArray(selectText, urarr) != -1) {
-					
+                }else if (selectText == labelText) {
+                    $(this).closest('.row').show();
+				}else if (selectText != labelText && jQuery.inArray(labelText, urarr) != -1) {
 					if (otherElemLabelText == 'If Other, Specify') {
 						$(this).closest('.row').next().hide();
-					}
+                    }
 					$(this).closest('.row').hide();
-				}
-
+                }
 			});
 		}
 	} else {
@@ -269,6 +273,11 @@ function displayHideDropDownFields(element,mainElement){
 				};
 			}, 500);
 		}else{
+			urarr =[];
+			$("#" +elemId+" option").each(function () {
+				var selectOption = $(this).text();
+				urarr.push(selectOption);
+			});
 			var chosenElem = $(chosenElemId + " :selected").map(function(i, el) {
                 return $(el).text();
             }).get();
@@ -286,7 +295,6 @@ function displayHideDropDownFields(element,mainElement){
 						if(val == labelText){
 							var elemRow = $(this).closest('.row');
 							if ($(elemRow).css('display') == 'flex') {	
-
 								$(this).closest('.row').hide();
 							}
 						}
