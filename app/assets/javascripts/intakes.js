@@ -300,7 +300,6 @@ function displayHideDropDownFields(element,mainElement){
 						}
 					});
 				}
-
 			});
 			$(chosenElem).each(function (i, val) {					
 				if (val == 'Others specify') {
