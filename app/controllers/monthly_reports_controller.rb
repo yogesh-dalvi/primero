@@ -15,7 +15,6 @@ class MonthlyReportsController < ApplicationController
     
 
   def index
-    authorize! :index, Child 
     set_end_date_empty=false
     set_start_date_empty=false
     set_state_empty=false
