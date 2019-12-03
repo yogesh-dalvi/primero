@@ -104,10 +104,23 @@ module IndexHelper
   end
 
   def build_filter_checkboxes(title, filter, items, type = false, format = true, filter_type = "list" )
-    content_tag :div, class: 'filter' do
-      concat(content_tag(:h3, title))
-      concat(build_checkboxes(filter, items, type, format, filter_type))
-      concat(content_tag(:div, '', class: 'clearfix'))
+    if title == "Type"
+      items = []
+      items.push({"display_text"=>"One Time Intervention", "id"=>"one_time_intervention_19509"})
+      items.push({"display_text"=>"New Registration", "id"=>"new_registration_85274"})
+      items.push({"display_text"=>"Cell Activity", "id"=>"cell_activity_51014"})
+      filter_type = "list"
+      content_tag :div, class: 'filter' do
+        concat(content_tag(:h3, title))
+        concat(build_checkboxes(filter, items, type, format, filter_type))
+        concat(content_tag(:div, '', class: 'clearfix'))
+      end
+    else
+      content_tag :div, class: 'filter' do
+        concat(content_tag(:h3, title))
+        concat(build_checkboxes(filter, items, type, format, filter_type))
+        concat(content_tag(:div, '', class: 'clearfix'))
+      end
     end
   end
 
@@ -233,6 +246,7 @@ module IndexHelper
     header_list << {title: 'id', sort_title: 'short_id'}
     header_list << {title: 'age', sort_title: 'age'}
     header_list << {title: 'sex', sort_title: 'sex'}
+    header_list << {title: 'type', sort_title: 'register_client'}
     header_list << {title: 'registration_date', sort_title: 'registration_date'}
     header_list << {title: 'social_worker', sort_title: 'owned_by'} if @is_manager && !@id_search.present?
     header_list << {title: 'owned_by', sort_title: 'owned_by'} if @is_cp && @id_search.present?
@@ -353,6 +367,7 @@ module IndexHelper
                   .all.select{|fs| fs.parent_form == "case" && !fs.is_nested && allowed_form_ids.include?(fs.unique_id)}
     filters << "Age Range"
     filters << "Sex"
+    filters << "CaseType"
     filters << "Dates"
 
 

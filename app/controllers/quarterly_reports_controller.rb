@@ -1778,23 +1778,26 @@ class QuarterlyReportsController < ApplicationController
       end
     end
 
+   
     for i in other_interventions_taking_place_outside_the_cell
       if !i['key'][0].empty? && !i['key'][2].empty?
-        if i['key'][3]!=nil
-          if i['key'][3].include? "home_visits"
-            @othr_inter_home_visit_count += i['value']
-          elsif i['key'][3].include? "visits_to_institutions"
-            @othr_inter_visit_inst_count += i['value']
-          elsif i['key'][3].include? "community_education_programmes"
-            @othr_inter_comm_edu_count += i['value']
-          elsif i['key'][3].include? "interaction_with_police"
-            @othr_inter_inter_with_police_count += i['value']
-          elsif i['key'][3].include? "representation_on_sexual_harrassment_committee"
-            @othr_inter_representation_on_sexual_harrassment_committee += i['value']
-          elsif i['key'][3].include? "others_specify" or i['key'][3].include? "any_other"
-            @othr_inter_any_other_count += i['value']
-          elsif i['key'][3].include? "meetings_with_local_groups_social_organisations"
-            @othr_inter_meet_local_count += i['value']
+        if i['key'][3]!=nil and !i['key'][3].empty?
+          for j in i['key'][3]
+            if j.include? "home_visits"
+              @othr_inter_home_visit_count += i['value']
+            elsif j.include? "visits_to_institutions"
+              @othr_inter_visit_inst_count += i['value']
+            elsif j.include? "community_education_programmes"
+              @othr_inter_comm_edu_count += i['value']
+            elsif j.include? "interaction_with_police"
+              @othr_inter_inter_with_police_count += i['value']
+            elsif j.include? "representation_on_sexual_harrassment_committee"
+              @othr_inter_representation_on_sexual_harrassment_committee += i['value']
+            elsif j.include? "others_specify" or j.include? "any_other"
+              @othr_inter_any_other_count += i['value']
+            elsif j.include? "meetings_with_local_groups_social_organisations"
+              @othr_inter_meet_local_count += i['value']
+            end
           end
         end
       end

@@ -16,9 +16,11 @@ $(document).ready(function(){
 		location = $('#cell_activity_child_location').find(":selected").index();
 		
 		if (location > 0) {
+				$('#cell_activity_child_register_client').val("cell_activity_51014");
 	    		$("#cell_activity_child_district").closest('.row').show();
-	    		$("#cell_activity_child_collateral_visits").closest('.row').show();
+	    		$("#cell_activity_child_collateral_visits_").closest('.row').show();
 				$("#cell_activity_child_programme_participationorganisationfacilitation").closest('.row').show();
+				$("#cell_activity_child_other_interventions_taking_place_outside_the_cell_").closest('.row').show();
 				$('#' + mainElem.attr('id') + ' select').each(function(){
 					if($(this).attr('id').indexOf("ongoing_client_child_") == -1){
 						displayHideDropDownFields($(this), mainElem);
@@ -26,8 +28,9 @@ $(document).ready(function(){
 				});
 		} else {
 			$("#cell_activity_child_district").closest('.row').hide();
-			$("#cell_activity_child_collateral_visits").closest('.row').hide();
+			$("#cell_activity_child_collateral_visits_").closest('.row').hide();
 			$("#cell_activity_child_programme_participationorganisationfacilitation").closest('.row').hide();
+			$("#cell_activity_child_other_interventions_taking_place_outside_the_cell_").closest('.row').hide();
 		}
 	}, 500);
 	return location;	
@@ -51,9 +54,11 @@ $(document).ready(function(){
 		location = $('#cell_activity__child_location').find(":selected").index();
 		
 		if (location > 0) {
+				$('#cell_activity__child_register_client').val("cell_activity_51014");
 	    		$("#cell_activity__child_district").closest('.row').show();
-	    		$("#cell_activity__child_collateral_visits").closest('.row').show();
+	    		$("#cell_activity__child_collateral_visits_").closest('.row').show();
 				$("#cell_activity__child_programme_participationorganisationfacilitation").closest('.row').show();
+				$("#cell_activity__child_other_interventions_taking_place_outside_the_cell_").closest('.row').show();
 				$('#' + mainElem.attr('id') + ' select').each(function(){
 					if($(this).attr('id').indexOf("ongoing_client_child_") == -1){
 						displayHideDropDownFields($(this), mainElem);
@@ -61,11 +66,11 @@ $(document).ready(function(){
 				});
 		} else {
 			$("#cell_activity__child_district").closest('.row').hide();
-			$("#cell_activity__child_collateral_visits").closest('.row').hide();
+			$("#cell_activity__child_collateral_visits_").closest('.row').hide();
 			$("#cell_activity__child_programme_participationorganisationfacilitation").closest('.row').hide();
+			$("#cell_activity__child_other_interventions_taking_place_outside_the_cell_").closest('.row').hide();
 		}
 	}, 500);
 	return location;	
 }
 });
-
