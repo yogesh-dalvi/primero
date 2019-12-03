@@ -303,21 +303,21 @@ class Child < CouchRest::Model::Base
 
     view :by_other_interevention_home_visits,
           :map => "function(doc) {
-                    if(doc.location!=null  && doc.district!=null && doc.other_interventions_taking_place_outside_the_cell!=null && doc.registration_date!=null){
-                          if(doc.other_interventions_taking_place_outside_the_cell.match(/home_visits/)){
-                            emit([doc.location,doc.district,new Date(doc.registration_date+' UTC'),doc.other_interventions_taking_place_outside_the_cell],1)
-                          }
-                      }
+                    if(doc.location!=null  && doc.district!=null && doc.other_interventions_taking_place_outside_the_cell!=null && doc.other_interventions_taking_place_outside_the_cell.length!= 0 && doc.registration_date!=null){
+                      
+                        emit([doc.location,1,new Date(doc.registration_date+' UTC'),doc.other_interventions_taking_place_outside_the_cell],1)
+                      
+                    }
                   }",
           :reduce =>
             "_sum"
 
     view :by_state_date_other_interevention_home_visits,
     :map => "function(doc) {
-              if(doc.location!=null  && doc.district!=null && doc.other_interventions_taking_place_outside_the_cell!=null && doc.registration_date!=null){
-                    if(doc.other_interventions_taking_place_outside_the_cell.match(/home_visits/)){
+              if(doc.location!=null  && doc.district!=null && doc.other_interventions_taking_place_outside_the_cell!=null && doc.other_interventions_taking_place_outside_the_cell.length!= 0 && doc.registration_date!=null){
+                    
                       emit([doc.location,1,new Date(doc.registration_date+' UTC'),doc.other_interventions_taking_place_outside_the_cell],1)
-                    }
+                    
                 }
             }",
     :reduce =>
@@ -325,7 +325,7 @@ class Child < CouchRest::Model::Base
 
     view :by_collateral_visits,
     :map => "function(doc) {
-              if(doc.collateral_visits!=null && doc.registration_date!=null){
+              if(doc.location!=null  && doc.district!=null && doc.collateral_visits!=null && doc.collateral_visits.length!= 0 && doc.registration_date!=null){
                     
                       emit([doc.location,doc.district,new Date(doc.registration_date+' UTC'),doc.collateral_visits],1)
                     
@@ -336,7 +336,7 @@ class Child < CouchRest::Model::Base
 
     view :by_state_date_collateral_visits,
     :map => "function(doc) {
-              if(doc.collateral_visits!=null && doc.registration_date!=null){
+              if(doc.location!=null  && doc.district!=null && doc.collateral_visits!=null && doc.collateral_visits.length!= 0 && doc.registration_date!=null){
                     
                       emit([doc.location,1,new Date(doc.registration_date+' UTC'),doc.collateral_visits],1)
                     

@@ -34,6 +34,19 @@
   <% if fields_to_show.include? 'sex' %>
     <td><%= record.display_field(@sex_field, @lookups)%></td>
   <% end %>
+  <% if fields_to_show.include? 'register_client' %>
+    <td>
+    <% if record.register_client != nil %>
+      <% if record.register_client.include? 'one_time_intervention'%>
+          One Time Intervention
+      <% elsif record.register_client.include? 'new_registration'%>
+          New Registration
+      <% elsif record.register_client.include? 'cell_activit'%>
+          Cell Activity
+      <% end %>    
+    <% end %>
+    </td>
+  <% end %>
   <% if fields_to_show.include? 'registration_date' %>
     <td><%= field_format_date(record.registration_date) %></td>
   <% end %>

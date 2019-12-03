@@ -802,7 +802,15 @@ class MonthlyReportsController < ApplicationController
       end
 
       for i in home_visits_array
-        @home_visit_count += i['value']
+        if !i['key'][0].empty? && !i['key'][2].empty?
+          if i['key'][3]!= nil and i['key'][3].length > 0
+            for j in i['key'][3]
+              if j.include? "home_visits"
+                @home_visit_count += i['value']
+              end
+            end
+          end
+        end
       end
 
       for i in collateral_visits_array

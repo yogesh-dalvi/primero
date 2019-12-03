@@ -59,6 +59,9 @@
     <% if filters_to_show.include? 'Sex' %>
       <%= build_filter_checkboxes(t("cases.filter_by.sex"), 'sex', Lookup.values('lookup-gender', @lookups, locale: I18n.locale)) %>
     <% end %>
+    <% if filters_to_show.include? 'CaseType' %>
+      <%= build_filter_checkboxes('Type', 'register_client', nil, nil, nil, 'list') %>
+    <% end %>
     <% if filters_to_show.include? 'GBV Displacement Status' %>
       <%= build_filter_checkboxes(t("cases.filter_by.displacement_status"), 'gbv_displacement_status',
                                   Lookup.values('lookup-displacement-status', @lookups, locale: I18n.locale)) %>

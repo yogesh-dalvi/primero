@@ -37,50 +37,53 @@ $(document).ready(function(){
 	$('body').delegate(".collapse_expand_subform","click", function(e) {
 		var subformElem = $(this).closest('.subform_container');
 		var subform = $(this).closest('.subform_container').attr('id');
-		var expanded = $(this).hasClass('expanded');	
-		if(expanded){
-			$('#' + subform + ' div.row').each(function(){
-				if(!$(this).hasClass('collapse_expand_subform_header')){
-					$(this).hide();
-				}
-			})
-			$("#ongoing_client_child_" + subform.substring(18, subform.length) + "_ongoing_followup").closest('.row').show();
-			$("#ongoing_client_child_" + subform.substring(18, subform.length) + "_nature_of_interaction_").closest('.row').show();
-			$("#ongoing_client_child_" + subform.substring(18, subform.length) + "_intervention_by_special_cell_").closest('.row').show();
-			$("#ongoing_client_child_" + subform.substring(18, subform.length) + "_referrals_new_clients_ongoing_clients_").closest('.row').show();
-			$("#ongoing_client_child_" + subform.substring(18, subform.length) + "_other_interventions_taking_place_outside_the_cell").closest('.row').show();
-			$("#ongoing_client_child_" + subform.substring(18, subform.length) + "_outcomes_new_clients_ongoing_clients_").closest('.row').show();
-			
-			$('#' + subform + ' select').each(function(){
-				displayHideDropDownFields($(this), subformElem);
-			});
-		}else{
-			$('#' + subform + ' div.row').each(function(){
-				if(!$(this).hasClass('collapse_expand_subform_header')){
-					$(this).hide();
-				}
-			})
+		var expanded = $(this).hasClass('expanded');
+		if(subform.indexOf("transitions") == -1){
+			if(expanded){
+				$('#' + subform + ' div.row').each(function(){
+					if(!$(this).hasClass('collapse_expand_subform_header')){
+						$(this).hide();
+					}
+				})
+				$("#ongoing_client_child_" + subform.substring(18, subform.length) + "_ongoing_followup").closest('.row').show();
+				$("#ongoing_client_child_" + subform.substring(18, subform.length) + "_nature_of_interaction_").closest('.row').show();
+				$("#ongoing_client_child_" + subform.substring(18, subform.length) + "_intervention_by_special_cell_").closest('.row').show();
+				$("#ongoing_client_child_" + subform.substring(18, subform.length) + "_referrals_new_clients_ongoing_clients_").closest('.row').show();
+				//$("#ongoing_client_child_" + subform.substring(18, subform.length) + "_other_interventions_taking_place_outside_the_cell").closest('.row').show();
+				$("#ongoing_client_child_" + subform.substring(18, subform.length) + "_outcomes_new_clients_ongoing_clients_").closest('.row').show();
+				
+				$('#' + subform + ' select').each(function(){
+					displayHideDropDownFields($(this), subformElem);
+				});
+			}else{
+				$('#' + subform + ' div.row').each(function(){
+					if(!$(this).hasClass('collapse_expand_subform_header')){
+						$(this).hide();
+					}
+				})
+			}
 		}
 	});
 	
 	$('body').delegate("a:contains('Add')","click", function(e) {
 		var subform = $(this).closest('.row').find('div:first').attr('id');
-		setTimeout(function(){		
-			var elemId = $('#' + subform).children().last().attr('id');			
-			$("#" + elemId + " fieldset label").each(function(){
-				if($(this).text() == "Ongoing Followup"){
-					$(this).closest('.row').nextAll().hide();			
-					return false;
-				}
-			});		
-			
-			$("#ongoing_client_child_" + elemId.substring(18, elemId.length) + "_nature_of_interaction_").closest('.row').show();
-			$("#ongoing_client_child_" + elemId.substring(18, elemId.length) + "_intervention_by_special_cell_").closest('.row').show();
-			$("#ongoing_client_child_" + elemId.substring(18, elemId.length) + "_referrals_new_clients_ongoing_clients_").closest('.row').show();
-			$("#ongoing_client_child_" + elemId.substring(18, elemId.length) + "_other_interventions_taking_place_outside_the_cell").closest('.row').show();
-			$("#ongoing_client_child_" + elemId.substring(18, elemId.length) + "_outcomes_new_clients_ongoing_clients_").closest('.row').show();
-		}, 100);
-		
+		if(subform.indexOf("transitions") == -1){
+			setTimeout(function(){		
+				var elemId = $('#' + subform).children().last().attr('id');			
+				$("#" + elemId + " fieldset label").each(function(){
+					if($(this).text() == "Ongoing Followup"){
+						$(this).closest('.row').nextAll().hide();			
+						return false;
+					}
+				});		
+				
+				$("#ongoing_client_child_" + elemId.substring(18, elemId.length) + "_nature_of_interaction_").closest('.row').show();
+				$("#ongoing_client_child_" + elemId.substring(18, elemId.length) + "_intervention_by_special_cell_").closest('.row').show();
+				$("#ongoing_client_child_" + elemId.substring(18, elemId.length) + "_referrals_new_clients_ongoing_clients_").closest('.row').show();
+				//$("#ongoing_client_child_" + elemId.substring(18, elemId.length) + "_other_interventions_taking_place_outside_the_cell").closest('.row').show();
+				$("#ongoing_client_child_" + elemId.substring(18, elemId.length) + "_outcomes_new_clients_ongoing_clients_").closest('.row').show();
+			}, 100);
+		}		
 	});
     
 });
@@ -116,7 +119,8 @@ function displayDefault(fromChangeEvent){
 			}		
 			
 		} else {
-			$("#record_case_data_child_district").closest('.row').hide();
+			$("#record_case_data_child_district").closest('.row').hide();			
+			$("#record_case_data_child_registration_date").closest('.row').hide();
 			$("#record_case_data_child_register_client").closest('.row').hide();
 			$("#record_case_data_child_clients_referred_by").closest('.row').hide();
 			$("#record_case_data_child_sex").closest('.row').hide();
@@ -127,7 +131,7 @@ function displayDefault(fromChangeEvent){
 			$("#record_case_data_child_nature_of_interaction_").closest('.row').hide();
 			$("#record_case_data_child_intervention_by_special_cell_").closest('.row').hide();
 			$("#record_case_data_child_referrals_new_clients_ongoing_clients_").closest('.row').hide();
-			$('#record_case_data_child_other_interventions_taking_place_outside_the_cell').closest('.row').hide();
+			//$('#record_case_data_child_other_interventions_taking_place_outside_the_cell').closest('.row').hide();
 			$("#record_case_data_child_outcomes_new_clients_ongoing_clients_").closest('.row').hide();
 			$("#record_case_data_child_programme_participationorganisationfacilitation").closest('.row').hide();
 		}
@@ -137,6 +141,7 @@ function displayDefault(fromChangeEvent){
 function defaultElements(){
 	$("#record_case_data_child_location").closest('.row').show()
 	$("#record_case_data_child_district").closest('.row').show();
+	$("#record_case_data_child_registration_date").closest('.row').show();
 	$("#record_case_data_child_register_client").closest('.row').show();
 	$("#record_case_data_child_clients_referred_by").closest('.row').show();
 	$("#record_case_data_child_sex").closest('.row').show();
@@ -147,7 +152,7 @@ function defaultElements(){
 	$("#record_case_data_child_nature_of_interaction_").closest('.row').show();
 	$("#record_case_data_child_intervention_by_special_cell_").closest('.row').show();
 	$("#record_case_data_child_referrals_new_clients_ongoing_clients_").closest('.row').show();
-	$('#record_case_data_child_other_interventions_taking_place_outside_the_cell').closest('.row').show();
+	//$('#record_case_data_child_other_interventions_taking_place_outside_the_cell').closest('.row').show();
 	$("#record_case_data_child_outcomes_new_clients_ongoing_clients_").closest('.row').show();
 	$("#record_case_data_child_programme_participationorganisationfacilitation").closest('.row').show();
 }
