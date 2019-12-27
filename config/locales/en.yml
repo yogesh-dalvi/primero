@@ -257,7 +257,7 @@ en:
 
   children:
     label: "Children"
-    register_new_child: "Register New Child"
+    register_new_child: "Register New Case"
     export: "Export"
     selectable_date_options:
       registration_date: 'Date of Registration'
