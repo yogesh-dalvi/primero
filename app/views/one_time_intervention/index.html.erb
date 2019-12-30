@@ -1,0 +1,405 @@
+<style>
+.col-sm-3 {
+	width: 16%;
+	margin-right: 25px;
+}
+
+submit_button {
+	margin-top: 2% !important;
+}
+
+.col-sm-2 {
+	width: 13%;
+	margin-right: 25px;
+}
+
+
+.page_container {
+	max-width: 1170px;
+	margin: 0 auto;
+}
+	.cssShow {
+	display : block;
+	}
+
+	.cssHide {
+		display : none;
+	}
+
+label {
+	margin-bottom: 0px;
+}
+
+body {font-family: Arial, Helvetica, sans-serif;}
+
+.form-inline {  
+  display: flex;
+  flex-flow: row wrap;
+  align-items: center;
+}
+
+.form-inline label {
+  margin: 5px 10px 5px 0;
+}
+
+.form-inline input {
+  vertical-align: middle;
+  margin: 5px 10px 5px 0;
+  padding: 10px;
+  background-color: #fff;
+  border: 1px solid #ddd;
+}
+
+.form-inline button {
+  padding: 10px 20px;
+  background-color: dodgerblue;
+  border: 1px solid #ddd;
+  color: white;
+  cursor: pointer;
+}
+
+header .menu.simple li a {
+	color: #212529 !important;
+}
+
+.form-inline button:hover {
+  background-color: royalblue;
+}
+
+@media (max-width: 800px) {
+  .col-sm-3 {
+    width: 100%;
+    margin-right: 25px;
+  }
+  
+  .col-sm-2 {
+    width: 100%;
+    margin-right: 25px;
+  }
+  
+  .page_container {
+    width: auto;
+  }
+  
+  .form-inline input {
+    margin: 10px 0;
+  }
+  
+  #mpr_report {
+    overflow: scroll;
+  }
+
+  .form-inline {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}
+
+@media screen and (min-width: 801px) and (max-width: 1200px) { 
+
+  .col-sm-2 {
+	width: 17%;
+	margin-right: 25px;
+}
+  .page_container {
+    width: auto;
+   padding-left:15px;
+   padding-right:15px;
+  }
+}
+
+
+
+.row.align-middle {
+    margin: 0 auto !important; 
+}
+</style>
+
+<script>
+$(document).ready(function() {
+	
+});
+
+</script>	
+
+<script>
+$(document).ready(function() {
+
+  // validation
+  document.getElementById("validation_div").innerHTML= "";
+  document.getElementById("submit_tag").addEventListener("click", function(event){
+    
+    document.getElementById("validation_div").innerHTML= "";
+    var validation_content='';
+    var location = document.getElementById("report-location").value;
+    var month = document.getElementById("month-selector").value;  
+    if (location == "" || month == "")
+      {
+        if (location == "")
+          {
+            validation_content += '<label id = "location_validate" style="color: red">please select state</label>';
+          }
+        if (month == "")
+          {
+            validation_content += '<label id = "month_validate" style="color: red">please select a month</label>';
+          }  
+        document.getElementById("validation_div").innerHTML= validation_content;
+        event.preventDefault();
+      }
+    });
+  
+  $('#cell-div').removeClass('cssShow').addClass('cssHide');
+  $('#district-div').removeClass('cssShow').addClass('cssHide');
+
+  var el = $('#report-cell');
+  el.empty(); // remove old subcell options
+
+  var el = $('#report-district');
+  el.empty(); // remove old cell options
+
+  //
+
+    $('#month-selector').on('change',function(){
+      var month = $('#month-selector').val();
+      if(month!= "")
+        {
+          document.getElementById("month_validate").innerHTML = "";
+        }
+        
+    });
+
+    $('#report-cell').on('change',function(){
+      var sub_cell = $('#report-cell').val();
+      if(sub_cell.includes(""))
+        {
+          document.getElementById("report-cell").selectedIndex = 0;
+        }
+    });
+
+    $('#report-district').on('change',function()
+    {
+      //document.getElementById("submit_button").setAttribute("style","margin-top: 4%")
+      $('#cell-div').removeClass('cssShow').addClass('cssHide');
+      var el = $('#report-cell');
+      el.empty(); // remove old subcell options
+
+      var cell = $('#report-district').val();
+
+      if(cell.includes(""))
+        {
+          document.getElementById("report-district").selectedIndex = 0;
+        }
+      else if(cell.length == 1 && !cell.includes(""))
+        {
+          cell_map_json = <%= @cell_map_array.to_json.html_safe%>;
+          if (cell[0] in cell_map_json)
+            {
+              subcell = cell_map_json[cell[0]];
+              var el = $("#report-cell");
+              el.empty();
+              subcell.forEach(function(value) {
+                if (value[1] == null)
+                  {
+                    el.append($("<option></option>")
+                  .attr("value", "").text(value[0]));
+                  }else{
+                    el.append($("<option></option>")
+                    .attr("value", value[1]).text(value[0]));
+                  }
+              });
+  
+              $('#cell-div').removeClass('cssHide').addClass('cssShow');
+            }
+        }
+     
+    });
+
+    $('#report-location').on('change', function() {
+      
+      //document.getElementById("submit_button").setAttribute("style","margin-top: 4%")
+      $('#district-div').removeClass('cssShow').addClass('cssHide'); //hide subcell and cell on location change
+      $('#cell-div').removeClass('cssShow').addClass('cssHide');
+
+      var el = $('#report-cell');
+      el.empty(); // remove old subcell options
+
+      var el = $('#report-district');
+      el.empty(); // remove old cell options
+
+      var location = document.getElementById("report-location").value;    
+      if (location!="")
+        {
+          //document.getElementById("state_validate").innerHTML = ""; 
+          var element_exist =  document.getElementById('location_validate');
+          if (typeof(element_exist) != 'undefined' && element_exist != null)
+            {
+              document.getElementById("location_validate").innerHTML = ""; 
+            }
+            
+            location_array = <%= @location_map_array.to_json.html_safe%>;
+            district_array = location_array[location];
+            
+            var el = $('#report-district');
+            el.empty(); // remove old cell options
+
+            district_array.forEach(function(value) {
+              if (value[1] == null)
+                {
+                  el.append($("<option></option>")
+                .attr("value", "").text(value[0]));
+                }else{
+                  el.append($("<option></option>")
+                  .attr("value", value[1]).text(value[0]));
+                }
+            });
+
+            $('#district-div').removeClass('cssHide').addClass('cssShow');
+
+        
+        }
+        
+    });
+
+
+    $('#end_date_field').on('change', function() {
+      var end_date = document.getElementById("end_date_field").value;
+      var start_date = document.getElementById("start_date_field").value;
+      if (end_date!="")
+        {
+      //document.getElementById("end_date_validate").innerHTML = ""; 
+      var element_exist =  document.getElementById('end_date_validate1');
+      if (typeof(element_exist) != 'undefined' && element_exist != null)
+        {
+          document.getElementById("end_date_validate1").innerHTML = ""; 
+        }
+      }
+      if (start_date!= "" && end_date!= "")
+        {
+          if(new Date(start_date)<= new Date(end_date))
+            {
+              //document.getElementById("date_validation").innerHTML = "";
+              var element_exist =  document.getElementById('date_validation1');
+              if (typeof(element_exist) != 'undefined' && element_exist != null)
+                {
+                  document.getElementById("date_validation1").innerHTML = "";
+                }
+            }
+          
+        }
+      
+    });
+    
+    $('#start_date_field').on('change', function() {
+      var start_date = document.getElementById("start_date_field").value;
+      var end_date = document.getElementById("end_date_field").value;
+      if (start_date!="")
+        {
+      //document.getElementById("start_date_validate").innerHTML = "";
+      var element_exist =  document.getElementById('start_date_validate1');
+      if (typeof(element_exist) != 'undefined' && element_exist != null)
+        {
+          document.getElementById("start_date_validate1").innerHTML = "";  
+        }
+        }
+      if (start_date!= "" && end_date!= "")
+        {
+          if(new Date(start_date)<= new Date(end_date))
+            {
+              //document.getElementById("date_validation").innerHTML = "";
+              var element_exist =  document.getElementById('date_validation1');
+              if (typeof(element_exist) != 'undefined' && element_exist != null)
+                {
+                  document.getElementById("date_validation1").innerHTML = "";
+                }
+            }
+          
+        }
+    });
+
+});
+
+</script>
+
+<div class="container">
+<br>
+<h2 style="color: #819f56">One Time Intervention Report</h2>
+<br>
+<div class="panel panel-default">
+	<div class="panel-body" style="padding: 20px">
+				<div>
+				<div>
+          <div id = "validation_div"></div>
+          <%= form_tag("/one_time_intervention/submit_form", method: "post", class: 'form-inline', name:"myForm", id:"submit_form_for_monthly_report") do %>
+                
+                <div class="col-sm-3">
+                    <label>Select month<span style="color: red">*</span></label> 
+                    <%= select_tag 'month_select', options_for_select(@month_array),{:id => "month-selector"} %>
+                </div>
+                <div class="col-sm-3">
+                  <label>Select year<span style="color: red">*</span></label>
+                  <%= select_year(Date.current, start_year: 1900, end_year: Date.current.year, name: "year", id: "year-selector") %>
+                </div>
+
+                <div class="col-sm-2" id="locations">
+                    <label>State<span style="color: red">*</span></label>
+                    <%= select_tag 'location', options_for_select(@location_array),{:id => "report-location"} %>
+                    <% if @location_not_selected == "true" %>
+                      <label style="color: red">please select location</label>
+                    <% end %>   
+                </div>
+
+                <div id="district-div" class="col-sm-2">    
+                    <div class="cell">
+                        <label>District</label>
+                        <%= select_tag 'district', options_for_select(@maha_location_array),{:id => "report-district",:multiple => true} %>
+                    </div>
+                </div>
+                <div id="cell-div" class="col-sm-2">    
+                    <div class="cell">
+                        <label>Cell</label>
+                        <%= select_tag 'cell', options_for_select(@maha_location_array),{:id => "report-cell",:multiple => true} %>
+                    </div>
+                </div>
+                <div class="col-sm-2" id="submit_button" style="margin-top: 2%;">
+                   <%= submit_tag "Generate Report", :name => 'save', :id => 'submit_tag' ,:class => "button btn_submit large" %>
+                </div>
+
+            <% end %>
+        </div> 
+    </div>
+    <br>
+<br>
+</div>
+
+<script>
+	if ("<%=@start_date_for_display %>" != "" || "<%=@end_date_for_display %>" != "")
+	{
+		if ("<%=@start_date_for_display %>" != "")
+		{
+			document.getElementById("start_date_field").defaultValue = "<%=@start_date_for_display %>";
+		}
+		if ("<%=@start_date_for_display %>" == "")
+		{
+			document.getElementById("start_date_field").defaultValue = "";
+		}
+		if ("<%=@end_date_for_display %>" != "")
+		{
+			document.getElementById("end_date_field").defaultValue = "<%=@end_date_for_display %>";
+		}
+		if ("<%=@end_date_for_display %>" == "")
+		{
+			document.getElementById("end_date_field").defaultValue = "";
+		}
+		
+	}
+	if ("<%=@start_date_not_selected %>" == "true" && "<%=@end_date_not_selected %>" == "true")
+		{
+			document.getElementById("start_date_field").defaultValue = "";
+			document.getElementById("end_date_field").defaultValue = "";
+		}
+		
+	
+	
+
+
+</script>

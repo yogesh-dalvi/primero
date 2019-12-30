@@ -175,7 +175,7 @@ class Child < CouchRest::Model::Base
 
     view :by_clients_reffered_by,
           :map => "function(doc) {
-              if(doc.location!=null && doc.district!=null && doc.clients_referred_by!=null && doc.registration_date!=null){
+              if(doc.location!=null && doc.district!=null && doc.clients_referred_by!=null && doc.registration_date!=null && doc.register_client.match(/new_registration/)){
                 emit([doc.location,doc.district,new Date(doc.registration_date+' UTC'),doc.clients_referred_by],1)
               }
             }",
@@ -184,7 +184,7 @@ class Child < CouchRest::Model::Base
     
     view :by_state_date_clients_reffered_by,
       :map => "function(doc) {
-          if(doc.location!=null && doc.district!=null && doc.clients_referred_by!=null && doc.registration_date!=null){
+          if(doc.location!=null && doc.district!=null && doc.clients_referred_by!=null && doc.registration_date!=null && doc.register_client.match(/new_registration/)){
             emit([doc.location,1,new Date(doc.registration_date+' UTC'),doc.clients_referred_by],1)
           }
         }",
@@ -193,7 +193,7 @@ class Child < CouchRest::Model::Base
 
     view :by_nature_of_interaction,
       :map => "function(doc) {
-                    if(doc.location!=null  && doc.district!=null && doc.nature_of_interaction!=null && doc.registration_date!=null){
+                    if(doc.location!=null  && doc.district!=null && doc.nature_of_interaction!=null && doc.registration_date!=null && doc.register_client.match(/new_registration/)){
                         emit([doc.location,doc.district,new Date(doc.registration_date+' UTC'),doc.nature_of_interaction],1)
                     }
               }",
@@ -202,7 +202,7 @@ class Child < CouchRest::Model::Base
       
     view :by_state_date_nature_of_interaction,
       :map => "function(doc) {
-                  if(doc.location!=null  && doc.district!=null && doc.nature_of_interaction!=null && doc.registration_date!=null){
+                  if(doc.location!=null  && doc.district!=null && doc.nature_of_interaction!=null && doc.registration_date!=null && doc.register_client.match(/new_registration/)){
                       emit([doc.location,1,new Date(doc.registration_date+' UTC'),doc.nature_of_interaction],1)
                   }
             }",
@@ -211,7 +211,7 @@ class Child < CouchRest::Model::Base
 
     view :by_individual_meeting_session,
     :map => "function(doc) {
-                if(doc.location!=null  && doc.district!=null && doc.individual_meetingssessions!=null && doc.registration_date!=null){
+                if(doc.location!=null  && doc.district!=null && doc.individual_meetingssessions!=null && doc.registration_date!=null && doc.register_client.match(/new_registration/)){
                   if (doc.hasOwnProperty('nature_of_interaction')){
                     var x = doc.nature_of_interaction
                     if (x.indexOf('individual_meetings_sessions_63305') > -1)
@@ -227,7 +227,7 @@ class Child < CouchRest::Model::Base
     
     view :by_state_date_individual_meeting_session,
         :map => "function(doc) {
-              if(doc.location!=null  && doc.district!=null && doc.individual_meetingssessions!=null && doc.registration_date!=null){
+              if(doc.location!=null  && doc.district!=null && doc.individual_meetingssessions!=null && doc.registration_date!=null && doc.register_client.match(/new_registration/)){
                 if (doc.hasOwnProperty('nature_of_interaction')){
                   var x = doc.nature_of_interaction
                   if (x.indexOf('individual_meetings_sessions_63305') > -1)
@@ -261,7 +261,7 @@ class Child < CouchRest::Model::Base
 
     view :by_new_refferals,
           :map => "function(doc) {
-                      if(doc.location!=null  && doc.district!=null && doc.referrals_new_clients_ongoing_clients!=null && doc.registration_date!=null){
+                      if(doc.location!=null  && doc.district!=null && doc.referrals_new_clients_ongoing_clients!=null && doc.registration_date!=null && doc.register_client.match(/new_registration/)){
                           emit([doc.location,doc.district,new Date(doc.registration_date+' UTC'),doc.referrals_new_clients_ongoing_clients],1)
                       }
                 }",
@@ -270,7 +270,7 @@ class Child < CouchRest::Model::Base
 
     view :by_state_date_new_refferals,
       :map => "function(doc) {
-                  if(doc.location!=null  && doc.district!=null && doc.referrals_new_clients_ongoing_clients!=null && doc.registration_date!=null){
+                  if(doc.location!=null  && doc.district!=null && doc.referrals_new_clients_ongoing_clients!=null && doc.registration_date!=null && doc.register_client.match(/new_registration/)){
                       emit([doc.location,1,new Date(doc.registration_date+' UTC'),doc.referrals_new_clients_ongoing_clients],1)
                   }
             }",
@@ -303,7 +303,7 @@ class Child < CouchRest::Model::Base
 
     view :by_other_interevention_home_visits,
           :map => "function(doc) {
-                    if(doc.location!=null  && doc.district!=null && doc.other_interventions_taking_place_outside_the_cell!=null && doc.other_interventions_taking_place_outside_the_cell.length!= 0 && doc.registration_date!=null){
+                    if(doc.location!=null  && doc.district!=null && doc.other_interventions_taking_place_outside_the_cell!=null && doc.other_interventions_taking_place_outside_the_cell.length!= 0 && doc.registration_date!=null && doc.register_client.match(/new_registration/)){
                       
                         emit([doc.location,1,new Date(doc.registration_date+' UTC'),doc.other_interventions_taking_place_outside_the_cell],1)
                       
@@ -314,7 +314,7 @@ class Child < CouchRest::Model::Base
 
     view :by_state_date_other_interevention_home_visits,
     :map => "function(doc) {
-              if(doc.location!=null  && doc.district!=null && doc.other_interventions_taking_place_outside_the_cell!=null && doc.other_interventions_taking_place_outside_the_cell.length!= 0 && doc.registration_date!=null){
+              if(doc.location!=null  && doc.district!=null && doc.other_interventions_taking_place_outside_the_cell!=null && doc.other_interventions_taking_place_outside_the_cell.length!= 0 && doc.registration_date!=null  && doc.register_client.match(/new_registration/)){
                     
                       emit([doc.location,1,new Date(doc.registration_date+' UTC'),doc.other_interventions_taking_place_outside_the_cell],1)
                     
@@ -347,7 +347,7 @@ class Child < CouchRest::Model::Base
 
     view :by_gender_of_complaint,
     :map => "function(doc) {
-            if(doc.location!=null  && doc.district!=null && doc.sex!=null && doc.registration_date!=null && doc.age!=null)
+            if(doc.location!=null  && doc.district!=null && doc.sex!=null && doc.registration_date!=null && doc.age!=null && doc.register_client.match(/new_registration/))
               {     
                 if (doc.age < 18 && doc.sex == 'female')
                   {
@@ -377,7 +377,7 @@ class Child < CouchRest::Model::Base
 
     view :by_state_date_gender_of_complaint,
     :map => "function(doc) {
-      if(doc.location!=null  && doc.district!=null && doc.sex!=null && doc.registration_date!=null && doc.age!=null)
+      if(doc.location!=null  && doc.district!=null && doc.sex!=null && doc.registration_date!=null && doc.age!=null && doc.register_client.match(/new_registration/))
         {     
           if (doc.age < 18 && doc.sex == 'female')
             {
@@ -407,7 +407,7 @@ class Child < CouchRest::Model::Base
 
     view :by_age_of_client,
     :map => "function(doc) {
-            if(doc.location!=null  && doc.district!=null && doc.registration_date!=null && doc.age!=null )
+            if(doc.location!=null  && doc.district!=null && doc.registration_date!=null && doc.age!=null && doc.register_client.match(/new_registration/) )
               {     
                 if (doc.age <= 14)
                   {
@@ -449,7 +449,7 @@ class Child < CouchRest::Model::Base
 
     view :by_state_date_age_of_client,
     :map => "function(doc) {
-            if(doc.location!=null  && doc.district!=null && doc.registration_date!=null && doc.age!=null)
+            if(doc.location!=null  && doc.district!=null && doc.registration_date!=null && doc.age!=null && doc.register_client.match(/new_registration/))
               {     
                 if (doc.age <= 14)
                   {
@@ -490,7 +490,7 @@ class Child < CouchRest::Model::Base
 
     view :by_client_education,
     :map => "function(doc) {
-              if(doc.location!=null  && doc.district!=null && doc.registration_date!=null){
+              if(doc.location!=null  && doc.district!=null && doc.registration_date!=null && doc.register_client.match(/new_registration/)){
                   emit([doc.location,doc.district,new Date(doc.registration_date+' UTC'),doc.education_of_the_client],1)
               }
         }",
@@ -499,7 +499,7 @@ class Child < CouchRest::Model::Base
 
     view :by_state_date_client_education,
     :map => "function(doc) {
-                if(doc.location!=null  && doc.district!=null && doc.registration_date!=null){
+                if(doc.location!=null  && doc.district!=null && doc.registration_date!=null && doc.register_client.match(/new_registration/)){
                     emit([doc.location,1,new Date(doc.registration_date+' UTC'),doc.education_of_the_client],1)
                 }
           }",
@@ -508,7 +508,7 @@ class Child < CouchRest::Model::Base
 
     view :by_reasons_for_registering_at_the_special_cell,
     :map => "function(doc) {
-                if(doc.location!=null  && doc.district!=null && doc.registration_date!=null){
+                if(doc.location!=null  && doc.district!=null && doc.registration_date!=null && doc.register_client.match(/new_registration/)){
                     emit([doc.location,doc.district,new Date(doc.registration_date+' UTC'),doc.reasons_for_registering_at_special_cell],1)
                 }
           }",
@@ -517,7 +517,7 @@ class Child < CouchRest::Model::Base
 
     view :by_state_date_reasons_for_registering_at_the_special_cell,
     :map => "function(doc) {
-                if(doc.location!=null  && doc.district!=null && doc.registration_date!=null){
+                if(doc.location!=null  && doc.district!=null && doc.registration_date!=null && doc.register_client.match(/new_registration/)){
                     emit([doc.location,1,new Date(doc.registration_date+' UTC'),doc.reasons_for_registering_at_special_cell],1)
                 }
           }",
@@ -526,7 +526,7 @@ class Child < CouchRest::Model::Base
 
     view :by_vio_by_husband,
     :map => "function(doc) {
-      if(doc.location!=null  && doc.district!=null && doc.registration_date!=null){
+      if(doc.location!=null  && doc.district!=null && doc.registration_date!=null && doc.register_client.match(/new_registration/)){
         if (doc.hasOwnProperty('reasons_for_registering_at_special_cell')){
           var x = doc.reasons_for_registering_at_special_cell
           if (x.indexOf('violence_by_husband_68373') > -1)
@@ -541,7 +541,7 @@ class Child < CouchRest::Model::Base
 
     view :by_state_date_vio_by_husband,
     :map => "function(doc) {
-      if(doc.location!=null  && doc.district!=null && doc.registration_date!=null){
+      if(doc.location!=null  && doc.district!=null && doc.registration_date!=null && doc.register_client.match(/new_registration/)){
         if (doc.hasOwnProperty('reasons_for_registering_at_special_cell')){
           var x = doc.reasons_for_registering_at_special_cell
           if (x.indexOf('violence_by_husband_68373') > -1)
@@ -556,7 +556,7 @@ class Child < CouchRest::Model::Base
 
     view :by_vio_by_marital_family,
     :map => "function(doc) {
-      if(doc.location!=null  && doc.district!=null && doc.registration_date!=null){
+      if(doc.location!=null  && doc.district!=null && doc.registration_date!=null && doc.register_client.match(/new_registration/)){
         if (doc.hasOwnProperty('reasons_for_registering_at_special_cell')){
           var x = doc.reasons_for_registering_at_special_cell
           if (x.indexOf('violence_by_marital_family_members_other_than_husband_81913') > -1)
@@ -572,7 +572,7 @@ class Child < CouchRest::Model::Base
 
     view :by_state_date_vio_by_martial_family,
     :map => "function(doc) {
-      if(doc.location!=null  && doc.district!=null && doc.registration_date!=null){
+      if(doc.location!=null  && doc.district!=null && doc.registration_date!=null && doc.register_client.match(/new_registration/)){
         if (doc.hasOwnProperty('reasons_for_registering_at_special_cell')){
           var x = doc.reasons_for_registering_at_special_cell
           if (x.indexOf('violence_by_marital_family_members_other_than_husband_81913') > -1)
@@ -587,7 +587,7 @@ class Child < CouchRest::Model::Base
 
     view :by_previous_intervention_before_coming_to_the_cell,
     :map => "function(doc) {
-                if(doc.location!=null  && doc.district!=null && doc.registration_date!=null){
+                if(doc.location!=null  && doc.district!=null && doc.registration_date!=null && doc.register_client.match(/new_registration/)){
                     emit([doc.location,doc.district,new Date(doc.registration_date+' UTC'),doc.previous_intervention_before_coming_to_the_cell],1)
                 }
           }",
@@ -596,7 +596,7 @@ class Child < CouchRest::Model::Base
 
     view :by_state_date_previous_intervention_before_coming_to_the_cell,
     :map => "function(doc) {
-                if(doc.location!=null  && doc.district!=null && doc.registration_date!=null){
+                if(doc.location!=null  && doc.district!=null && doc.registration_date!=null && doc.register_client.match(/new_registration/)){
                     emit([doc.location,1,new Date(doc.registration_date+' UTC'),doc.previous_intervention_before_coming_to_the_cell],1)
                 }
           }",
@@ -605,7 +605,7 @@ class Child < CouchRest::Model::Base
 
     view :by_intervention_by_special_cell,
     :map => "function(doc) {
-                if(doc.location!=null  && doc.district!=null && doc.registration_date!=null){
+                if(doc.location!=null  && doc.district!=null && doc.registration_date!=null && doc.register_client.match(/new_registration/)){
                     emit([doc.location,doc.district,new Date(doc.registration_date+' UTC'),doc.intervention_by_special_cell],1)
                 }
           }",
@@ -614,7 +614,7 @@ class Child < CouchRest::Model::Base
 
     view :by_state_date_intervention_by_special_cell,
     :map => "function(doc) {
-                if(doc.location!=null  && doc.district!=null && doc.registration_date!=null){
+                if(doc.location!=null  && doc.district!=null && doc.registration_date!=null  && doc.register_client.match(/new_registration/)){
                     emit([doc.location,1,new Date(doc.registration_date+' UTC'),doc.intervention_by_special_cell],1)
                 }
           }",
@@ -623,7 +623,7 @@ class Child < CouchRest::Model::Base
 
     view :by_negotiating_nonviolence,
     :map => "function(doc) {
-                if(doc.location!=null  && doc.district!=null && doc.registration_date!=null){
+                if(doc.location!=null  && doc.district!=null && doc.registration_date!=null && doc.register_client.match(/new_registration/)){
                   if (doc.hasOwnProperty('intervention_by_special_cell')){
                     var x = doc.intervention_by_special_cell
                     if (x.indexOf('negotiating_non_violence_47149') > -1)
@@ -639,7 +639,7 @@ class Child < CouchRest::Model::Base
 
     view :by_state_date_negotiating_nonviolence,
       :map => "function(doc) {
-              if(doc.location!=null  && doc.district!=null && doc.registration_date!=null){
+              if(doc.location!=null  && doc.district!=null && doc.registration_date!=null && doc.register_client.match(/new_registration/)){
                 if (doc.hasOwnProperty('intervention_by_special_cell')){
                   var x = doc.intervention_by_special_cell
                   if (x.indexOf('negotiating_non_violence_47149') > -1)
@@ -655,7 +655,7 @@ class Child < CouchRest::Model::Base
 
     view :by_other_negotiations,
     :map => "function(doc) {
-            if(doc.location!=null  && doc.district!=null && doc.registration_date!=null){
+            if(doc.location!=null  && doc.district!=null && doc.registration_date!=null && doc.register_client.match(/new_registration/)){
               if (doc.hasOwnProperty('intervention_by_special_cell')){
                     var x = doc.intervention_by_special_cell
                     if (x.indexOf('other_negotiations_79490') > -1)
@@ -671,7 +671,7 @@ class Child < CouchRest::Model::Base
 
     view :by_state_date_other_negotiations,
     :map => "function(doc) {
-            if(doc.location!=null  && doc.district!=null && doc.registration_date!=null){
+            if(doc.location!=null  && doc.district!=null && doc.registration_date!=null && doc.register_client.match(/new_registration/)){
               if (doc.hasOwnProperty('intervention_by_special_cell')){
                     var x = doc.intervention_by_special_cell
                     if (x.indexOf('other_negotiations_79490') > -1)
@@ -687,7 +687,7 @@ class Child < CouchRest::Model::Base
 
     view :by_referrals_new_clients_ongoing_clients,
     :map => "function(doc) {
-                if(doc.location!=null  && doc.district!=null && doc.registration_date!=null){
+                if(doc.location!=null  && doc.district!=null && doc.registration_date!=null && doc.register_client.match(/new_registration/)){
                     emit([doc.location,doc.district,new Date(doc.registration_date+' UTC'),doc.referrals_new_clients_ongoing_clients],1)
                 }
           }",
@@ -696,7 +696,7 @@ class Child < CouchRest::Model::Base
 
     view :by_state_date_referrals_new_clients_ongoing_clients,
     :map => "function(doc) {
-                if(doc.location!=null  && doc.district!=null && doc.registration_date!=null){
+                if(doc.location!=null  && doc.district!=null && doc.registration_date!=null && doc.register_client.match(/new_registration/)){
                     emit([doc.location,1,new Date(doc.registration_date+' UTC'),doc.referrals_new_clients_ongoing_clients],1)
                 }
           }",
@@ -705,7 +705,7 @@ class Child < CouchRest::Model::Base
 
     view :by_other_interventions_taking_place_outside_the_cell,
     :map => "function(doc) {
-                if(doc.location!=null  && doc.district!=null && doc.registration_date!=null){
+                if(doc.location!=null  && doc.district!=null && doc.registration_date!=null && doc.register_client.match(/new_registration/)){
                     emit([doc.location,doc.district,new Date(doc.registration_date+' UTC'),doc.other_interventions_taking_place_outside_the_cell],1)
                 }
           }",
@@ -714,7 +714,7 @@ class Child < CouchRest::Model::Base
 
     view :by_state_date_other_interventions_taking_place_outside_the_cell,
     :map => "function(doc) {
-                if(doc.location!=null  && doc.district!=null && doc.registration_date!=null){
+                if(doc.location!=null  && doc.district!=null && doc.registration_date!=null && doc.register_client.match(/new_registration/)){
                     emit([doc.location,1,new Date(doc.registration_date+' UTC'),doc.other_interventions_taking_place_outside_the_cell],1)
                 }
           }",
@@ -723,7 +723,7 @@ class Child < CouchRest::Model::Base
 
     view :by_outcomes_new_clients_ongoing_clients,
     :map => "function(doc) {
-                if(doc.location!=null  && doc.district!=null && doc.registration_date!=null){
+                if(doc.location!=null  && doc.district!=null && doc.registration_date!=null && doc.register_client.match(/new_registration/)){
                     emit([doc.location,doc.district,new Date(doc.registration_date+' UTC'),doc.outcomes_new_clients_ongoing_clients],1)
                 }
           }",
@@ -732,7 +732,7 @@ class Child < CouchRest::Model::Base
 
     view :by_state_date_outcomes_new_clients_ongoing_clients,
     :map => "function(doc) {
-                if(doc.location!=null  && doc.district!=null && doc.registration_date!=null){
+                if(doc.location!=null  && doc.district!=null && doc.registration_date!=null && doc.register_client.match(/new_registration/)){
                     emit([doc.location,1,new Date(doc.registration_date+' UTC'),doc.outcomes_new_clients_ongoing_clients],1)
                 }
           }",
@@ -759,7 +759,7 @@ class Child < CouchRest::Model::Base
 
     view :by_cases_sent_back_to_eo,
     :map => "function(doc) {
-      if(doc.location!=null  && doc.district!=null && doc.registration_date!=null){
+      if(doc.location!=null  && doc.district!=null && doc.registration_date!=null && doc.register_client.match(/new_registration/)){
         if (doc.hasOwnProperty('outcomes_new_clients_ongoing_clients')){
           var x = doc.outcomes_new_clients_ongoing_clients
 
@@ -777,7 +777,7 @@ class Child < CouchRest::Model::Base
 
     view :by_state_date_cases_sent_back_to_eo,
     :map => "function(doc) {
-      if(doc.location!=null  && doc.district!=null && doc.registration_date!=null){
+      if(doc.location!=null  && doc.district!=null && doc.registration_date!=null && doc.register_client.match(/new_registration/)){
         if (doc.hasOwnProperty('outcomes_new_clients_ongoing_clients')){
           var x = doc.outcomes_new_clients_ongoing_clients
 
@@ -795,7 +795,7 @@ class Child < CouchRest::Model::Base
 
     view :by_helped_in_filing_for_divorceseparationtalaqkhula,
     :map => "function(doc) {
-        if(doc.location!=null  && doc.district!=null && doc.registration_date!=null){
+        if(doc.location!=null  && doc.district!=null && doc.registration_date!=null && doc.register_client.match(/new_registration/)){
             if (doc.hasOwnProperty('outcomes_new_clients_ongoing_clients')){
               var x = doc.outcomes_new_clients_ongoing_clients
               if ((x.indexOf('helped_in_filing_for_divorce_separation_talaq_khula_66992') > -1) || (x.indexOf('helped_in_filing_case_in_court_for_divorce_separation_76258') > -1))
@@ -810,7 +810,7 @@ class Child < CouchRest::Model::Base
 
     view :by_state_date_helped_in_filing_for_divorceseparationtalaqkhula,
     :map => "function(doc) {
-        if(doc.location!=null  && doc.district!=null && doc.registration_date!=null){
+        if(doc.location!=null  && doc.district!=null && doc.registration_date!=null && doc.register_client.match(/new_registration/)){
             if (doc.hasOwnProperty('outcomes_new_clients_ongoing_clients')){
               var x = doc.outcomes_new_clients_ongoing_clients
               if ((x.indexOf('helped_in_filing_for_divorce_separation_talaq_khula_66992') > -1) || (x.indexOf('helped_in_filing_case_in_court_for_divorce_separation_76258') > -1))
@@ -825,7 +825,7 @@ class Child < CouchRest::Model::Base
 
     view :by_helped_in_filing_case_in_court_for_divorceseparationmediation,
     :map => "function(doc) {
-      if(doc.location!=null  && doc.district!=null && doc.registration_date!=null){
+      if(doc.location!=null  && doc.district!=null && doc.registration_date!=null && doc.register_client.match(/new_registration/)){
             if (doc.hasOwnProperty('outcomes_new_clients_ongoing_clients')){
               var x = doc.outcomes_new_clients_ongoing_clients
               if (x.indexOf('helped_in_filing_case_in_court_for_divorce_separation_mediation_31063') > -1)
@@ -840,7 +840,7 @@ class Child < CouchRest::Model::Base
 
     view :by_state_date_helped_in_filing_case_in_court_for_divorceseparationmediation,
     :map => "function(doc) {
-      if(doc.location!=null  && doc.district!=null && doc.registration_date!=null){
+      if(doc.location!=null  && doc.district!=null && doc.registration_date!=null && doc.register_client.match(/new_registration/)){
             if (doc.hasOwnProperty('outcomes_new_clients_ongoing_clients')){
               var x = doc.outcomes_new_clients_ongoing_clients
               if (x.indexOf('helped_in_filing_case_in_court_for_divorce_separation_mediation_31063') > -1)
@@ -855,7 +855,7 @@ class Child < CouchRest::Model::Base
 
     view :helped_the_woman_in_accessing_her_financial_entitlements,
     :map => "function(doc) {
-      if(doc.location!=null  && doc.district!=null && doc.registration_date!=null){
+      if(doc.location!=null  && doc.district!=null && doc.registration_date!=null && doc.register_client.match(/new_registration/)){
             if (doc.hasOwnProperty('outcomes_new_clients_ongoing_clients')){
               var x = doc.outcomes_new_clients_ongoing_clients
               if ((x.indexOf('helped_the_woman_in_accessing_her_financial_entitlements_02771') > -1) || (x.indexOf('helped_the_woman_in_accessing_her_financial_entitlements_61649') > -1) || (x.indexOf('helped_the_woman_in_accessing_her_financial_entitlements_16163') > -1))
@@ -870,7 +870,7 @@ class Child < CouchRest::Model::Base
 
     view :by_state_date_helped_the_woman_in_accessing_her_financial_entitlements,
     :map => "function(doc) {
-      if(doc.location!=null  && doc.district!=null && doc.registration_date!=null){
+      if(doc.location!=null  && doc.district!=null && doc.registration_date!=null && doc.register_client.match(/new_registration/)){
             if (doc.hasOwnProperty('outcomes_new_clients_ongoing_clients')){
               var x = doc.outcomes_new_clients_ongoing_clients
               if ((x.indexOf('helped_the_woman_in_accessing_her_financial_entitlements_02771') > -1) || (x.indexOf('helped_the_woman_in_accessing_her_financial_entitlements_61649') > -1) || (x.indexOf('helped_the_woman_in_accessing_her_financial_entitlements_16163') > -1))
@@ -918,7 +918,7 @@ class Child < CouchRest::Model::Base
 
     view :by_ongoing_clients_not_registered_in_this_quarter,
     :map => "function(doc) {
-      if(doc.location!=null  && doc.district!=null && doc.registration_date!=null){
+      if(doc.location!=null  && doc.district!=null && doc.registration_date!=null && doc.register_client.match(/new_registration/)){
         if(doc.hasOwnProperty('cp_case_intake_delhi_subform_ongoing_client')){
           if(doc.cp_case_intake_delhi_subform_ongoing_client.length>0)
           {	
@@ -949,7 +949,7 @@ class Child < CouchRest::Model::Base
 
     view :by_state_date_ongoing_clients_not_registered_in_this_quarter,
     :map => "function(doc) {
-      if(doc.location!=null  && doc.district!=null && doc.registration_date!=null){
+      if(doc.location!=null  && doc.district!=null && doc.registration_date!=null && doc.register_client.match(/new_registration/)){
         if(doc.hasOwnProperty('cp_case_intake_delhi_subform_ongoing_client')){
           if(doc.cp_case_intake_delhi_subform_ongoing_client.length>0)
           {	
@@ -980,7 +980,7 @@ class Child < CouchRest::Model::Base
 
     view :by_ongoing_clients,
       :map => "function(doc) {
-        if(doc.location!=null  && doc.district!=null && doc.registration_date!=null){
+        if(doc.location!=null  && doc.district!=null && doc.registration_date!=null && doc.register_client.match(/new_registration/)){
           if(doc.hasOwnProperty('cp_case_intake_delhi_subform_ongoing_client')){
             if(doc.cp_case_intake_delhi_subform_ongoing_client.length>0)
             {	
@@ -1012,7 +1012,7 @@ class Child < CouchRest::Model::Base
 
     view :by_state_date_ongoing_clients,
       :map => "function(doc) {
-        if(doc.location!=null  && doc.district!=null && doc.registration_date!=null){
+        if(doc.location!=null  && doc.district!=null && doc.registration_date!=null && doc.register_client.match(/new_registration/)){
           if(doc.hasOwnProperty('cp_case_intake_delhi_subform_ongoing_client')){
             if(doc.cp_case_intake_delhi_subform_ongoing_client.length>0)
             {	
@@ -1042,6 +1042,243 @@ class Child < CouchRest::Model::Base
             }",
       :reduce =>
       "_sum"
+
+      # Part only for One Time Intervention
+
+      view :by_clients_reffered_by_one_time_intervention,
+          :map => "function(doc) {
+              if(doc.location!=null && doc.district!=null && doc.clients_referred_by!=null && doc.registration_date!=null && doc.register_client == 'one_time_intervention_19509'){
+                emit([doc.location,doc.district,new Date(doc.registration_date+' UTC'),doc.clients_referred_by],1)
+              }
+            }",
+          :reduce =>
+            "_sum"
+    
+      view :by_state_date_clients_reffered_by_one_time_intervention,
+        :map => "function(doc) {
+            if(doc.location!=null && doc.district!=null && doc.clients_referred_by!=null && doc.registration_date!=null && doc.register_client == 'one_time_intervention_19509'){
+              emit([doc.location,1,new Date(doc.registration_date+' UTC'),doc.clients_referred_by],1)
+            }
+          }",
+        :reduce =>
+            "_sum"
+          
+      view :by_gender_of_complaint_one_time_intervention,
+      :map => "function(doc) {
+              if(doc.location!=null  && doc.district!=null && doc.sex!=null && doc.registration_date!=null && doc.age!=null && doc.register_client == 'one_time_intervention_19509')
+                {     
+                  if (doc.age < 18 && doc.sex == 'female')
+                    {
+                      emit([doc.location,doc.district,new Date(doc.registration_date+' UTC'),'child_female', doc.age],1)
+                    }
+                  else if (doc.age < 18 && doc.sex == 'male')
+                    {
+                      emit([doc.location,doc.district,new Date(doc.registration_date+' UTC'),'child_male', doc.age],1)
+                    }
+                  else if (doc.age >= 18 && doc.sex == 'male')
+                    {
+                      emit([doc.location,doc.district,new Date(doc.registration_date+' UTC'),'adult_male', doc.age],1)
+                    }
+                  else if (doc.age >= 18 && doc.sex == 'female')
+                    {
+                      emit([doc.location,doc.district,new Date(doc.registration_date+' UTC'),'adult_female', doc.age],1)
+                    }
+                  else
+                    {
+                      emit([doc.location,doc.district,new Date(doc.registration_date+' UTC'),'third_gender', doc.age],1)
+                    }
+  
+                }
+              }",
+      :reduce =>
+      "_sum"
+  
+      view :by_state_date_gender_of_complaint_one_time_intervention,
+      :map => "function(doc) {
+        if(doc.location!=null  && doc.district!=null && doc.sex!=null && doc.registration_date!=null && doc.age!=null && doc.register_client == 'one_time_intervention_19509')
+          {     
+            if (doc.age < 18 && doc.sex == 'female')
+              {
+                emit([doc.location,1,new Date(doc.registration_date+' UTC'),'child_female', doc.age],1)
+              }
+            else if (doc.age < 18 && doc.sex == 'male')
+              {
+                emit([doc.location,1,new Date(doc.registration_date+' UTC'),'child_male', doc.age],1)
+              }
+            else if (doc.age >= 18 && doc.sex == 'male')
+              {
+                emit([doc.location,1,new Date(doc.registration_date+' UTC'),'adult_male', doc.age],1)
+              }
+            else if (doc.age >= 18 && doc.sex == 'female')
+              {
+                emit([doc.location,1,new Date(doc.registration_date+' UTC'),'adult_female', doc.age],1)
+              }
+            else
+              {
+                emit([doc.location,1,new Date(doc.registration_date+' UTC'),'third_gender', doc.age],1)
+              }
+  
+          }
+        }",
+      :reduce =>
+      "_sum"
+  
+      view :by_age_of_client_one_time_intervention,
+      :map => "function(doc) {
+              if(doc.location!=null  && doc.district!=null && doc.registration_date!=null && doc.age!=null && doc.register_client == 'one_time_intervention_19509' )
+                {     
+                  if (doc.age <= 14)
+                    {
+                      emit([doc.location,doc.district,new Date(doc.registration_date+' UTC'),'less_than_14'],1)
+                    }
+                  else if (doc.age >= 15 && doc.age <= 17)
+                    {
+                      emit([doc.location,doc.district,new Date(doc.registration_date+' UTC'),'in_15_17'],1)
+                    }
+                  else if (doc.age >= 18 && doc.age <= 24)
+                    {
+                      emit([doc.location,doc.district,new Date(doc.registration_date+' UTC'),'in_18_24'],1)
+                    }
+                  else if (doc.age >= 25 && doc.age <= 34 )
+                    {
+                      emit([doc.location,doc.district,new Date(doc.registration_date+' UTC'),'in_25_34'],1)
+                    }
+                  else if (doc.age >= 35 && doc.age <= 44 )
+                    {
+                      emit([doc.location,doc.district,new Date(doc.registration_date+' UTC'),'in_35_44'],1)
+                    }
+                  else if (doc.age >= 45 && doc.age <= 54 )
+                    {
+                      emit([doc.location,doc.district,new Date(doc.registration_date+' UTC'),'in_45_54'],1)
+                    }
+                  else if (doc.age >= 55)
+                    {
+                      emit([doc.location,doc.district,new Date(doc.registration_date+' UTC'),'above_55'],1)
+                    }
+                  else
+                    {
+                      emit([doc.location,doc.district,new Date(doc.registration_date+' UTC'),'not_mentioned'],1)
+                    }
+  
+                }
+              }",
+      :reduce =>
+      "_sum"
+  
+      view :by_state_date_age_of_client_one_time_intervention,
+      :map => "function(doc) {
+              if(doc.location!=null  && doc.district!=null && doc.registration_date!=null && doc.age!=null && doc.register_client == 'one_time_intervention_19509')
+                {     
+                  if (doc.age <= 14)
+                    {
+                      emit([doc.location,1,new Date(doc.registration_date+' UTC'),'less_than_14'],1)
+                    }
+                  else if (doc.age >= 15 && doc.age <= 17)
+                    {
+                      emit([doc.location,1,new Date(doc.registration_date+' UTC'),'in_15_17'],1)
+                    }
+                  else if (doc.age >= 18 && doc.age <= 24)
+                    {
+                      emit([doc.location,1,new Date(doc.registration_date+' UTC'),'in_18_24'],1)
+                    }
+                  else if (doc.age >= 25 && doc.age <= 34 )
+                    {
+                      emit([doc.location,1,new Date(doc.registration_date+' UTC'),'in_25_34'],1)
+                    }
+                  else if (doc.age >= 35 && doc.age <= 44 )
+                    {
+                      emit([doc.location,1,new Date(doc.registration_date+' UTC'),'in_35_44'],1)
+                    }
+                  else if (doc.age >= 45 && doc.age <= 54 )
+                    {
+                      emit([doc.location,1,new Date(doc.registration_date+' UTC'),'in_45_54'],1)
+                    }
+                  else if (doc.age >= 55)
+                    {
+                      emit([doc.location,1,new Date(doc.registration_date+' UTC'),'above_55'],1)
+                    }
+                  else
+                    {
+                      emit([doc.location,1,new Date(doc.registration_date+' UTC'),'not_mentioned'],1)
+                    }
+                }
+              }",
+      :reduce =>
+      "_sum"
+  
+      view :by_client_education_one_time_intervention,
+      :map => "function(doc) {
+                if(doc.location!=null  && doc.district!=null && doc.registration_date!=null && doc.register_client == 'one_time_intervention_19509'){
+                    emit([doc.location,doc.district,new Date(doc.registration_date+' UTC'),doc.education_of_the_client],1)
+                }
+          }",
+      :reduce =>
+      "_sum"
+  
+      view :by_state_date_client_education_one_time_intervention,
+      :map => "function(doc) {
+                  if(doc.location!=null  && doc.district!=null && doc.registration_date!=null && doc.register_client == 'one_time_intervention_19509'){
+                      emit([doc.location,1,new Date(doc.registration_date+' UTC'),doc.education_of_the_client],1)
+                  }
+            }",
+      :reduce =>
+      "_sum"
+
+      view :by_referrals_new_clients_ongoing_clients_one_time_intervention,
+      :map => "function(doc) {
+                  if(doc.location!=null  && doc.district!=null && doc.registration_date!=null && doc.register_client == 'one_time_intervention_19509'){
+                      emit([doc.location,doc.district,new Date(doc.registration_date+' UTC'),doc.referrals_new_clients_ongoing_clients],1)
+                  }
+            }",
+      :reduce =>
+      "_sum"
+
+      view :by_state_date_referrals_new_clients_ongoing_clients_one_time_intervention,
+      :map => "function(doc) {
+                  if(doc.location!=null  && doc.district!=null && doc.registration_date!=null && doc.register_client == 'one_time_intervention_19509'){
+                      emit([doc.location,1,new Date(doc.registration_date+' UTC'),doc.referrals_new_clients_ongoing_clients],1)
+                  }
+            }",
+      :reduce =>
+      "_sum"
+
+      view :by_previous_intervention_before_coming_to_the_cell_one_time_intervention,
+      :map => "function(doc) {
+                  if(doc.location!=null  && doc.district!=null && doc.registration_date!=null && doc.register_client == 'one_time_intervention_19509'){
+                      emit([doc.location,doc.district,new Date(doc.registration_date+' UTC'),doc.previous_intervention_before_coming_to_the_cell],1)
+                  }
+            }",
+      :reduce =>
+      "_sum"
+
+      view :by_state_date_previous_intervention_before_coming_to_the_cell_one_time_intervention,
+      :map => "function(doc) {
+                  if(doc.location!=null  && doc.district!=null && doc.registration_date!=null && doc.register_client == 'one_time_intervention_19509'){
+                      emit([doc.location,1,new Date(doc.registration_date+' UTC'),doc.previous_intervention_before_coming_to_the_cell],1)
+                  }
+            }",
+      :reduce =>
+      "_sum"
+
+      view :by_intervention_by_special_cell_one_time_intervention,
+      :map => "function(doc) {
+                  if(doc.location!=null  && doc.district!=null && doc.registration_date!=null && doc.register_client == 'one_time_intervention_19509'){
+                      emit([doc.location,doc.district,new Date(doc.registration_date+' UTC'),doc.intervention_by_special_cell],1)
+                  }
+            }",
+      :reduce =>
+      "_sum"
+
+      view :by_state_date_intervention_by_special_cell_one_time_intervention,
+      :map => "function(doc) {
+                  if(doc.location!=null  && doc.district!=null && doc.registration_date!=null && doc.register_client == 'one_time_intervention_19509'){
+                      emit([doc.location,1,new Date(doc.registration_date+' UTC'),doc.intervention_by_special_cell],1)
+                  }
+            }",
+      :reduce =>
+      "_sum"
+
+
 end
 
 

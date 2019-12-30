@@ -21,18 +21,18 @@ Primero::Application.routes.draw do
     end
   end
 
-  resources :monthly_reports_test do
+  resources :monthly_reports_one_time_intervention do
     collection do
       post :submit_form
-      get :show_qpr
+      get :show_mpr
       get :generate_pdf
     end
   end
   
-  resources :quarterly_reports_test do
+  resources :one_time_intervention do
     collection do
       post :submit_form
-      get :show_qpr
+      get :show_one_time_intervention_report
       get :quarterly_pdf
     end
   end
